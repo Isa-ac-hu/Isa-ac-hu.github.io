@@ -1,4 +1,4 @@
-import { polygonPoints, COLORS, LOGO, LOGO_BOUNDS, isLogoHit, HERO_BTN } from '../utils.js';      // keeps util helper
+import { polygonPoints, COLORS, LOGO, LOGO_BOUNDS, isLogoHit, HERO_BTN, RESUME_URL } from '../utils.js';      // keeps util helper
 import Header from './header.js';
 import Hero from './hero.js';
 import SocialBar from './socialBar.js';
@@ -20,11 +20,6 @@ export default class HomeStage {
         this.logoDone  = false;
 
         /* simple click handler */
-
-
-
-
-
         this.hero   = new Hero(this.ctx, this.canvas);
 
         this.mailBar   = new MailBar (this.ctx, this.canvas);
@@ -39,6 +34,8 @@ export default class HomeStage {
         this.scrollY  = 0;                  // new
         window.addEventListener('scroll', this.onScroll);
         this.canvas.addEventListener('place-select', this.onPlaceSelect);
+
+
 
 
         this.canvas.addEventListener('mousemove', this.onMove);
@@ -72,11 +69,11 @@ export default class HomeStage {
         cssX >= HERO_BTN.x && cssX <= HERO_BTN.x + HERO_BTN.w &&
         cssY >= btnTop     && cssY <= btnBottom;
 
-      const overHeader = this.header.updateHover(cssX, cssY);
+      const overHeaderOrResume  = this.header.updateHover(cssX, cssY);
       const overMail   = this.mailBar.hover;          // set in its own onMove
 
 
-      this.canvas.style.cursor = (overLogo || overBtn || overHeader || overMail || overSocial) ? 'pointer' : '';
+      this.canvas.style.cursor = (overLogo || overBtn || overHeaderOrResume || overMail || overSocial) ? 'pointer' : '';
 
 
     };
@@ -86,11 +83,20 @@ export default class HomeStage {
         if (!this.logoDone) return;                  // wait until fade‑in finished
 
         const rect = this.canvas.getBoundingClientRect();
-        const cssX = (e.clientX - rect.left) * (this.canvas.width  / rect.width);
-        const cssY = (e.clientY - rect.top ) * (this.canvas.height / rect.height);
+        const cssX   = e.clientX - rect.left;
+        const cssY   = e.clientY - rect.top;
+
+        /* 1)  Resume button – handled entirely by Header’s geometry     */
+        if (this.header.isResumeHit(cssX, cssY)) {
+            window.open(RESUME_URL, '_blank');
+            return;                          // nothing else for this click
+        }
+        /* -------- device-pixel coords (existing math) ---------------- */
+        const pxX = cssX * (this.canvas.width  / rect.width);
+        const pxY = cssY * (this.canvas.height / rect.height);
 
         /* logo is centered at (48,48); radius ≈ 64px box */
-        if (isLogoHit(cssX, cssY)) {
+        if (isLogoHit(pxX, pxY)) {
             this.destroy();                 // stop drawing & remove listener
             this.restart();                 // create a brand‑new IntroStage
         }
@@ -103,8 +109,8 @@ export default class HomeStage {
       const btnRight  = (HERO_BTN.x + HERO_BTN.w) * scale;
       const btnTop    = (HERO_BTN.y - this.scrollY + lineGap) * scale;
       const btnBottom =  btnTop + HERO_BTN.h * scale;
-      if (cssX >= btnLeft && cssX <= btnRight &&
-        cssY >= btnTop  && cssY <= btnBottom) {
+      if (pxX >= btnLeft && pxX <= btnRight &&
+          pxY >= btnTop  && pxY <= btnBottom) {
         window.open(HERO_BTN.mail, '_self');     // launches default mail app
       }
     };

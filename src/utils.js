@@ -226,3 +226,6 @@ export const INFO_PANEL = {
   w    : 320,   // max width  (img will auto-scale to this)
 };
 
+
+export const RESUME_URL =
+    'assets/resumes/Isaac%20Hu%20Resume.pdf';   // adjust if you move the file

@@ -1,5 +1,5 @@
 // src/components/hero.js
-import { COLORS, HERO_BTN, strokeRoundRect } from '../utils.js';
+import { COLORS, HERO_BTN, strokeRoundRect, easeLogistic } from '../utils.js';
 
 
 /* helper ─ wrap a long string inside maxW and draw it line‑by‑line */
@@ -26,7 +26,13 @@ export default class Hero {
   constructor(ctx, canvas) {
     this.ctx     = ctx;
     this.canvas  = canvas;
+
+    this.hover        = false;   // current frame’s hover state
+    this.hoverProg    = 0;       // 0‒1 logistic input
+    this.SPEED        = 0.08;    // bigger = quicker fade
   }
+
+  setHover(flag) { this.hover = flag; }   // called from HomeStage
 
   draw(scrollY = 0) {
     const { ctx, canvas } = this;
@@ -38,6 +44,13 @@ export default class Hero {
     /* vertical placement: 25% from top looks close to the screenshot */
     const baseY   = cssH * 0.23 - scrollY;
     const lineGap = 64;   // distance between headline lines
+
+
+    /* update fade progress */
+    if (this.hover) this.hoverProg = Math.min(1, this.hoverProg + this.SPEED);
+    else            this.hoverProg = Math.max(0, this.hoverProg - this.SPEED);
+    const hueT  = easeLogistic(this.hoverProg);       // 0‒1
+    const alpha = 0.25 * hueT;                        // translucent
 
     /* 01 ── “Hi, my name is” */
     ctx.fillStyle = COLORS.cyan;
@@ -74,9 +87,12 @@ export default class Hero {
     /* 05 ── “Get In Touch” button */
     ctx.save();
     ctx.translate(HERO_BTN.x, HERO_BTN.y);
-    /* (optional) red debug hit‑box */
-    // ctx.fillStyle = 'rgba(255,0,0,.15)';
-    // ctx.fillRect(0, 0, HERO_BTN.w, HERO_BTN.h);
+
+    /* background tint */
+    if (alpha > 0.005) {
+      ctx.fillStyle = `rgba(100,255,218,${alpha})`;
+      ctx.fillRect(0, -scrollY + lineGap, HERO_BTN.w, HERO_BTN.h);
+    }
 
     /* cyan rounded outline */
     ctx.lineWidth   = 1;

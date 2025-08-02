@@ -13,7 +13,10 @@ export default class Header {
         this.ctx    = ctx;
         this.canvas = canvas;
         this.hover  = -1;          // index of the link currently hovered
+        this.hoverResume = false; // ← separate flag for the button
 
+        this.resumeProg  = 0;
+        this.SPEED       = 0.08;
         /* right‑hand nav data */
         this.links = [
             { num: '01.', label: 'About'      },
@@ -21,6 +24,23 @@ export default class Header {
             { num: '03.', label: 'Work'       },
             { num: '04.', label: 'Contact'    },
         ];
+    }
+    /** true if (cssX, cssY) is inside the Resume rounded-rect (CSS-px) */
+    isResumeHit(cssX, cssY) {
+        const dpr  = window.devicePixelRatio || 1;
+        const cssW = this.canvas.width / dpr;
+        const yMid = LOGO.anchor.y;
+
+        const rx = cssW
+            - HEADER.rightShift
+            - HEADER.resumeW / 2
+            + HEADER.resumeDistance;
+
+        const left   = rx - HEADER.resumeW / 2;
+        const right  = rx + HEADER.resumeW / 2;
+        const top    = yMid - HEADER.resumeH / 2;
+        const bottom = yMid + HEADER.resumeH / 2;
+        return cssX >= left && cssX <= right && cssY >= top && cssY <= bottom;
     }
 
     /* alpha lets HomeStage fade‑in the logo */
@@ -104,9 +124,20 @@ export default class Header {
         const rx = cssW - HEADER.rightShift - HEADER.resumeW / 2 + HEADER.resumeDistance;
         const ry = y;
 
-        // ctx.fillStyle = 'rgba(255,0,0,.15)';             // hit‑box
-        // ctx.fillRect(rx - HEADER.resumeW/2, ry - HEADER.resumeH/2,
-        //     HEADER.resumeW, HEADER.resumeH);
+
+        //
+        // /* fade calculation */
+        // if (this.hoverResume) this.resumeProg = Math.min(1, this.resumeProg + this.SPEED);
+        // else                  this.resumeProg = Math.max(0, this.resumeProg - this.SPEED);
+        // const rT    = easeLogistic(this.resumeProg);
+        // const alpha2 = 0.25 * rT;
+        // if (alpha2 > 0.005) {
+        //     ctx.fillStyle = `rgba(100,255,218,${alpha2})`;
+        //     ctx.fillRect(rx - HEADER.resumeW / 2,
+        //         ry - HEADER.resumeH / 2,
+        //         HEADER.resumeW, HEADER.resumeH);
+        // }
+
 
         ctx.lineWidth   = 1;
         ctx.strokeStyle = COLORS.cyan;
@@ -131,26 +162,19 @@ export default class Header {
    * Returns true ↔ pointer is over a link, so HomeStage can switch the cursor.
    */
   updateHover(cssX, cssY) {
-    const { canvas } = this;
-    const dpr   = window.devicePixelRatio || 1;
-    const cssW  = canvas.width  / dpr;   // ← real visual width in CSS px
-    const cssH  = canvas.height / dpr;   // ← not used here but handy
+      const { canvas } = this;
+      const dpr   = window.devicePixelRatio || 1;
+      const cssW  = canvas.width  / dpr;   // ← real visual width in CSS px
+      const cssH  = canvas.height / dpr;   // ← not used here but handy
 
-    const ctx        = this.ctx;
-    ctx.font         = HEADER.font;
+      const ctx        = this.ctx;
+      ctx.font         = HEADER.font;
 
-    const yMid       = LOGO.anchor.y;
-    const hitH       = HEADER.resumeH;              // same vertical height
-
-      //
-      // const metrics = this.links.map(({ num, label }) => {
-      //     const numW   = ctx.measureText(num  ).width;
-      //     const labelW = ctx.measureText(label).width;
-      //     return { numW, labelW, stripW : numW + HEADER.numToLabel + labelW };
-      // });
+      const yMid       = LOGO.anchor.y;
+      const hitH       = HEADER.resumeH;              // same vertical height
 
 
-    // running x position of the *start* of each link
+      // running x position of the *start* of each link
       const metrics = this.links.map(({ num, label }) => {
           const numW   = ctx.measureText(num  ).width;
           const labelW = ctx.measureText(label).width;
@@ -160,29 +184,28 @@ export default class Header {
       const contentW = metrics.reduce((s, m) => s + m.totalW, 0)
           + HEADER.gap * (this.links.length - 1);
 
-    // const contentW = metrics.reduce((s, m) => s + (m.stripW + HEADER.innerPad * 2),
-    //   0) + HEADER.gap * (this.links.length - 1);
 
-    let x = cssW - HEADER.resumeW - contentW - HEADER.rightShift;
+      let x = cssW - HEADER.resumeW - contentW - HEADER.rightShift;
 
-    /* reset hover each call */
-    this.hover = -1;
+      /* reset hover each call */
+      this.hover = -1;
+      this.hoverResume  = this.isResumeHit(cssX, cssY);
 
-    metrics.forEach((m, idx) => {
-      const stripStart = x;           // skip left padding
-      const stripEnd   = x + m.totalW;         // no right padding
-      const by         = yMid - hitH / 2;
+      metrics.forEach((m, idx) => {
+          const stripStart = x;           // skip left padding
+          const stripEnd   = x + m.totalW;         // no right padding
+          const by         = yMid - hitH / 2;
 
-      if (cssX >= stripStart && cssX <= stripEnd &&
-        cssY >= by         && cssY <= by + hitH) {
-        this.hover = idx;
-      }
+          if (cssX >= stripStart && cssX <= stripEnd &&
+              cssY >= by         && cssY <= by + hitH) {
+              this.hover = idx;
+          }
 
-      // advance to next slot: full padded box + gap
-        x += m.totalW + HEADER.gap;
-    });
+          // advance to next slot: full padded box + gap
+          x += m.totalW + HEADER.gap;
+      });
 
-    return this.hover !== -1;
+      return this.hover !== -1 || this.hoverResume;
   }
 }
 
