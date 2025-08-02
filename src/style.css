@@ -1,0 +1,29 @@
+@import url(https://db.onlinewebfonts.com/c/c8da3c58be0ab862c24357279216fe05?family=SF+Mono+Regular);
+
+canvas, body { font-family: "SF Mono Regular", monospace; }
+
+
+html, body {
+    /* min-height: 100%; */
+    margin: 0;
+    overflow-y: auto;        /* ← prevents any scroll bars */
+    background: #020C1B;     /* keeps your black until the JS draws */
+}
+
+/* make the canvas follow the viewport edges exactly */
+canvas {
+    position: fixed;         /* take it out of normal flow */
+    inset: 0;                /* shorthand for top:0; right:0; bottom:0; left:0 */
+    width: 100vw;            /* vw / vh track the visual viewport */
+    height: 100vh;
+    display: block;          /* remove inline‑block baseline gap */
+}
+
+/* each “page” takes one viewport height */
+.page{
+    min-height:100vh;
+    padding:0 200px;
+    box-sizing:border-box;
+    display:flex;          /* centres the demo text a bit */
+    align-items:center;
+}
