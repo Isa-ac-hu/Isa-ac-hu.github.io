@@ -1,4 +1,4 @@
-import { polygonPoints, COLORS, LOGO, LOGO_BOUNDS, isLogoHit, HERO_BTN, RESUME_URL } from '../utils.js';      // keeps util helper
+import {polygonPoints, COLORS, LOGO, LOGO_BOUNDS, isLogoHit, HERO_BTN, RESUME_URL, BAR_ANIM} from '../utils.js';      // keeps util helper
 import Header from './header.js';
 import Hero from './hero.js';
 import SocialBar from './socialBar.js';
@@ -8,11 +8,11 @@ import GlobeCanvas   from './globeCanvas.js';
 import InfoPanel    from './infoPanel.js';
 
 export default class HomeStage {
-    constructor(canvas, restartCallback = () => {}) {
+    constructor(canvas, restartCallback = () => {}, headerShared) {
         this.canvas  = canvas;
         this.ctx     = canvas.getContext('2d');
         this.restart = restartCallback;
-
+        this.heroDoneTime = null;
 
 
         /* logo animation state */
@@ -26,7 +26,7 @@ export default class HomeStage {
         this.about = new AboutCanvas(this.ctx,this.canvas)
         this.globe  = new GlobeCanvas(this.ctx,this.canvas);
         this.socialBar = new SocialBar(this.ctx, this.canvas);
-        this.header = new Header(this.ctx, this.canvas);
+        this.header = headerShared;
         this.panel   = new InfoPanel();
 
         document.body.style.height = `${3 * 100}vh`;   // Hero (1vh) + About (1vh)
@@ -69,7 +69,9 @@ export default class HomeStage {
         cssX >= HERO_BTN.x && cssX <= HERO_BTN.x + HERO_BTN.w &&
         cssY >= btnTop     && cssY <= btnBottom;
 
-      const overHeaderOrResume  = this.header.updateHover(cssX, cssY);
+      this.hero.setHover(overBtn);
+
+      const overHeaderOrResume = this.header.updateHover(e.clientX, e.clientY);
       const overMail   = this.mailBar.hover;          // set in its own onMove
 
 
@@ -87,7 +89,7 @@ export default class HomeStage {
         const cssY   = e.clientY - rect.top;
 
         /* 1)  Resume button – handled entirely by Header’s geometry     */
-        if (this.header.isResumeHit(cssX, cssY)) {
+        if (this.header.isResumeHit(e.clientX, e.clientY)) {
             window.open(RESUME_URL, '_blank');
             return;                          // nothing else for this click
         }
@@ -96,7 +98,7 @@ export default class HomeStage {
         const pxY = cssY * (this.canvas.height / rect.height);
 
         /* logo is centered at (48,48); radius ≈ 64px box */
-        if (isLogoHit(pxX, pxY)) {
+        if (isLogoHit(e.clientX, e.clientY)) {
             this.destroy();                 // stop drawing & remove listener
             this.restart();                 // create a brand‑new IntroStage
         }
@@ -138,18 +140,40 @@ export default class HomeStage {
 
 
 
-        this.header.draw(this.logoProg);
-        this.hero.draw(this.scrollY);
+
+        const headerDone =
+            this.header.logoProg >= 1 && this.header.navProg >= this.header.navDone;
+        this.hero.draw(this.scrollY, headerDone);
+
         this.socialBar.draw(this.socialBar);
         this.mailBar.draw();
         this.about.draw(this.scrollY);
         this.globe.draw(this.scrollY);
 
+        //this.header.draw(this.logoProg);
+
         if (!this.logoDone) {
             this.logoProg += 0.03;
             if (this.logoProg >= 1) { this.logoProg = 1; this.logoDone = true; }
         }
+// 1) hero
+        this.hero.draw(this.scrollY, headerDone);
 
+// 2) check hero completion
+        if (headerDone && this.hero.isFinished() && this.heroDoneTime === null) {
+            this.heroDoneTime = performance.now();
+        }
+
+// 3) decide side-bar activation
+        if (this.heroDoneTime &&
+            performance.now() - this.heroDoneTime > BAR_ANIM.delay * 1000) {
+            this.mailBar.visible   = true;
+            this.socialBar.visible = true;
+        }
+
+// 4) side-bars
+        this.socialBar.draw();
+        this.mailBar.draw();
 
 
         /* loop forever */

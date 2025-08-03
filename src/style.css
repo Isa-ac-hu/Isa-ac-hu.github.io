@@ -17,6 +17,7 @@ canvas {
     width: 100vw;            /* vw / vh track the visual viewport */
     height: 100vh;
     display: block;          /* remove inline‑block baseline gap */
+    z-index: 1;        /*we want our canvas to stay in front of most other components*/
 }
 
 /* each “page” takes one viewport height */

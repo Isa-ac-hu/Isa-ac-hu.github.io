@@ -8,11 +8,16 @@ export default class IntroStage {
         const dpr  = window.devicePixelRatio || 1;   // <── NEW
 
         const CYAN = 'rgba(100,255,218,1)';
-        const BG   = '#020C1B';
-        const BG2  = 'rgba(10,25,47,1)';
+        const BG1  = '#020C1B';                 // starting colour
+        const BG2  = '#0A192F';        // final colour after fade
         const SIZE = 0.05;
         const LETTER_FADE = 0.04;
         const LOG_K = 10;
+
+        let bgProg = 0;
+        const BG_FADE_STEP = 0.025;             // tweak speed (smaller == slower)
+        /* helper – returns interpolated #rrggbb            */
+        const mixBG = () => lerpHex(BG1, BG2, easeLogistic(bgProg));
 
         /* copied helpers */
         const L0 = 1 / (1 + Math.exp( LOG_K / 2));
@@ -25,10 +30,8 @@ export default class IntroStage {
         /* geometry & state (unchanged names) */
         let prog = 0, letterAlpha = 0, done = false;
         const STEP = 0.02, SHRINK_STEP = 0.02, VANISH_AT = 0.05;
-        let scale = 1, shrinkProg = 0, currentBG = BG;
+        let scale = 1, shrinkProg = 0, currentBG = BG1;
 
-        let bgT   = 0;                // 0 → 1 background‑fade progress
-        const BG_FADE_STEP = 0.02;    // smaller = slower fade (~0.02 ≈ 0.5s)
 
         const SIDES = 6;
         const center = () => [canvas.width  / (2 * dpr),
@@ -48,25 +51,22 @@ export default class IntroStage {
         /* main loop */
         const frame = () => {
             /* ---- original update‑state & draw code, unchanged ---- */
-            if (!done) {
-                if (prog < 1) prog += STEP;
-                else {
-                    if (letterAlpha < 1) letterAlpha += LETTER_FADE;
-                    else if (shrinkProg < 1) {
-                        shrinkProg += SHRINK_STEP;          // still shrinking
-                    } else {                              // shrink done → fade background
-                        bgT = Math.min(bgT + BG_FADE_STEP, 1);
-                        if (bgT >= 1 && !done) {            // fade finished
-                            done = true;
-                            onFinish();                       // hand off to HomeStage
-                        }
-                    }
+            if (prog < 1)              prog         += STEP;        // stroke grows
+            else if (letterAlpha < 1)  letterAlpha  += LETTER_FADE; // ‘I’ fades in
+            else if (shrinkProg  < 1)  shrinkProg   += SHRINK_STEP; // logo shrinks
+
+            if (shrinkProg >= 1 && bgProg < 1) {
+                bgProg = Math.min(1, bgProg + BG_FADE_STEP);
+                if (bgProg === 1) {               // cross-fade complete
+                    onFinish();                   // hand off to HomeStage
+                    return;                       // stop the intro loop
                 }
             }
-            else done = true;
 
             scale = 1 - easeLogistic(Math.min(shrinkProg, 1));
-            ctx.fillStyle = currentBG; ctx.fillRect(0,0,canvas.width,canvas.height);
+            /* clear & paint interpolated background */
+            ctx.fillStyle = mixBG();
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             ctx.lineWidth=5; ctx.strokeStyle=CYAN; ctx.lineCap='round'; ctx.globalAlpha=1;
 
@@ -102,7 +102,7 @@ export default class IntroStage {
                 ctx.fillText('I',cx,cy+5*scale);
             }
 
-            if (!done) requestAnimationFrame(frame);
+            requestAnimationFrame(frame);
         };
         frame();  // kick it off
     }

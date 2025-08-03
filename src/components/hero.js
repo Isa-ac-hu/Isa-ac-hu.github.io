@@ -1,5 +1,5 @@
 // src/components/hero.js
-import { COLORS, HERO_BTN, strokeRoundRect, easeLogistic } from '../utils.js';
+import {COLORS, HERO_BTN, strokeRoundRect, easeLogistic, HERO_ANIM} from '../utils.js';
 
 
 /* helper ─ wrap a long string inside maxW and draw it line‑by‑line */
@@ -21,6 +21,8 @@ function wrapFillText(ctx, text, x, y, maxW, lineH) {
   });
 }
 
+
+
 /* the block never animates for now – it just draws each frame */
 export default class Hero {
   constructor(ctx, canvas) {
@@ -30,12 +32,48 @@ export default class Hero {
     this.hover        = false;   // current frame’s hover state
     this.hoverProg    = 0;       // 0‒1 logistic input
     this.SPEED        = 0.08;    // bigger = quicker fade
+    /* ─── intro animation state ───────────────────────── */
+    this.timer      = 0;         // global timer (advances only after header)
+    this.started    = false;     // tells us when header has finished
+    this.lineCount  = 6;         // 4 lines + the button
+    this.lineProg   = Array(this.lineCount).fill(0);  // per-line ease input
+
+
+    this.done = false;
   }
+  isFinished() { return this.done; }
+
 
   setHover(flag) { this.hover = flag; }   // called from HomeStage
 
-  draw(scrollY = 0) {
+  draw(scrollY = 0, headerDone = false) {
     const { ctx, canvas } = this;
+
+    /* helper */
+    const drawLine = (idx, txt, font, fill, baseX, baseY) => {
+      // logistic input for this line
+      const raw   = this.timer - HERO_ANIM.delay - idx * HERO_ANIM.stagger;
+      const t     = Math.max(0, Math.min(1, raw));      // clamp 0-1
+      const easeT = easeLogistic(t);
+
+      ctx.save();
+      ctx.globalAlpha = easeT;                           // fade
+      ctx.translate(0, HERO_ANIM.dropPx * (1 - easeT)); // vertical drop
+      ctx.fillStyle   = fill;
+      ctx.font        = font;
+      ctx.fillText(txt, baseX, baseY);
+      ctx.restore();
+    };
+
+    /* Start the hero animation only once, HERO_ANIM.delay sec after header */
+    if (headerDone && !this.started) {
+      this.started = true;         // we’ve been signalled
+    }
+    if (this.started && this.timer < HERO_ANIM.delay + HERO_ANIM.stagger*(this.lineCount-1)+1) {
+      this.timer += HERO_ANIM.speed;   // advance master timer
+    }
+    // hero animation complete?  (the extra “+1” is a small grace period)
+    this.done = this.timer >= HERO_ANIM.delay + HERO_ANIM.stagger * (this.lineCount - 1) + 1;
 
     const dpr  = window.devicePixelRatio || 1;
     const cssW = canvas.width  / dpr;
@@ -53,40 +91,58 @@ export default class Hero {
     const alpha = 0.25 * hueT;                        // translucent
 
     /* 01 ── “Hi, my name is” */
-    ctx.fillStyle = COLORS.cyan;
-    ctx.font      = '18px "SF Mono", monospace';
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'top';
-    ctx.fillText('Hi, my name is', HERO_BTN.x, baseY);
+    drawLine(0, 'Hi, my name is',
+        '18px "SF Mono", monospace', COLORS.cyan,
+        HERO_BTN.x, baseY);
 
     /* 02 ── Name */
-    ctx.fillStyle = COLORS.light;
-    ctx.font      = 'bold 70px "Calibre", sans-serif';
-    ctx.fillText('Isaac Hu.', HERO_BTN.x, baseY + 40);
+    drawLine(1, 'Isaac Hu.',
+        'bold 70px "Calibre", sans-serif', COLORS.light,
+        HERO_BTN.x, baseY + 40);
 
     /* 03 ── Tag‑line */
-    ctx.fillStyle = COLORS.gray;
-    ctx.font      = 'bold 70px "Calibre", sans-serif';
-    ctx.fillText('Sparking joy', HERO_BTN.x, baseY + 73 + lineGap);
-    ctx.fillText('through creation.',      HERO_BTN.x, baseY + 73 + lineGap * 2);
+    drawLine(2, 'Sparking joy',
+        'bold 70px "Calibre", sans-serif', COLORS.gray,
+        HERO_BTN.x, baseY + 73 + lineGap);
+    drawLine(3, 'through creation.',
+        'bold 70px "Calibre", sans-serif', COLORS.gray,
+        HERO_BTN.x, baseY + 73 + lineGap * 2);
 
-    /* 04 ── paragraph */
-    ctx.fillStyle = COLORS.gray;
-    ctx.font      = '18px "Calibre", sans-serif';
-    ctx.maxWidth  = 700;
-    wrapFillText(
-      ctx,
-      "Greetings! I'm a recent graduate of Boston University (BA/MS in Computer Science). " +
-      "Here is a showcase of my work and some other fun things!",
-      HERO_BTN.x,                                 // x
-      baseY + 73 + lineGap * 3.4,          // starting y
-      700,                                 // max line width
-      30                                   // line height ≈ font‑size+10
-    );
+    /* 04 ── paragraph (drop + fade) */
+    {
+      const idx   = 4;                                        // 0-based order
+      const raw   = this.timer - HERO_ANIM.delay - idx * HERO_ANIM.stagger;
+      const t     = Math.max(0, Math.min(1, raw));
+      const easeT = easeLogistic(t);
 
-    /* 05 ── “Get In Touch” button */
+      ctx.save();
+      ctx.globalAlpha = easeT;
+      ctx.translate(0, HERO_ANIM.dropPx * (1 - easeT));
+      ctx.fillStyle = COLORS.gray;
+      ctx.font      = '18px "Calibre", sans-serif';
+      wrapFillText(
+          ctx,
+          "Greetings! I'm a recent graduate of Boston University (BA/MS in Computer Science). " +
+          "Here is a showcase of my work and some other fun things!",
+          HERO_BTN.x,
+          baseY + 73 + lineGap * 3.4,
+          700,
+          30
+      );
+      ctx.restore();
+    }
+
+    /* 05 ── button */
     ctx.save();
     ctx.translate(HERO_BTN.x, HERO_BTN.y);
+
+    const lineIdx = 5;   // 0-based index for staggering
+
+    const raw   = this.timer - HERO_ANIM.delay - lineIdx * HERO_ANIM.stagger;
+    const t     = Math.max(0, Math.min(1, raw));
+    const easeT = easeLogistic(t);
+    ctx.globalAlpha = easeT;
+    ctx.translate(0, HERO_ANIM.dropPx * (1 - easeT));
 
     /* background tint */
     if (alpha > 0.005) {

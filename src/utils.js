@@ -15,6 +15,41 @@ export function strokeRoundRect(ctx, x, y, w, h, r) {
   ctx.stroke();
 }
 
+export function hideHeader () {
+  /* canvas and blur strip both use fixed IDs, so we can just query */
+  const glass = document.getElementById('header-glass');
+  if (glass) glass.style.display = 'none';
+
+  const headerCanvas = document.querySelector('canvas#headerCanvas');
+  if (headerCanvas) headerCanvas.style.display = 'none';
+}
+
+export function showHeader () {
+  const glass = document.getElementById('header-glass');
+  if (glass) glass.style.display = 'block';
+
+  const headerCanvas = document.querySelector('canvas#headerCanvas');
+  if (headerCanvas) headerCanvas.style.display = 'block';
+}
+
+export function ensureHeaderGlass(height = 72) {
+  if (document.getElementById('header-glass')) return;   // already present
+
+  const glass = document.createElement('div');
+  glass.id = 'header-glass';
+  Object.assign(glass.style, {
+    position        : 'fixed',
+    inset           : '0 0 auto 0',     // top, full-width
+    height          : `${height}px`,
+    backgroundColor : 'rgba(10,25,47,0.85)',
+    backdropFilter  : 'blur(10px)',
+    WebkitBackdropFilter : 'blur(10px)', // Safari
+    zIndex          : '5',               // below canvas (see note)
+    pointerEvents   : 'none'
+  });
+  document.body.appendChild(glass);
+}
+
 /* reusable hexagon vertex generator */
 export function polygonPoints(radius, sides = SIDES) {
   const pts = [];
@@ -61,7 +96,7 @@ export function lerpHex(c1, c2, t) {
 export const LOGO = {
     anchor: { x: 70, y: 50 },   // where the mini‑logo is drawn
     size   : { w: 45,  h: 45 },                 // click zone width/height in CSS‑px
-    scale : 0.018,              // radius factor (r = min(vw,vh)*scale)
+    scale : 0.022,              // radius factor (r = min(vw,vh)*scale)
 };
 
 export const COLORS = {
@@ -106,7 +141,7 @@ export const HEADER = {
 /* hero button geometry (CSS px in the design coordinate‑system) */
 export const HERO_BTN = {
     x : 320,          // left‑edge (same margin as the “Hi, my name is”)
-    y : 600,          // fine‑tune after you see it live
+    y : 540,          // fine‑tune after you see it live
     w : 160,
     h : 56,
     label : 'Get In Touch',
@@ -114,37 +149,45 @@ export const HERO_BTN = {
     connectRadius: 6,
 };
 
+/* ───────────────── Hero intro animation ────────────────────────── */
+export const HERO_ANIM = {
+    delay     : 0.5,   // seconds AFTER the header completes
+    stagger   : 0.35,  // delay between successive hero lines
+    dropPx    : 30,    // start-offset below baseline
+    speed     : 0.03   // timer advance per frame  (0-1)
+};
+
 /* fixed social‑bar geometry (CSS‑px) */
 export const SOCIAL = {
-  x      : 70,     // left margin ─ same as mini‑logo
-  top    : 600,    // tweak until it matches your design
-  size   : 20,     // width & height of icon cells
-  gap    : 25,     // vertical gap between icons
-  lift   : 4,      // how much the icon rises on hover
-  lineH  : 200,    // length of the grey line below the last icon
+    x      : 70,     // left margin ─ same as mini‑logo
+    top    : 600,    // tweak until it matches your design
+    size   : 20,     // width & height of icon cells
+    gap    : 25,     // vertical gap between icons
+    lift   : 4,      // how much the icon rises on hover
+    lineH  : 200,    // length of the grey line below the last icon
 
-  icons: [
-    {
-      id      : 'gh',           // default svg  →  assets/icons/gh.svg
-      hoverId : 'gh-teal',      // hover svg    →  assets/icons/gh‑teal.svg
-      url     : 'https://github.com/yourUsername'
-    },
-    {
-      id      : 'ln',
-      hoverId : 'ln-teal',
-      url     : 'https://www.linkedin.com/in/isaac-hu-195696249/'
-    },
-    {
-      id      : 'ig',
-      hoverId : 'ig-teal',
-      url     : 'https://www.instagram.com/isaac__hu/'
-    },
-    {
-      id      : 'tw',
-      hoverId : 'tw-teal',
-      url     : 'https://twitter.com/yourHandle'
-    }
-  ],
+    icons: [
+        {
+            id      : 'gh',           // default svg  →  assets/icons/gh.svg
+            hoverId : 'gh-teal',      // hover svg    →  assets/icons/gh‑teal.svg
+            url     : 'https://github.com/yourUsername'
+        },
+        {
+            id      : 'ln',
+            hoverId : 'ln-teal',
+            url     : 'https://www.linkedin.com/in/isaac-hu-195696249/'
+        },
+        {
+            id      : 'ig',
+            hoverId : 'ig-teal',
+            url     : 'https://www.instagram.com/isaac__hu/'
+        },
+        {
+            id      : 'tw',
+            hoverId : 'tw-teal',
+            url     : 'https://twitter.com/yourHandle'
+        }
+    ],
 };
 
 /* fixed mail‑bar geometry (CSS‑px) */
@@ -226,6 +269,16 @@ export const INFO_PANEL = {
   w    : 320,   // max width  (img will auto-scale to this)
 };
 
+export const NAV_ANIM = {
+  speed   : 0.03,   // global timer advance per frame  (0-1)
+  stagger : 0.35,   // delay between successive items  (seconds of timer)
+  dropPx  :  30     // start-offset above baseline     (px)
+};
+
+export const BAR_ANIM = {
+  delay  : 0.5,   // seconds after hero completes
+  speed  : 0.03,  // logistic input advance per frame
+};
 
 export const RESUME_URL =
     'assets/resumes/Isaac%20Hu%20Resume.pdf';   // adjust if you move the file

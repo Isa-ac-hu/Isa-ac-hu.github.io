@@ -29,6 +29,8 @@ function loadCoast () {
   return COAST_PROMISE;
 }
 
+
+
 /* ───────── helper maths ─────────────────────────────────────────── */
 const toVec = (lat, lng) => {
   const phi = lat * Math.PI / 180;
@@ -63,9 +65,11 @@ export default class GlobeCanvas {
     tip.style.cssText =
       'position:fixed;padding:4px 6px;font:12px/1 "SF Mono",monospace;' +
       'background:#111;border:1px solid #ffeb3b;color:#ffeb3b;' +
-      'border-radius:3px;pointer-events:none;opacity:0;transition:opacity .15s';
+      'border-radius:3px;pointer-events:none;opacity:0;transition:opacity .15s;z-index:31';
     document.body.appendChild(tip);
     this.tooltip = tip;
+
+
 
     /* ======== pointer interaction ======== */
     const hitTest = (clientX, clientY) => {
@@ -145,6 +149,16 @@ export default class GlobeCanvas {
 
   /* =============================================================== */
   draw (scrollY) {
+
+    // --- helper -------------------------------------------------------------
+    const paintDot = (p, hovered=false) => {
+      ctx.beginPath();
+      ctx.arc(p.sx, p.sy, hovered ? 4 : 4, 0, Math.PI * 2);
+      ctx.fillStyle = hovered ? '#ffeb3b' : '#ff4444';
+      ctx.fill();
+    };
+
+
     const { ctx, canvas } = this;
     const dpr   = window.devicePixelRatio || 1;
     const cssH  = canvas.height / dpr;
@@ -254,13 +268,10 @@ export default class GlobeCanvas {
 
     /* ------- draw markers ------- */
     projected.forEach(p => {
-      ctx.beginPath();
-      ctx.arc(p.sx, p.sy, 4, 0, Math.PI * 2);
-      ctx.fillStyle = (this.hovered && this.hovered.name === p.name)
-        ? '#ffeb3b'       // yellow highlight
-        : '#ff4444';      // default red
-      ctx.fill();
+      if (!this.hovered || p.name !== this.hovered.name) paintDot(p);
     });
+    // 2-pass: hovered one goes on top
+    if (this.hovered) paintDot(this.hovered, true);
 
     /* ------- tooltip visibility ------- */
     if (this.hovered) {

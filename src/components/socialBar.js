@@ -1,4 +1,4 @@
-import { COLORS, SOCIAL } from '../utils.js';
+import {COLORS, SOCIAL, easeLogistic, BAR_ANIM} from '../utils.js';
 
 /* fallback doodle while the SVG hasn’t loaded yet */
 function drawStub(ctx, id, s) {
@@ -53,8 +53,14 @@ export default class SocialBar {
     this.ctx     = ctx;
     this.canvas  = canvas;
 
+    this.visible = false;     // controlled by HomeStage
+    this.timer   = 0;         // 0-1 fade prog
+
     /* per‑icon hover state */
     this.hovers  = SOCIAL.icons.map(() => false);
+
+    this.prog    = SOCIAL.icons.map(() => 0);   // 0‒1 logistic input
+    this.SPEED   = 0.08;                       // bigger = quicker ease
 
     canvas.addEventListener('mousemove', this.onMove);
     canvas.addEventListener('click',     this.onClick);
@@ -66,7 +72,9 @@ export default class SocialBar {
   hitIndex(cssX, cssY) {
     const { x, top, size, gap } = SOCIAL;
     for (let i = 0; i < SOCIAL.icons.length; i++) {
-      const bx = x - size / 2, by = top + i * (size + gap) - size / 2;
+      const lift = -SOCIAL.lift * easeLogistic(this.prog[i]);
+      const bx   = x - size / 2;
+      const by   = top + i * (size + gap) + lift - size / 2;
       if (
         cssX >= bx && cssX <= bx + size &&
         cssY >= by && cssY <= by + size
@@ -100,11 +108,22 @@ export default class SocialBar {
   /* draw every frame */
   draw() {
     const { ctx } = this;
+
+    if (!this.visible) return;           // not yet
+    this.timer = Math.min(1, this.timer + BAR_ANIM.speed);
+    const globalT = easeLogistic(this.timer);   // 0‒1
+    if (globalT < 1e-3) return;                 // skip painting while invisible
+    ctx.globalAlpha = globalT;
+
+
     ctx.save();
     ctx.lineWidth   = 2;
 
     SOCIAL.icons.forEach((ic, i) => {
-      const lift   = this.hovers[i] ? -SOCIAL.lift : 0;
+      /* progress toward 0 or 1 */
+      if (this.hovers[i]) this.prog[i] = Math.min(1, this.prog[i] + this.SPEED);
+      else                this.prog[i] = Math.max(0, this.prog[i] - this.SPEED);
+      const lift = -SOCIAL.lift * easeLogistic(this.prog[i]);   // smooth rise
       const alpha  = 1;
       const color  = this.hovers[i] ? COLORS.cyan : COLORS.gray;
 

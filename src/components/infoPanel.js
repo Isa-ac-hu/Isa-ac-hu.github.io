@@ -22,6 +22,7 @@ export default class InfoPanel {
       gap           : '12px',
       color         : '#ccd6f6',
       fontFamily    : '"Inter",sans-serif',
+      zIndex : 30,
     });
     Object.assign(this.img.style,   { width: '100%', borderRadius: '6px' });
     Object.assign(this.titleEl.style, { margin: 0, fontSize: '20px', color: '#ffeb3b' });
