@@ -1,5 +1,21 @@
 /* utils.js – shared helpers & constants */
 
+
+/*#############################FUNCTIONS GO HERE###################################*/
+
+export function resizeHiDPI(canvas, ctx) {
+  const dpr = window.devicePixelRatio || 1;
+  const { width: cssW, height: cssH } = canvas.getBoundingClientRect();
+
+  // only resize if something changed (avoids useless re-allocations)
+  if (canvas.width !== cssW * dpr || canvas.height !== cssH * dpr) {
+    canvas.width  = cssW * dpr;
+    canvas.height = cssH * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);         // draw in CSS-px from now on
+  }
+}
+
+
 export function strokeRoundRect(ctx, x, y, w, h, r) {
   ctx.beginPath();
   ctx.moveTo(x + r, y);
@@ -88,8 +104,15 @@ export function lerpHex(c1, c2, t) {
   return `rgb(${rr},${gg},${bb})`;
 }
 
-//############################################################################
-
+//####################################CONSTANTS GO HERE########################################
+export const COLORS = {
+  cyan   : 'rgba(100,255,218,1)',        // bright mint
+  bgDark : '#0A192F',
+  bgDeep : '#020C1B',
+  light  : 'rgba(204,214,246,1)',   // name + headline lines
+  gray   : 'rgba(136,146,176,1)',   // paragraph + nav labels
+  gray15 : 'rgba(136,146,176,.15)',   // translucent for hit‑boxes / line
+};
 
 /* central place for design constants */
 
@@ -98,16 +121,6 @@ export const LOGO = {
     size   : { w: 45,  h: 45 },                 // click zone width/height in CSS‑px
     scale : 0.022,              // radius factor (r = min(vw,vh)*scale)
 };
-
-export const COLORS = {
-    cyan   : 'rgba(100,255,218,1)',        // bright mint
-    bgDark : '#0A192F',
-    bgDeep : '#020C1B',
-    light  : 'rgba(204,214,246,1)',   // name + headline lines
-    gray   : 'rgba(136,146,176,1)',   // paragraph + nav labels
-    gray15 : 'rgba(136,146,176,.15)',   // translucent for hit‑boxes / line
-};
-
 
 
 /* derived bounds — computed once & cached */
@@ -118,9 +131,6 @@ export const LOGO_BOUNDS = {
     top    : LOGO.anchor.y - halfH,
     bottom : LOGO.anchor.y + halfH,
 };
-
-
-
 /* number of sides is the same everywhere */
 export const SIDES = 6;
 
@@ -137,6 +147,9 @@ export const HEADER = {
   resumeRadius: 6,    // corner radius for the rounded outline
   resumeDistance: 20,
 };
+
+export const RESUME_URL =
+  'assets/resumes/Isaac%20Hu%20Resume.pdf';   // adjust if you move the file
 
 /* hero button geometry (CSS px in the design coordinate‑system) */
 export const HERO_BTN = {
@@ -253,6 +266,116 @@ export const SKILL_GROUPS = {
   ]
 };
 
+
+
+export const BAR_ANIM = {
+  delay  : 0.5,   // seconds after hero completes
+  speed  : 0.03,  // logistic input advance per frame
+};
+
+/*  small portrait-hover animation  */
+export const PORTRAIT_ANIM = {
+  speed : 0.08,    // higher = snappier ease
+  shift : 12       // px the outline moves up-left at 100 %
+};
+
+
+
+
+/* ─── 3 rd page: Work / Experience ──────────────────────────────── */
+export const WORK = {
+  top       : 200,          // distance from its page-top
+  marginX   : 465,          // same lateral margin as About
+  ruleGap   : 10,
+  maxW      : 620,          // right column paragraph width
+  rowH      : 50,           // vertical spacing between job names
+  barW      : 2,            // cyan bar thickness
+  barH      : 50,           // cyan bar height
+  padX      : 16,           // gap between bar and job label
+
+  hitShift  : 10,
+
+  buttonSize: 200,
+
+  labelW : 200,
+
+  labelPadX : 14,       // horizontal padding inside the swatch
+  labelPadY : 6,        // vertical padding
+  hlPad     : 0,
+};
+
+/* tiny data-model – extend/replace as you like */
+export const JOBS = [
+  {
+    company : 'Church & Dwight',
+    title   : 'IT Analyst Intern',
+    date    : 'May 2024 – Dec 2024',
+    bullets : [
+      'Built end-to-end automation pipeline for purchase-order processing with Power Automate and Python, routing hundreds of special-format PDF contracts',
+      'Used K-means clustering in R to uncover consumer insights and desires from a laundry product survey, utilizing CRISP-DM methodology to help support data driven business decisions',
+      'Authored Selenium automation test suites for 20 ServiceNow forms, checking for unintended behaviors',
+    ]
+  },
+  {
+    company : 'Carpenter Technology',
+    title   : 'Digital Technology Intern',
+    date    : 'May 2023 – Aug 2023',
+    bullets : [
+      'Analyzed iron-production process data in Python; applied receiver operating characteristic analysis to find factors associated with coarse grain steel, using base model of random forest',
+      'Mined SAP plant-maintenance data with Pandas and Power BI, building algorithms to better inform spot-buys and reduce aging of inventory in warehouse'
+    ]
+  },
+
+
+  {
+    company : 'Boston University',
+    title   : 'Course Staff',
+    date    : 'Jan 2023 – May 2025',
+
+    /* each role is an object with its own sub-bullets */
+    bullets : [
+      {
+        role : 'Teaching Assistant — CS210 Computer Systems (Sept 2024 – May 2025)',
+        desc : [
+          'Instruct two-hour weekly labs for 250 students on digital logic design, C, x86-64 assembly, cache hierarchies',
+          'Built containerised autograder (Python + pytest) that compiles binaries, runs differential checks, and posts results to Gradescope;',
+        ]
+      },
+      {
+        role : 'Course Assistant — CS237 Fundamentals of Statistics (Jan 2023 - May 2024)',
+        desc : [
+          'Collaborate with staff on course material and assessment design',
+          'Co-teach discussions, hold office hours, grade, and proctor exams'
+        ]
+      },
+      {
+        role : 'Computer-Science Grader — CS330 Algorithm Analysis (Jan 2023 - May 2023)',
+        desc : [
+          'Grade proofs and algorithm-design assignments; give written feedback'
+        ]
+      },
+    ]
+  },
+  {
+    company : 'Gravic Inc',
+    title   : 'Programming Intern',
+    date    : 'May 2022 – Jul 2022',
+    bullets : [
+      'Worked in Power BI to create interactive visuals and models for sales database to be used by the sales team, utilizing DAX scripting to format and derive values from collected data',
+      'Wrote visual basic software and bash scripts for parsing and modifying Optical Mark Recognition forms to test company scanners'
+    ]
+  }
+];
+
+
+
+/* animation for the selector bar */
+export const WORK_ANIM = {
+  speed  : 0.08,    // logistic input speed
+  shift  : 22,      // px the bar slides when switching
+  barEase: 0.14     // 0‒1 lerp factor for the cyan bar
+};
+
 export const GLOBE_BOX = {
   top  : 250,          // distance from top of its page
   left : 300,          // left margin
@@ -265,7 +388,7 @@ export const GLOBE_BOX = {
 
 export const INFO_PANEL = {
   left : 1050,   // distance from the left edge of the canvas / page
-  top  : 1970,   // distance from the top
+  top  : 2830,   // distance from the top
   w    : 320,   // max width  (img will auto-scale to this)
 };
 
@@ -274,11 +397,3 @@ export const NAV_ANIM = {
   stagger : 0.35,   // delay between successive items  (seconds of timer)
   dropPx  :  30     // start-offset above baseline     (px)
 };
-
-export const BAR_ANIM = {
-  delay  : 0.5,   // seconds after hero completes
-  speed  : 0.03,  // logistic input advance per frame
-};
-
-export const RESUME_URL =
-    'assets/resumes/Isaac%20Hu%20Resume.pdf';   // adjust if you move the file

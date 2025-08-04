@@ -1,4 +1,14 @@
-import {polygonPoints, COLORS, LOGO, LOGO_BOUNDS, isLogoHit, HERO_BTN, RESUME_URL, BAR_ANIM} from '../utils.js';      // keeps util helper
+import {
+  polygonPoints,
+  COLORS,
+  LOGO,
+  LOGO_BOUNDS,
+  isLogoHit,
+  HERO_BTN,
+  RESUME_URL,
+  BAR_ANIM,
+  resizeHiDPI
+} from '../utils.js';      // keeps util helper
 import Header from './header.js';
 import Hero from './hero.js';
 import SocialBar from './socialBar.js';
@@ -6,6 +16,7 @@ import MailBar from './mailBar.js';
 import AboutCanvas from './aboutSection.js';
 import GlobeCanvas   from './globeCanvas.js';
 import InfoPanel    from './infoPanel.js';
+import WorkCanvas from './workCanvas.js';
 
 export default class HomeStage {
     constructor(canvas, restartCallback = () => {}, headerShared) {
@@ -13,6 +24,11 @@ export default class HomeStage {
         this.ctx     = canvas.getContext('2d');
         this.restart = restartCallback;
         this.heroDoneTime = null;
+
+        // -------- Hi-DPI setup --------
+        // resizeHiDPI(canvas, this.ctx);               // initial scale
+        // this.onResize = () => resizeHiDPI(canvas, this.ctx);
+        // window.addEventListener('resize', this.onResize);
 
 
         /* logo animation state */
@@ -25,11 +41,12 @@ export default class HomeStage {
         this.mailBar   = new MailBar (this.ctx, this.canvas);
         this.about = new AboutCanvas(this.ctx,this.canvas)
         this.globe  = new GlobeCanvas(this.ctx,this.canvas);
+        this.work   = new WorkCanvas(this.ctx,this.canvas);
         this.socialBar = new SocialBar(this.ctx, this.canvas);
         this.header = headerShared;
         this.panel   = new InfoPanel();
 
-        document.body.style.height = `${3 * 100}vh`;   // Hero (1vh) + About (1vh)
+        document.body.style.height = `${5 * 100}vh`;   // Hero (1vh) + About (1vh)
 
         this.scrollY  = 0;                  // new
         window.addEventListener('scroll', this.onScroll);
@@ -122,6 +139,7 @@ export default class HomeStage {
         this.canvas.removeEventListener('mousemove', this.onMove);
         window.removeEventListener('scroll', this.onScroll);
         this.canvas.removeEventListener('place-select', this.onPlaceSelect);
+        window.removeEventListener('resize', this.onResize);
     }
 
     /* called on window resize */
@@ -133,6 +151,12 @@ export default class HomeStage {
     frame = (ts) => {
         this.scrollY = window.scrollY || window.pageYOffset;
         const { ctx, canvas } = this;
+
+        //resizeHiDPI(canvas, ctx);      // first time
+
+        window.addEventListener('resize', () => {
+          resizeHiDPI(canvas, ctx);
+        });
 
         /* --- background & placeholder text --- */
         ctx.fillStyle = COLORS.bgDark;
@@ -149,6 +173,7 @@ export default class HomeStage {
         this.mailBar.draw();
         this.about.draw(this.scrollY);
         this.globe.draw(this.scrollY);
+        this.work.draw(this.scrollY);
 
         //this.header.draw(this.logoProg);
 

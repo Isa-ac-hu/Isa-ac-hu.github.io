@@ -1,5 +1,5 @@
 /* src/components/aboutCanvas.js --------------------------------------- */
-import { BULLET, COLORS, ABOUT, strokeRoundRect, SKILL_GROUPS } from '../utils.js';
+import {BULLET, COLORS, ABOUT, strokeRoundRect, SKILL_GROUPS, PORTRAIT_ANIM} from '../utils.js';
 
 
 export default class AboutCanvas{
@@ -12,6 +12,10 @@ export default class AboutCanvas{
       prog:0,           // 0→1 underline progress
       hover:false
     };
+
+    /* run-time state for the portrait hover -------------------- */
+    this.portraitHover = false;  // current pointer state
+    this.portraitProg  = 0;      // 0‒1 logistic input
 
     /* pointer listeners once per AboutCanvas instance ---------- */
     canvas.addEventListener('mousemove', this.onMove );
@@ -30,7 +34,15 @@ export default class AboutCanvas{
     const r=this.canvas.getBoundingClientRect();
     const cssX=e.clientX-r.left, cssY=e.clientY-r.top;
     this.buLink.hover=this.inLink(cssX,cssY);
-    this.canvas.style.cursor = this.buLink.hover? 'pointer' : '';
+
+    // ─── portrait hit-test (uses last-frame bbox) ─────────────
+    if (this.portraitBox) {
+      const {x, y, w, h} = this.portraitBox;
+      this.portraitHover = cssX >= x && cssX <= x+w && cssY >= y && cssY <= y+h;
+    }
+
+
+    this.canvas.style.cursor = ( this.buLink.hover || this.portraitHover ) ? 'pointer' : '';
   }
   onClick = ()=>{ if(this.buLink.hover) window.open('https://www.bu.edu/','_blank'); }
 
@@ -59,6 +71,8 @@ export default class AboutCanvas{
     const pageY  = offset-scrollY;       // page‑top in canvas space
     const baseX  = ABOUT.marginX;
     let   y      = pageY+ABOUT.top;
+
+
 
     /* 01 – cyan index */
     ctx.fillStyle=COLORS.cyan;
@@ -158,39 +172,55 @@ export default class AboutCanvas{
     if (!portrait.bmp.complete) return;
     /* natural dimensions straight from file */
 
+    /* ─── progress toward 0/1 for filter & frame shift ───────── */
+    if (this.portraitHover)
+      this.portraitProg = Math.min(1, this.portraitProg + PORTRAIT_ANIM.speed);
+    else
+      this.portraitProg = Math.max(0, this.portraitProg - PORTRAIT_ANIM.speed);
+    const pT = AboutCanvas.ease(this.portraitProg);    // 0‒1
+
+    /* natural size --------------------------------------------------------- */
     const SCALE = ABOUT.portraitScale;
-    const W = portrait.bmp.naturalWidth * SCALE;
+    const W = portrait.bmp.naturalWidth  * SCALE;
     const H = portrait.bmp.naturalHeight * SCALE;
 
-
-    /* place it flush with the right margin, same top offset as before */
+    /* position ------------------------------------------------------------- */
     const imgX = canvas.width / dpr - W - ABOUT.marginX + ABOUT.imageRightShift;
     const imgY = pageY + ABOUT.top;
 
+    /* save bbox for next onMove() call */
+    this.portraitBox = { x: imgX, y: imgY, w: W, h: H };
 
+    /* --------------------------------------------------------------------- */
     ctx.save();
     ctx.translate(imgX, imgY);
-    /* cyan-tinted draw */
 
-
-    ctx.filter = 'none';
-
-    /* outline with exact same size */
-    ctx.translate(portrait.borderOffset, portrait.borderOffset);
-    ctx.strokeStyle = COLORS.cyan;
+    /* -- 2.  cyan frame – shifts but picture stays put -------------------- */
+    const s = PORTRAIT_ANIM.shift * pT;        // current offset
     ctx.lineWidth   = 2;
+    ctx.strokeStyle = COLORS.cyan;
     strokeRoundRect(
-      ctx,
-      -portrait.borderOffset + 20,
-      -portrait.borderOffset + 20,
-      W,
-      H,
-      3
+        ctx,
+        -portrait.borderOffset + 50 - s,         // x
+        -portrait.borderOffset + 50 - s,         // y
+        W, H, 3
     );
-    ctx.translate(-portrait.borderOffset, -portrait.borderOffset);
-    ctx.filter = 'grayscale(100%) brightness(60%) contrast(120%) ' +
-      'sepia(100%) hue-rotate(145deg) saturate(500%)';
-    ctx.drawImage(portrait.bmp, 0, 0, W, H);   // ← no width / height ⇒ native size
+
+    /* -- 1.  draw the picture (colour fades back to normal) --------------- */
+    const g   = 100 * (1 - pT);                // grayscale 100 → 0
+    const br  =  60 + 40  * pT;                // brightness 60 → 100
+    const ct  = 120 - 20  * pT;                // contrast   120 → 100
+    const sp  = 100 * (1 - pT);                // sepia      100 → 0
+    const hr  = 145 * (1 - pT);                // hue-rotate 145 → 0
+    const sat = 500 - 400 * pT;                // saturate   500 → 100
+    ctx.filter =
+        `grayscale(${g}%) brightness(${br}%) contrast(${ct}%) ` +
+        `sepia(${sp}%) hue-rotate(${hr}deg) saturate(${sat}%)`;
+
+    ctx.drawImage(portrait.bmp, 0, 0, W, H);
+    ctx.filter = 'none';                       // reset for the frame
+
+
 
     ctx.restore();
   }
