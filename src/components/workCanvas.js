@@ -39,6 +39,8 @@ export default class WorkCanvas {
     this.ctx = ctx;
     this.canvas = canvas;
 
+    this.compLink = { x:0, y:0, w:0, h:0, prog:0, hover:false };
+
     this.sel = 0;            // selected job index
     this.hover = -1;           // hover index (-1 = none)
     this.barProg = 0;            // 0‒1 bar transition
@@ -61,19 +63,28 @@ export default class WorkCanvas {
   }
 
   onMove = e => {
-    const r = this.canvas.getBoundingClientRect();
+    const r   = this.canvas.getBoundingClientRect();
     const cssX = e.clientX - r.left;
-    const cssY = e.clientY - r.top;   // page coords
+    const cssY = e.clientY - r.top;
 
-    this.hover = this.hitIndex(cssX, cssY);
-    this.canvas.style.cursor = this.hover !== -1 ? 'pointer' : '';
+    this.hover           = this.hitIndex(cssX, cssY);
+    this.compLink.hover  = (
+      cssX >= this.compLink.x && cssX <= this.compLink.x + this.compLink.w &&
+      cssY >= this.compLink.y && cssY <= this.compLink.y + this.compLink.h
+    );
+
+    this.canvas.style.cursor =
+      (this.compLink.hover || this.hover !== -1) ? 'pointer' : '';
   };
   onClick = e => {
     const r = this.canvas.getBoundingClientRect();
     const cssX = e.clientX - r.left;
     const cssY = e.clientY - r.top;
     const idx  = this.hitIndex(cssX, cssY);
-    console.log(idx);
+    if (this.compLink.hover) {
+      window.open(JOBS[this.sel].website, '_blank');
+      return;
+    }
     if (idx !== -1) this.sel = idx;
 
 
@@ -111,7 +122,6 @@ export default class WorkCanvas {
     const ty = pageY + WORK.top - 100;              // 2nd arg
     ctx.translate(tx, ty);
 
-    console.log('Where-title translate:', { tx, ty, scrollY });
 
     ctx.fillStyle = COLORS.cyan;
     ctx.font = '24px "SF Mono Regular", monospace';
@@ -122,11 +132,11 @@ export default class WorkCanvas {
     const idxW = ctx.measureText('02.').width + 8;
 
     ctx.fillStyle = COLORS.light;
-    ctx.font = 'bold 32px "Calibre", sans-serif';
+    ctx.font = 'bold 28px "Calibre", sans-serif';
     ctx.fillText('Where I’ve Worked', idxW, -4);
 
 
-    ctx.strokeStyle=COLORS.gray;ctx.lineWidth=1;
+    ctx.strokeStyle=COLORS.gray;ctx.lineWidth=0.5;
     ctx.beginPath();
     ctx.moveTo(idxW + 300, WORK.ruleGap);
     ctx.lineTo(idxW + 300 + 300, WORK.ruleGap);
@@ -185,16 +195,46 @@ export default class WorkCanvas {
     ctx.globalAlpha = 1;
 
     /* right column ------------------------------------------------ */
-    const infoX = leftX + WORK.labelW + 40;
-    const job = JOBS[this.sel];
+    const infoX  = leftX + WORK.labelW + 40;
+    const job    = JOBS[this.sel];
+    const SPEED  = 0.05;                       // underline growth speed
 
     ctx.fillStyle = COLORS.light;
-    ctx.font = '18px "SF Mono Regular", sans-serif';
+    ctx.font      = '18px "SF Mono Regular", sans-serif';
     ctx.fillText(`${job.title} @ `, infoX, pageY + WORK.top + 10);
 
-    const titleW = ctx.measureText(`${job.title} @ `).width;
+    const titleW   = ctx.measureText(`${job.title} @ `).width;
+    const compX    = infoX + titleW;
+    const compY    = pageY + WORK.top + 10;
+    const compW    = ctx.measureText(job.company).width;
+    const compH    = 22;                       // ≈ line-height
+
+    /* store bbox for hover tests (CSS-px) */
+    Object.assign(this.compLink, { x: compX, y: compY - 5, w: compW, h: compH });
+
+    /* progress for logistic underline */
+    if (this.compLink.hover)
+      this.compLink.prog = Math.min(1, this.compLink.prog + SPEED);
+    else
+      this.compLink.prog = Math.max(0, this.compLink.prog - SPEED);
+
+    const t = easeLogistic(this.compLink.prog);   // 0-1
+
+    /* cyan company text */
     ctx.fillStyle = COLORS.cyan;
-    ctx.fillText(job.company, infoX + titleW, pageY + WORK.top + 10);
+    ctx.fillText(job.company, compX, compY);
+
+
+    const underlineY = compY + compH - 10;
+    /* underline */
+    if (t > 0.01) {
+      ctx.strokeStyle = COLORS.cyan;
+      ctx.lineWidth   = 2;
+      ctx.beginPath();
+      ctx.moveTo(compX, underlineY);
+      ctx.lineTo(compX + compW * t, underlineY);
+      ctx.stroke();
+    }
 
     ctx.fillStyle = COLORS.gray;
     ctx.font = '16px "SF Mono Regular", monospace';
@@ -226,5 +266,6 @@ export default class WorkCanvas {
         by = wrapLine(ctx, t, innerX, by + 2, maxW - SMALL_PAD, lineH);
       });
     });
+    this.linkHoverGlobal = this.compLink.hover;   // share with HomeStage
   }
 }

@@ -17,6 +17,7 @@ import AboutCanvas from './aboutSection.js';
 import GlobeCanvas   from './globeCanvas.js';
 import InfoPanel    from './infoPanel.js';
 import WorkCanvas from './workCanvas.js';
+import BuildCanvas  from './buildCanvas.js';
 
 export default class HomeStage {
     constructor(canvas, restartCallback = () => {}, headerShared) {
@@ -42,6 +43,7 @@ export default class HomeStage {
         this.about = new AboutCanvas(this.ctx,this.canvas)
         this.globe  = new GlobeCanvas(this.ctx,this.canvas);
         this.work   = new WorkCanvas(this.ctx,this.canvas);
+        this.builds = new BuildCanvas(this.ctx,this.canvas);
         this.socialBar = new SocialBar(this.ctx, this.canvas);
         this.header = headerShared;
         this.panel   = new InfoPanel();
@@ -91,8 +93,11 @@ export default class HomeStage {
       const overHeaderOrResume = this.header.updateHover(e.clientX, e.clientY);
       const overMail   = this.mailBar.hover;          // set in its own onMove
 
+      const overAboutLink   = this.about.linkHover;
+      const overCompanyLink = this.work.linkHoverGlobal;
 
-      this.canvas.style.cursor = (overLogo || overBtn || overHeaderOrResume || overMail || overSocial) ? 'pointer' : '';
+
+      this.canvas.style.cursor = (overLogo || overBtn || overHeaderOrResume || overMail || overSocial || overAboutLink || overCompanyLink) ? 'pointer' : '';
 
 
     };
@@ -174,7 +179,7 @@ export default class HomeStage {
         this.about.draw(this.scrollY);
         this.globe.draw(this.scrollY);
         this.work.draw(this.scrollY);
-
+        this.builds.draw(this.scrollY);
         //this.header.draw(this.logoProg);
 
         if (!this.logoDone) {

@@ -31,7 +31,7 @@ export default class Hero {
 
     this.hover        = false;   // current frame’s hover state
     this.hoverProg    = 0;       // 0‒1 logistic input
-    this.SPEED        = 0.08;    // bigger = quicker fade
+    this.SPEED        = 0.03;    // bigger = quicker fade
     /* ─── intro animation state ───────────────────────── */
     this.timer      = 0;         // global timer (advances only after header)
     this.started    = false;     // tells us when header has finished
@@ -146,7 +146,7 @@ export default class Hero {
 
     /* background tint */
     if (alpha > 0.005) {
-      ctx.fillStyle = `rgba(100,255,218,${alpha})`;
+      ctx.fillStyle = `rgba(100,255,218,${alpha})`
       ctx.fillRect(0, -scrollY + lineGap, HERO_BTN.w, HERO_BTN.h);
     }
 

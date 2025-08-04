@@ -183,7 +183,7 @@ export const SOCIAL = {
         {
             id      : 'gh',           // default svg  →  assets/icons/gh.svg
             hoverId : 'gh-teal',      // hover svg    →  assets/icons/gh‑teal.svg
-            url     : 'https://github.com/yourUsername'
+            url     : 'https://github.com/Isa-ac-hu'
         },
         {
             id      : 'ln',
@@ -310,6 +310,7 @@ export const JOBS = [
     company : 'Church & Dwight',
     title   : 'IT Analyst Intern',
     date    : 'May 2024 – Dec 2024',
+    website : 'https://churchdwight.com',
     bullets : [
       'Built end-to-end automation pipeline for purchase-order processing with Power Automate and Python, routing hundreds of special-format PDF contracts',
       'Used K-means clustering in R to uncover consumer insights and desires from a laundry product survey, utilizing CRISP-DM methodology to help support data driven business decisions',
@@ -320,6 +321,7 @@ export const JOBS = [
     company : 'Carpenter Technology',
     title   : 'Digital Technology Intern',
     date    : 'May 2023 – Aug 2023',
+    website : 'https://www.carpentertechnology.com',
     bullets : [
       'Analyzed iron-production process data in Python; applied receiver operating characteristic analysis to find factors associated with coarse grain steel, using base model of random forest',
       'Mined SAP plant-maintenance data with Pandas and Power BI, building algorithms to better inform spot-buys and reduce aging of inventory in warehouse'
@@ -331,7 +333,7 @@ export const JOBS = [
     company : 'Boston University',
     title   : 'Course Staff',
     date    : 'Jan 2023 – May 2025',
-
+    website : 'https://www.bu.edu',
     /* each role is an object with its own sub-bullets */
     bullets : [
       {
@@ -360,6 +362,7 @@ export const JOBS = [
     company : 'Gravic Inc',
     title   : 'Programming Intern',
     date    : 'May 2022 – Jul 2022',
+    website : 'https://www.gravic.com',
     bullets : [
       'Worked in Power BI to create interactive visuals and models for sales database to be used by the sales team, utilizing DAX scripting to format and derive values from collected data',
       'Wrote visual basic software and bash scripts for parsing and modifying Optical Mark Recognition forms to test company scanners'
@@ -388,7 +391,7 @@ export const GLOBE_BOX = {
 
 export const INFO_PANEL = {
   left : 1050,   // distance from the left edge of the canvas / page
-  top  : 2830,   // distance from the top
+  top  : 2830 + 860,   // distance from the top
   w    : 320,   // max width  (img will auto-scale to this)
 };
 
@@ -397,3 +400,32 @@ export const NAV_ANIM = {
   stagger : 0.35,   // delay between successive items  (seconds of timer)
   dropPx  :  30     // start-offset above baseline     (px)
 };
+
+
+/* ─── 4 th  page: Projects / Builds ─────────────────────────────── */
+export const BUILDS = { /* section header */
+  top      : 200,          // distance from page-top
+  marginX  : 310,          // global left margin
+  ruleGap  : 10,           // grey rule alignment
+  cornerR  : 6,            // card corner radius
+  ghSize   : 28,           // GitHub icon size
+};
+
+/* tiny data-model – one object per project                          */
+export const PROJECT_LIST = [
+  {
+    title   : 'RoboWallet',
+    tagline : 'Featured Project',
+    blurb   :
+      'RoboWallet is an iOS application to track cryptocurrency ' +
+      'exchange portfolios. It uses innovative technologies and ' +
+      'glamorous UI.',
+    tech    : ['SwiftUI', 'CoinGecko API', 'Firebase', 'Combine'],
+    img     : 'AmazingBallSystem.jpg',           // lives in assets/images
+    repo    : 'https://github.com/Isa-ac-hu',    // opens in new tab
+
+    imgPos : { x:   0,  y:   0,  w: 580, h: 320 },
+    card   : { x: 520,  y:  80, w: 600, h: 120 },
+    ghPos  : { x: 820,  y:  85 }           // optional; omit → auto bottom-right
+  }, // …push more objects here for more cards
+];

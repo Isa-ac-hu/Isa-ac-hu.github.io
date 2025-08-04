@@ -1,6 +1,9 @@
 @import url(https://db.onlinewebfonts.com/c/c8da3c58be0ab862c24357279216fe05?family=SF+Mono+Regular);
+@import url(https://db.onlinewebfonts.com/c/54ef0f7ba1355411413d1b182456de2e?family=Calibre);
 
-canvas, body { font-family: "SF Mono Regular", monospace; }
+canvas, body { font-family: "SF Mono Regular", serif; }
+canvas, body {
+    font-family: "Calibre", Comic Sans MS, serif; }
 
 
 html, body {

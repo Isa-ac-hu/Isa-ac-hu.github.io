@@ -84,10 +84,10 @@ export default class AboutCanvas{
     /* heading text */
     ctx.fillStyle=COLORS.light;
     ctx.font     ='bold 28px "Calibre", sans-serif';
-    ctx.fillText('About Me',baseX+idxW,y-4);
+    ctx.fillText('About Me',baseX+idxW,y);
 
     /* grey horizontal rule */
-    ctx.strokeStyle=COLORS.gray+'66';ctx.lineWidth=1;
+    ctx.strokeStyle=COLORS.gray+'66';ctx.lineWidth=0.5;
     ctx.beginPath();
     ctx.moveTo(baseX+idxW+160,y+ABOUT.ruleGap);
     ctx.lineTo(baseX+idxW+160 + ABOUT.lineLength,y+ABOUT.ruleGap);
@@ -128,8 +128,8 @@ export default class AboutCanvas{
       ctx.strokeStyle = COLORS.cyan;
       ctx.lineWidth   = 2;
       ctx.beginPath();
-      ctx.moveTo(linkX         , linkY + ABOUT.paraLH - 4);
-      ctx.lineTo(linkX + buW*t , linkY + ABOUT.paraLH - 4);
+      ctx.moveTo(linkX         , linkY + ABOUT.paraLH - 10);
+      ctx.lineTo(linkX + buW*t , linkY + ABOUT.paraLH - 10);
       ctx.stroke();
     }
 
@@ -221,7 +221,7 @@ export default class AboutCanvas{
     ctx.filter = 'none';                       // reset for the frame
 
 
-
+    this.linkHover = this.buLink.hover;
     ctx.restore();
   }
 }

@@ -6,7 +6,7 @@ export const PLACES = [
     name : "Angor Wat, Cambodia",
     lat  : 13.4125,
     lng  : 103.8670,
-    desc : "The ancient capital of the Khmer Empire. I recall eating a particularly evil looking fish roasted on hot coals stuck to a split piece of bamboo in the food stalls here.",
+    desc : "The ancient capital of the Khmer Empire. I recall eating a particularly evil looking fish, roasted on hot coals stuck to a split piece of bamboo in the food stalls here.",
     img  : "Angor Wat.jpg"
   },
   {
@@ -377,7 +377,7 @@ export const PLACES = [
   { name:"Secaucus, New Jersey",                  lat:40.7895, lng:-74.0565, desc:"", img:"Secaucus.jpg" },
   { name:"Seaport District",               lat:42.3500, lng:-71.0400, desc:"", img:"Seaport.jpg" },
 
-  { name:"Shanghai, China",                       lat:31.2304, lng:121.4737, desc:"", img:"Shanghai.jpg" },
+  { name:"Shanghai, China",                       lat:31.2304, lng:121.4737, desc:"I got lost along this walkway on the huangpu river, wandering aimlessly in the summer heat while the tour group had left hours ago. It turns out they were waiting under that building with the green roof. As an aside, I later saw that building in a world war two documentary. Pretty cool!", img:"Shanghai.jpg" },
   { name:"Singapore Chinatown",                   lat: 1.2829, lng:103.8458, desc:"", img:"Singapore Chinatown.jpg" },
   { name:"Six Flags New England, Massachusetts",  lat:42.0378, lng:-72.6159, desc:"", img:"Six Flags New England.jpg" },
   { name:"SoHo, Manhattan NYC",                   lat:40.7233, lng:-74.0030, desc:"", img:"Soho.jpg" },
@@ -402,7 +402,7 @@ export const PLACES = [
   { name:"Top Road – North Trenton, NJ",          lat:40.2295, lng:-74.7592, desc:"", img:"Trenton Top Road.jpg" },
 
   { name:"Tuol Sleng (S-21) Museum, Phnom Penh",  lat:11.5491, lng:104.9174, desc:"", img:"S21.jpg" },
-  { name:"UMass Boston, Massachusetts",           lat:42.3146, lng:-71.0387, desc:"", img:"Umass Boston.jpg" },
+  { name:"UMass Boston, Massachusetts",           lat:42.3146, lng:-71.0387, desc:"The UMass Boston mascot is an anthropomorphic lighthouse with the most diabolical smile I have ever seen. See for yourself!", img:"Umass Boston.jpg" },
   { name:"Valley Forge, Pennsylvania",           lat:40.0994, lng:-75.4636, desc:"", img:"Valley Forge.jpg" },
   {
     name : "Victoria Peak, Hong Kong",
