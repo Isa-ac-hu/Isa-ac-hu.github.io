@@ -78,7 +78,7 @@ export default class GlobeCanvas {
       const y = clientY - top;
 
       const cssH = canvas.height / (window.devicePixelRatio || 1);
-      const PAGE_OFFSET = 6 * cssH;
+      const PAGE_OFFSET = 7 * cssH;
       const boxY = PAGE_OFFSET - window.scrollY + GLOBE_BOX.top;
 
       return (
@@ -162,7 +162,7 @@ export default class GlobeCanvas {
     const { ctx, canvas } = this;
     const dpr   = window.devicePixelRatio || 1;
     const cssH  = canvas.height / dpr;
-    const PAGE_OFFSET = 6 * cssH;
+    const PAGE_OFFSET = 7 * cssH;
 
     if (scrollY < PAGE_OFFSET - cssH || scrollY > PAGE_OFFSET + cssH) return;
 

@@ -125,7 +125,7 @@ export default class WorkCanvas {
 
     ctx.fillStyle = COLORS.cyan;
     ctx.font = '24px "SF Mono Regular", monospace';
-    ctx.fillText('02.', 0, 6);
+    ctx.fillText('02.', 0, 8);
 
     //ctx.strokeStyle = COLORS.gray + '66';
     ctx.lineWidth = 1;
@@ -133,7 +133,7 @@ export default class WorkCanvas {
 
     ctx.fillStyle = COLORS.light;
     ctx.font = 'bold 36px "Calibre", sans-serif';
-    ctx.fillText('Where I’ve Worked', idxW, -4);
+    ctx.fillText('Where I’ve Worked', idxW, 10);
 
 
     ctx.strokeStyle=COLORS.gray;ctx.lineWidth=0.5;

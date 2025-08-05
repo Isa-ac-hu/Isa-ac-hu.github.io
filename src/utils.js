@@ -15,7 +15,22 @@ export function resizeHiDPI(canvas, ctx) {
   }
 }
 
-
+// utils.js – add near the other helpers
+export function wrap(ctx, txt, x, y, maxW, lh) {
+  const words = txt.split(/\s+/);
+  let line = '', cy = y;
+  words.forEach((w, i) => {
+    const test = line ? line + ' ' + w : w;
+    if (ctx.measureText(test).width > maxW) {
+      ctx.fillText(line, x, cy);
+      line = w;  cy += lh;
+    } else {
+      line = test;
+    }
+    if (i === words.length - 1) ctx.fillText(line, x, cy);
+  });
+  return cy + lh;
+}
 
 export function strokeRoundRect(ctx, x, y, w, h, r) {
   ctx.beginPath();
@@ -287,7 +302,7 @@ export const PORTRAIT_ANIM = {
 export const WORK = {
   top       : 200,          // distance from its page-top
   marginX   : 465,          // same lateral margin as About
-  ruleGap   : 17,
+  ruleGap   : 0,
   maxW      : 620,          // right column paragraph width
   rowH      : 50,           // vertical spacing between job names
   barW      : 2,            // cyan bar thickness
@@ -352,7 +367,7 @@ export const JOBS = [
         ]
       },
       {
-        role : 'Computer-Science Grader — CS330 Algorithm Analysis (Jan 2023 - May 2023)',
+        role : 'Grader — CS330 Algorithm Analysis (Jan 2023 - May 2023)',
         desc : [
           'Grade proofs and algorithm-design assignments; give written feedback'
         ]
@@ -392,7 +407,7 @@ export const GLOBE_BOX = {
 
 export const INFO_PANEL = {
   left : 1050,   // distance from the left edge of the canvas / page
-  top  : 2830 + 860 + 860 + 860,   // distance from the top
+  top  : 2830 + 860 + 860 + 860 + 860,   // distance from the top
   w    : 320,   // max width  (img will auto-scale to this)
 };
 
@@ -495,11 +510,11 @@ export const PROJECT_LIST = [
 
 /* ─── 5th page : Other Noteworthy Projects ───────────────────────── */
 export const NOTEWORTHY = {
-  top       : 220,          // distance from page-top of *this* section
-  marginX   : 250,          // global left margin (looks centred under header)
+  top       : 130,          // distance from page-top of *this* section
+  marginX   : 430,          // global left margin (looks centred under header)
   gap       : 40,           // px between cards (both x & y)
-  cardW     : 350,
-  cardH     : 220,
+  cardW     : 375,
+  cardH     : 235,
   cornerR   : 6,
   liftPx    : 10,           // how far a card rises on hover
   speed     : 0.08,         // logistic input advance per frame
@@ -510,28 +525,27 @@ export const NOTEWORTHY = {
 /* four small-card entries (extend at will) */
 export const NOTE_LIST = [
   {
-    title : 'Slay The Spire',
-    desc  : 'Implemented Slay the Spire: Card based battle game for desktop clone using Java and JavaFX technologies.',
-    tech  : ['Java', 'JavaFX'],
-    repo  : 'https://github.com/Isa-ac-hu/slay-the-spire'
+    title : 'Paper on Quantum Random Walks',
+    desc  : 'Report analyzing the behavior and novel use cases of random walks using quantum computers',
+    tech  : ['Quantum Computing'],
+    url   : 'assets/PDF/Paper on Quantum Random Walks.pdf'
   },
   {
-    title : 'Yelp-Camp',
-    desc  : 'Developed website Yelp Camp for exploring hand-picked campgrounds around the world.',
-    tech  : ['ejs', 'express', 'mongoDB'],
-    repo  : 'https://github.com/Isa-ac-hu/yelp-camp',
-    ext   : 'https://yelp-camp-demo.netlify.app'   // optional  ↗ link
+    title : 'Paper on Information Cascades',
+    desc  : 'In depth analysis on the way information propagates through wikipedia articles',
+    tech  : ['Python', 'Beautiful Soup', 'Data Mining'],
+    url   : 'assets/PDF/Paper on Information Cascades.pdf'
   },
   {
-    title : 'Done.',
-    desc  : 'Created a free to use cross-platform mobile todo list/reminder application using Flutter.',
+    title : 'Presentation on the History of English',
+    desc  : 'Presented to the Boston University history club',
     tech  : ['Flutter', 'Firebase', 'Firestore'],
-    repo  : 'https://github.com/Isa-ac-hu/done'
+    url   : 'assets/PDF/History of English.pdf'
   },
   {
-    title : 'Ubeat',
-    desc  : 'Developed a platform for mothers to record & share baby\'s heartbeat',
-    tech  : ['Java', 'Android', 'Firebase'],
-    repo  : 'https://github.com/Isa-ac-hu/ubeat'
-  }
+    title : 'Schubert\'s Piano Trio No. 1 in B-Flat',
+    desc  : 'I played the cello part!',
+    tech  : ['Cello'],
+    url   : 'https://youtu.be/uOSbVwMUbJo'
+}
 ];
