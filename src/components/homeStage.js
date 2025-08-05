@@ -18,6 +18,7 @@ import GlobeCanvas   from './globeCanvas.js';
 import InfoPanel    from './infoPanel.js';
 import WorkCanvas from './workCanvas.js';
 import BuildCanvas  from './buildCanvas.js';
+//import NoteworthyCanvas from './noteworthyCanvas.js';
 
 export default class HomeStage {
     constructor(canvas, restartCallback = () => {}, headerShared) {
@@ -27,9 +28,9 @@ export default class HomeStage {
         this.heroDoneTime = null;
 
         // -------- Hi-DPI setup --------
-        // resizeHiDPI(canvas, this.ctx);               // initial scale
-        // this.onResize = () => resizeHiDPI(canvas, this.ctx);
-        // window.addEventListener('resize', this.onResize);
+        resizeHiDPI(canvas, this.ctx);               // initial scale
+        this.onResize = () => resizeHiDPI(canvas, this.ctx);
+        window.addEventListener('resize', this.onResize);
 
 
         /* logo animation state */
@@ -44,11 +45,12 @@ export default class HomeStage {
         this.globe  = new GlobeCanvas(this.ctx,this.canvas);
         this.work   = new WorkCanvas(this.ctx,this.canvas);
         this.builds = new BuildCanvas(this.ctx,this.canvas);
+        //this.notes  = new NoteworthyCanvas(this.ctx,this.canvas);
         this.socialBar = new SocialBar(this.ctx, this.canvas);
         this.header = headerShared;
         this.panel   = new InfoPanel();
 
-        document.body.style.height = `${5 * 100}vh`;   // Hero (1vh) + About (1vh)
+        document.body.style.height = `${8 * 100}vh`;   // Hero (1vh) + About (1vh)
 
         this.scrollY  = 0;                  // new
         window.addEventListener('scroll', this.onScroll);
@@ -95,10 +97,11 @@ export default class HomeStage {
 
       const overAboutLink   = this.about.linkHover;
       const overCompanyLink = this.work.linkHoverGlobal;
+      //const overNotes       = this.notes.hoverAny;
 
-
-      this.canvas.style.cursor = (overLogo || overBtn || overHeaderOrResume || overMail || overSocial || overAboutLink || overCompanyLink) ? 'pointer' : '';
-
+      this.canvas.style.cursor = (
+        overLogo || overBtn || overHeaderOrResume || overMail || overSocial ||
+        overAboutLink || overCompanyLink) ? 'pointer' : '';
 
     };
 
@@ -159,9 +162,7 @@ export default class HomeStage {
 
         //resizeHiDPI(canvas, ctx);      // first time
 
-        window.addEventListener('resize', () => {
-          resizeHiDPI(canvas, ctx);
-        });
+        resizeHiDPI(this.canvas, this.ctx);
 
         /* --- background & placeholder text --- */
         ctx.fillStyle = COLORS.bgDark;
@@ -172,7 +173,6 @@ export default class HomeStage {
 
         const headerDone =
             this.header.logoProg >= 1 && this.header.navProg >= this.header.navDone;
-        this.hero.draw(this.scrollY, headerDone);
 
         this.socialBar.draw(this.socialBar);
         this.mailBar.draw();
@@ -180,6 +180,7 @@ export default class HomeStage {
         this.globe.draw(this.scrollY);
         this.work.draw(this.scrollY);
         this.builds.draw(this.scrollY);
+        //this.notes.draw(this.scrollY);
         //this.header.draw(this.logoProg);
 
         if (!this.logoDone) {

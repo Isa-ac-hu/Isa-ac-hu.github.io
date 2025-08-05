@@ -1,11 +1,18 @@
 /* src/components/aboutCanvas.js --------------------------------------- */
-import {BULLET, COLORS, ABOUT, strokeRoundRect, SKILL_GROUPS, PORTRAIT_ANIM} from '../utils.js';
+import { BULLET, COLORS, ABOUT, strokeRoundRect, SKILL_GROUPS, PORTRAIT_ANIM, easeLogistic  } from '../utils.js';
 
 
 export default class AboutCanvas{
   constructor(ctx,canvas){
     this.ctx     = ctx;
     this.canvas  = canvas;
+
+    this.introStarted = false;   // becomes true the first time it’s on-screen
+    this.introDone    = false;   // stays true afterwards
+    this.introTimer   = 0;       // logistic input 0 → 1
+    this.INTRO_SPEED  = 0.03;    // tweak to taste
+    this.INTRO_DROP   = 40;      // px it climbs while fading in
+
     /* run-time state for one interactive link ------------------ */
     this.buLink = {                       // geometry filled in later
       x:0,y:0,w:0,h:0,
@@ -69,21 +76,40 @@ export default class AboutCanvas{
     if(scrollY<offset-cssH||scrollY>offset+cssH)return;
 
     const pageY  = offset-scrollY;       // page‑top in canvas space
+
+    /* trigger the intro the first time About becomes visible */
+    if (!this.introStarted &&
+      scrollY > offset - cssH && scrollY < offset + cssH) {
+      this.introStarted = true;
+    }
+
+    /* after triggering logic – still near the top of draw() */
+    if (this.introStarted && !this.introDone) {
+      this.introTimer = Math.min(1, this.introTimer + this.INTRO_SPEED);
+      if (this.introTimer >= 1) this.introDone = true;
+    }
+    const easeT   = easeLogistic(this.introTimer);     // 0‒1
+    const dropY   = this.INTRO_DROP * (1 - easeT);     // 40 px → 0
+    const alphaT  = easeT;                             // same logistic for α
+
+
     const baseX  = ABOUT.marginX;
     let   y      = pageY+ABOUT.top;
 
-
+    ctx.save();
+    ctx.translate(0, dropY);      // rise up
+    ctx.globalAlpha = alphaT;     // logistic fade-in
 
     /* 01 – cyan index */
     ctx.fillStyle=COLORS.cyan;
     ctx.font     ='24px "SF Mono Regular", monospace';
     ctx.textAlign='left';ctx.textBaseline='top';
-    ctx.fillText('01.',baseX,y);
+    ctx.fillText('01.',baseX,y + 8);
     const idxW=ctx.measureText('01.').width+8;
 
     /* heading text */
     ctx.fillStyle=COLORS.light;
-    ctx.font     ='bold 28px "Calibre", sans-serif';
+    ctx.font     ='bold 36px "Calibre", sans-serif';
     ctx.fillText('About Me',baseX+idxW,y);
 
     /* grey horizontal rule */
@@ -97,7 +123,7 @@ export default class AboutCanvas{
 
     /* paragraphs */
     ctx.fillStyle=COLORS.gray;
-    ctx.font     ='18px "Calibre", sans-serif';
+    ctx.font     ='20px "Calibre", sans-serif';
     y=this.wrap("I have a combined Bachelor of Arts/Master of Science in computer science from Boston University, completed in May 2025, with prominent coursework in embedded systems, statistics, machine learning, and software design.",baseX,y,ABOUT.maxW,ABOUT.paraLH);
     y=this.wrap("",baseX,y - 15,ABOUT.maxW,ABOUT.paraLH);
     y=this.wrap("Outside of school, I have done some internships and personal projects that have developed my understanding of many different facets of the computing world!",baseX,y,ABOUT.maxW,ABOUT.paraLH);
@@ -108,11 +134,11 @@ export default class AboutCanvas{
 
     /* -------- highlight “Boston University” word manually --------------- */
     const buText   = 'Boston University';
-    ctx.font       = '18px "Calibre", sans-serif';
+    ctx.font       = '20px "Calibre", sans-serif';
     const pre      = 'I have a combined Bachelor of Arts/Master of Science in computer science from ';
     const preW     = ctx.measureText(pre).width;
     const buW      = ctx.measureText(buText).width;
-    const linkX    = baseX + 187;        // x-pos where BU starts
+    const linkX    = baseX + 182;        // x-pos where BU starts
     const linkY    = (offset-scrollY) + ABOUT.top + 80 + 30; // same paragraph Y + tweak
     /* store bounding box once (for hit-testing) */
     Object.assign(this.buLink,{x:linkX,y:linkY,w:buW,h:ABOUT.paraLH});
@@ -160,6 +186,10 @@ export default class AboutCanvas{
       });
     });
 
+
+    // ctx.restore();
+    //
+    // if (!this.introDone) return;
     /* ---------- portrait with native size (no stretching) -------------- */
     const { portrait } = ABOUT;          // still keep misc settings here
     /* lazy-load once */

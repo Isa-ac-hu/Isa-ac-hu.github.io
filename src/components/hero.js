@@ -49,6 +49,11 @@ export default class Hero {
   draw(scrollY = 0, headerDone = false) {
     const { ctx, canvas } = this;
 
+    ctx.save();                     // protect whatever came before
+    ctx.textAlign   = 'left';       // <-- explicit defaults
+    ctx.textBaseline= 'top';        // (or 'alphabetic', whichever you want
+
+
     /* helper */
     const drawLine = (idx, txt, font, fill, baseX, baseY) => {
       // logistic input for this line
@@ -56,13 +61,11 @@ export default class Hero {
       const t     = Math.max(0, Math.min(1, raw));      // clamp 0-1
       const easeT = easeLogistic(t);
 
-      ctx.save();
       ctx.globalAlpha = easeT;                           // fade
       ctx.translate(0, HERO_ANIM.dropPx * (1 - easeT)); // vertical drop
       ctx.fillStyle   = fill;
       ctx.font        = font;
       ctx.fillText(txt, baseX, baseY);
-      ctx.restore();
     };
 
     /* Start the hero animation only once, HERO_ANIM.delay sec after header */
@@ -81,7 +84,7 @@ export default class Hero {
 
     /* vertical placement: 25% from top looks close to the screenshot */
     const baseY   = cssH * 0.23 - scrollY;
-    const lineGap = 64;   // distance between headline lines
+    const lineGap = 70;   // distance between headline lines
 
 
     /* update fade progress */
@@ -92,21 +95,21 @@ export default class Hero {
 
     /* 01 ── “Hi, my name is” */
     drawLine(0, 'Hi, my name is',
-        '18px "SF Mono", monospace', COLORS.cyan,
+        '18px "SF Mono Regular", MS Comic Sans', COLORS.cyan,
         HERO_BTN.x, baseY);
 
     /* 02 ── Name */
     drawLine(1, 'Isaac Hu.',
-        'bold 70px "Calibre", sans-serif', COLORS.light,
+        '800 80px "Calibre", MS Comic Sans', COLORS.light,
         HERO_BTN.x, baseY + 40);
 
     /* 03 ── Tag‑line */
-    drawLine(2, 'Sparking joy',
-        'bold 70px "Calibre", sans-serif', COLORS.gray,
-        HERO_BTN.x, baseY + 73 + lineGap);
+    drawLine(2, 'Making joy',
+        'bold 80px "Calibre", MS Comic Sans', COLORS.gray,
+        HERO_BTN.x, baseY + 60 + lineGap);
     drawLine(3, 'through creation.',
-        'bold 70px "Calibre", sans-serif', COLORS.gray,
-        HERO_BTN.x, baseY + 73 + lineGap * 2);
+        'bold 80px "Calibre", MS Comic Sans', COLORS.gray,
+        HERO_BTN.x, baseY + 60 + lineGap * 2);
 
     /* 04 ── paragraph (drop + fade) */
     {
@@ -115,25 +118,22 @@ export default class Hero {
       const t     = Math.max(0, Math.min(1, raw));
       const easeT = easeLogistic(t);
 
-      ctx.save();
       ctx.globalAlpha = easeT;
       ctx.translate(0, HERO_ANIM.dropPx * (1 - easeT));
       ctx.fillStyle = COLORS.gray;
-      ctx.font      = '18px "Calibre", sans-serif';
+      ctx.font      = '22px "Calibre", sans-serif';
       wrapFillText(
           ctx,
           "Greetings! I'm a recent graduate of Boston University (BA/MS in Computer Science). " +
           "Here is a showcase of my work and some other fun things!",
           HERO_BTN.x,
           baseY + 73 + lineGap * 3.4,
-          700,
-          30
+          750,
+          25
       );
-      ctx.restore();
     }
 
     /* 05 ── button */
-    ctx.save();
     ctx.translate(HERO_BTN.x, HERO_BTN.y);
 
     const lineIdx = 5;   // 0-based index for staggering
@@ -168,6 +168,7 @@ export default class Hero {
     ctx.textAlign   = 'center';
     ctx.textBaseline= 'middle';
     ctx.fillText(HERO_BTN.label, HERO_BTN.w / 2, -scrollY + lineGap + HERO_BTN.h/2);
+
     ctx.restore();
   }
 }

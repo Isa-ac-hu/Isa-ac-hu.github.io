@@ -16,6 +16,7 @@ export function resizeHiDPI(canvas, ctx) {
 }
 
 
+
 export function strokeRoundRect(ctx, x, y, w, h, r) {
   ctx.beginPath();
   ctx.moveTo(x + r, y);
@@ -217,7 +218,7 @@ export const ABOUT = {
   marginX : 365,          // same lateral margin you gave Hero
   top     : 100,          // distance from the top of its page
   maxW    : 500,         // paragraph wrap‑width
-  ruleGap : 10,          // vertical align of the grey rule
+  ruleGap : 17,          // vertical align of the grey rule
   paraLH  : 30,          // paragraph line‑height
   skillLH : 26,          // list line‑height
   colW    : 230,         // width of each skill column
@@ -286,7 +287,7 @@ export const PORTRAIT_ANIM = {
 export const WORK = {
   top       : 200,          // distance from its page-top
   marginX   : 465,          // same lateral margin as About
-  ruleGap   : 10,
+  ruleGap   : 17,
   maxW      : 620,          // right column paragraph width
   rowH      : 50,           // vertical spacing between job names
   barW      : 2,            // cyan bar thickness
@@ -391,7 +392,7 @@ export const GLOBE_BOX = {
 
 export const INFO_PANEL = {
   left : 1050,   // distance from the left edge of the canvas / page
-  top  : 2830 + 860,   // distance from the top
+  top  : 2830 + 860 + 860 + 860,   // distance from the top
   w    : 320,   // max width  (img will auto-scale to this)
 };
 
@@ -406,7 +407,7 @@ export const NAV_ANIM = {
 export const BUILDS = { /* section header */
   top      : 200,          // distance from page-top
   marginX  : 310,          // global left margin
-  ruleGap  : 10,           // grey rule alignment
+  ruleGap  : 0,           // grey rule alignment
   cornerR  : 6,            // card corner radius
   ghSize   : 28,           // GitHub icon size
 };
@@ -414,18 +415,123 @@ export const BUILDS = { /* section header */
 /* tiny data-model – one object per project                          */
 export const PROJECT_LIST = [
   {
-    title   : 'RoboWallet',
+    title   : 'Ball Balancing PID Embedded System',
     tagline : 'Featured Project',
     blurb   :
-      'RoboWallet is an iOS application to track cryptocurrency ' +
-      'exchange portfolios. It uses innovative technologies and ' +
-      'glamorous UI.',
-    tech    : ['SwiftUI', 'CoinGecko API', 'Firebase', 'Combine'],
+      'Closed loop PID controller programmed in C on a Microchip dsPIC33 that can balance a ball on the center of a platform, filtering noisy signals using a 2nd order Butterworth filter.',
+    tech    : ['dsPIC33', 'C', 'PID', 'UART'],
     img     : 'AmazingBallSystem.jpg',           // lives in assets/images
     repo    : 'https://github.com/Isa-ac-hu',    // opens in new tab
 
+    align   : 'right',
+
     imgPos : { x:   0,  y:   0,  w: 580, h: 320 },
-    card   : { x: 520,  y:  80, w: 600, h: 120 },
-    ghPos  : { x: 820,  y:  85 }           // optional; omit → auto bottom-right
+    card   : { x: 520,  y:  90, w: 500, h: 120 },
+    ghPos  : { x: 990,  y:  250 } // optional; omit → auto bottom-right
   }, // …push more objects here for more cards
+
+  {
+    title   : 'Tetris Playing Autonomous Agent',
+    tagline : 'Featured Project',
+    blurb   : 'A script written in Java, using Q-learning with a heuristic emphasizing the minimization gaps between blocks and total height. It learned how to stay alive in Tetris indefinitely after training for 48 hours, in 2000 trials.',
+    tech    : [ 'Java' ],
+    img     : 'Tetris.gif',          // <- real .gif
+    repo    : 'https://github.com/Isa-ac-hu/tetris',
+
+    align   : 'left',
+
+    frames : {
+      dir   : 'Tetris/frame_',  // <assets/gifs/>dir + ## + ext
+      ext   : '.png',           // file extension
+      count : 65,               // how many numbered frames
+      fps   : 10                // 100 ms per frame  (count * fps ~= 6 s loop)
+    },
+
+
+    imgPos  : { x: 420, y: 500,  w: 580, h: 320 }, // picture on the right
+    card    : { x: 0,   y: 580, w: 500, h: 120 }, // text on the left
+  },
+
+  {
+    title   : 'Flutter Scheduling App',
+    tagline : 'Featured Project',
+    blurb   :
+      'App that gradually learns a persons\'s habits, and algorithmically deduces the amount of time they need to get ready to better plan their day. Integrated with google maps and calendar.',
+    tech    : ['Flutter', 'Firebase', 'Google Calendar', 'Google Authentication'],
+    img     : 'Timo.png',           // lives in assets/images
+    repo    : 'https://github.com/Isa-ac-hu',    // opens in new tab
+
+    align   : 'right',
+
+    imgPos : { x: 300,  y:   1000,  w: 150, h: 320 },
+    card   : { x: 520,  y:  1080, w: 500, h: 120 },
+    ghPos  : { x: 990,  y:  250 } // optional; omit → auto bottom-right
+  },
+
+  {
+    title   : 'Arduino Robot',
+    tagline : 'Featured Project',
+    blurb   : 'Robot powered by a small arduino computer, with activatable motors, infrared sensors, and speakers. Made to greet people.',
+    tech    : [ 'Arduino', 'C', 'Circuit Design' ],
+    img     : 'Arduino.gif',          // <- real .gif
+    repo    : 'https://github.com/Isa-ac-hu/tetris',
+
+    align   : 'left',
+
+    frames : {
+      dir   : 'Arduino/frame_',  // <assets/gifs/>dir + ## + ext
+      ext   : '.png',           // file extension
+      count : 65,               // how many numbered frames
+      fps   : 10                // 100 ms per frame  (count * fps ~= 6 s loop)
+    },
+
+
+    imgPos  : { x: 420, y: 1500,  w: 580, h: 320 }, // picture on the right
+    card    : { x: 0,   y: 1580, w: 500, h: 120 }, // text on the left
+  },
+];
+
+
+
+/* ─── 5th page : Other Noteworthy Projects ───────────────────────── */
+export const NOTEWORTHY = {
+  top       : 220,          // distance from page-top of *this* section
+  marginX   : 250,          // global left margin (looks centred under header)
+  gap       : 40,           // px between cards (both x & y)
+  cardW     : 350,
+  cardH     : 220,
+  cornerR   : 6,
+  liftPx    : 10,           // how far a card rises on hover
+  speed     : 0.08,         // logistic input advance per frame
+  ghSize    : 24,
+  iconGap   : 18            // distance folder→GH→external
+};
+
+/* four small-card entries (extend at will) */
+export const NOTE_LIST = [
+  {
+    title : 'Slay The Spire',
+    desc  : 'Implemented Slay the Spire: Card based battle game for desktop clone using Java and JavaFX technologies.',
+    tech  : ['Java', 'JavaFX'],
+    repo  : 'https://github.com/Isa-ac-hu/slay-the-spire'
+  },
+  {
+    title : 'Yelp-Camp',
+    desc  : 'Developed website Yelp Camp for exploring hand-picked campgrounds around the world.',
+    tech  : ['ejs', 'express', 'mongoDB'],
+    repo  : 'https://github.com/Isa-ac-hu/yelp-camp',
+    ext   : 'https://yelp-camp-demo.netlify.app'   // optional  ↗ link
+  },
+  {
+    title : 'Done.',
+    desc  : 'Created a free to use cross-platform mobile todo list/reminder application using Flutter.',
+    tech  : ['Flutter', 'Firebase', 'Firestore'],
+    repo  : 'https://github.com/Isa-ac-hu/done'
+  },
+  {
+    title : 'Ubeat',
+    desc  : 'Developed a platform for mothers to record & share baby\'s heartbeat',
+    tech  : ['Java', 'Android', 'Firebase'],
+    repo  : 'https://github.com/Isa-ac-hu/ubeat'
+  }
 ];

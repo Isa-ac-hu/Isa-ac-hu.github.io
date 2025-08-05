@@ -377,7 +377,7 @@ export const PLACES = [
   { name:"Secaucus, New Jersey",                  lat:40.7895, lng:-74.0565, desc:"", img:"Secaucus.jpg" },
   { name:"Seaport District",               lat:42.3500, lng:-71.0400, desc:"", img:"Seaport.jpg" },
 
-  { name:"Shanghai, China",                       lat:31.2304, lng:121.4737, desc:"I got lost along this walkway on the huangpu river, wandering aimlessly in the summer heat while the tour group had left hours ago. It turns out they were waiting under that building with the green roof. As an aside, I later saw that building in a world war two documentary. Pretty cool!", img:"Shanghai.jpg" },
+  { name:"Shanghai, China",                       lat:31.2304, lng:121.4737, desc:"I got lost along this walkway on the huangpu river, wandering aimlessly in the summer heat. It turns out the tour group was waiting under that building with the green roof. As an aside, I later saw that building in a world war two documentary. Pretty cool!", img:"Shanghai.jpg" },
   { name:"Singapore Chinatown",                   lat: 1.2829, lng:103.8458, desc:"", img:"Singapore Chinatown.jpg" },
   { name:"Six Flags New England, Massachusetts",  lat:42.0378, lng:-72.6159, desc:"", img:"Six Flags New England.jpg" },
   { name:"SoHo, Manhattan NYC",                   lat:40.7233, lng:-74.0030, desc:"", img:"Soho.jpg" },
