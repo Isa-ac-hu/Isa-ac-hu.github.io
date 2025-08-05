@@ -10,8 +10,8 @@ export default class AboutCanvas{
     this.introStarted = false;   // becomes true the first time it’s on-screen
     this.introDone    = false;   // stays true afterwards
     this.introTimer   = 0;       // logistic input 0 → 1
-    this.INTRO_SPEED  = 0.03;    // tweak to taste
-    this.INTRO_DROP   = 40;      // px it climbs while fading in
+    this.INTRO_SPEED  = 0.02;    // tweak to taste
+    this.INTRO_DROP   = 200;      // px it climbs while fading in
 
     /* run-time state for one interactive link ------------------ */
     this.buLink = {                       // geometry filled in later
@@ -252,6 +252,7 @@ export default class AboutCanvas{
 
 
     this.linkHover = this.buLink.hover;
+    ctx.restore();
     ctx.restore();
   }
 }
