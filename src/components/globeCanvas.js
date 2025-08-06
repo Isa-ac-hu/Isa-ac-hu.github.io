@@ -4,7 +4,7 @@
 import {
   COLORS,
   GLOBE_BOX,
-  strokeRoundRect, 
+  strokeRoundRect,
 } from '../utils.js';
 
 import {PLACES} from '../places.js';
@@ -78,7 +78,7 @@ export default class GlobeCanvas {
       const y = clientY - top;
 
       const cssH = canvas.height / (window.devicePixelRatio || 1);
-      const PAGE_OFFSET = 7 * cssH;
+      const PAGE_OFFSET = 6 * cssH;
       const boxY = PAGE_OFFSET - window.scrollY + GLOBE_BOX.top;
 
       return (
@@ -158,13 +158,40 @@ export default class GlobeCanvas {
       ctx.fill();
     };
 
-
     const { ctx, canvas } = this;
     const dpr   = window.devicePixelRatio || 1;
     const cssH  = canvas.height / dpr;
-    const PAGE_OFFSET = 7 * cssH;
-
+    const PAGE_OFFSET = 6 * cssH;      // <-- same as before
+    /* bail early if the whole Travel page is off-screen */
     if (scrollY < PAGE_OFFSET - cssH || scrollY > PAGE_OFFSET + cssH) return;
+    const pageY = PAGE_OFFSET - scrollY;
+    const hdrX  = GLOBE_BOX.left;       // line-up with left edge of globe
+    const HDR_GAP = -90;                // vertical gap *above* the frame (px)
+    const hdrY  = pageY + GLOBE_BOX.top + HDR_GAP;
+    // 04. index number — cyan
+    ctx.fillStyle   = COLORS.cyan;
+    ctx.font        = '24px "SF Mono Regular", monospace';
+    ctx.textAlign   = 'left';
+    ctx.textBaseline= 'top';
+    ctx.fillText('04.', hdrX, hdrY + 8);
+    const idxW = ctx.measureText('04.').width + 8;
+    // heading label — light
+    ctx.fillStyle = COLORS.light;
+    ctx.font = 'bold 36px "Calibre", sans-serif';
+    ctx.fillText('Travel', hdrX + idxW, hdrY);
+    // grey horizontal rule
+    ctx.strokeStyle = COLORS.gray + '66';
+    ctx.lineWidth   = 0.5;
+    ctx.beginPath();
+    ctx.moveTo(hdrX + idxW + 105, hdrY + 17);
+    ctx.lineTo(hdrX + idxW + 105 + 300, hdrY + 17);
+    ctx.stroke();
+
+    /* --- NEW: one-liner blurb ------------------------------------ */
+    ctx.fillStyle = COLORS.gray;
+    ctx.font      = '20px "Calibre", sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText("I've traveled a lot — click around below to see where I've been!", hdrX, hdrY + 48);
 
     const box  = GLOBE_BOX;
     const cx   = box.left + box.size / 2;
@@ -203,31 +230,7 @@ export default class GlobeCanvas {
     ctx.arc(0, 0, R, 0, Math.PI * 2);    // x = 0, y = 0 because we are
     ctx.stroke();                        // already translated to (cx, cy)
 
-    /* ------- latitude / longitude grid ------- */
-    // ctx.lineWidth   = 1;
-    // ctx.strokeStyle = COLORS.cyan;
-    // const step = 15;
-    //
-    // ctx.beginPath();
-    // for (let lat = -75; lat <= 75; lat += step) {
-    //   for (let lng = -180; lng <= 180; lng += 5) {
-    //     const v = rot(toVec(lat, lng));
-    //     if (v[2] < 0) continue;
-    //     const [sx, sy] = proj(v, R);
-    //     lng === -180 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
-    //   }
-    // }
-    // for (let lng = -180; lng < 180; lng += step) {
-    //   let move = true;
-    //   for (let lat = -90; lat <= 90; lat += 5) {
-    //     const v = rot(toVec(lat, lng));
-    //     if (v[2] < 0) { move = true; continue; }
-    //     const [sx, sy] = proj(v, R);
-    //     move ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
-    //     move = false;
-    //   }
-    // }
-    // ctx.stroke();
+
 
     /* ------- coastlines ------- */
     COAST_LINES.forEach(line => {

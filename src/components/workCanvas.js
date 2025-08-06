@@ -39,6 +39,14 @@ export default class WorkCanvas {
     this.ctx = ctx;
     this.canvas = canvas;
 
+
+    /* intro animation state (same numbers as About) */
+    this.introStarted = false;   // first time Work is on-screen
+    this.introDone    = false;   // stays true afterwards
+    this.introTimer   = 0;       // logistic input 0 → 1
+    this.INTRO_SPEED  = 0.01;    // advance per frame (tweak to taste)
+    this.INTRO_DROP   = 200;     // px it climbs while fading in
+
     this.compLink = { x:0, y:0, w:0, h:0, prog:0, hover:false };
 
     this.sel = 0;            // selected job index
@@ -107,6 +115,25 @@ export default class WorkCanvas {
 
     const pageY = PAGE_OFFSET - scrollY;
     this.pageY  = pageY;                   // ← keep for hit-tests
+
+
+    /* ─── trigger intro once the section is visible ─── */
+    if (!this.introStarted &&
+      scrollY > PAGE_OFFSET - cssH && scrollY < PAGE_OFFSET + cssH) {
+      this.introStarted = true;
+    }
+    if (this.introStarted && !this.introDone) {
+      this.introTimer = Math.min(1, this.introTimer + this.INTRO_SPEED);
+      if (this.introTimer >= 1) this.introDone = true;
+    }
+    const easeT   = easeLogistic(this.introTimer);   // 0‒1
+    const dropY   = this.INTRO_DROP * (1 - easeT);   // 200 → 0
+    const alphaT  = easeT;                           // fade in
+    /* draw everything under a translate + alpha */
+    ctx.save();
+    ctx.translate(0, dropY);
+    ctx.globalAlpha = alphaT;
+
     const leftX = WORK.marginX;
 
     /* ─── static grey track for the cyan bar ───────────────────────── */
@@ -267,5 +294,7 @@ export default class WorkCanvas {
       });
     });
     this.linkHoverGlobal = this.compLink.hover;   // share with HomeStage
+
+    ctx.restore();
   }
 }

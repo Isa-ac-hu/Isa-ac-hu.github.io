@@ -1,8 +1,47 @@
 // src/components/header.js
-import {COLORS, LOGO, HEADER, polygonPoints, strokeRoundRect, easeLogistic, lerpHex, NAV_ANIM } from '../utils.js';
+import {
+  COLORS,
+  LOGO,
+  HEADER,
+  polygonPoints,
+  strokeRoundRect,
+  easeLogistic,
+  lerpHex,
+  NAV_ANIM,
+  RESUME_URL
+} from '../utils.js';
 
 
 export default class Header {
+  onClick = e => {
+    const r     = this.canvas.getBoundingClientRect();
+    const cssX  = e.clientX - r.left;
+    const cssY  = e.clientY - r.top;
+    /* Resume button opens the PDF exactly as before */
+    if (this.isResumeHit(cssX, cssY)) {
+      return;
+    }
+
+    this.updateLinkBoxes();
+    /* which nav link (if any)? */
+    const idx = this.linkBoxes.findIndex(
+      b => cssX >= b.left && cssX <= b.right &&
+        cssY >= b.top  && cssY <= b.bottom
+    );
+    if (idx === -1) return;                 // nothing clicked
+    /* scroll target – every section starts at n × viewport-height     */
+    const vh = window.innerHeight;
+    // custom section start positions in multiples of vh
+    const sectionOffsets = [
+      /* About   */ 1,
+      /* Work    */ 2,
+      /* Projects*/ 3,
+      /* Travel  */ 6.2
+    ];
+    const targetY = sectionOffsets[idx] * vh;
+
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
+  };
     constructor(ctx, canvas) {
 
         this.ctx    = ctx;
@@ -15,11 +54,12 @@ export default class Header {
         this.SPEED       = 0.08;
         /* right‑hand nav data */
         this.links = [
-            { num: '01.', label: 'About'      },
-            { num: '02.', label: 'Experience' },
-            { num: '03.', label: 'Work'       },
-            { num: '04.', label: 'Contact'    },
+            { num: '01.', label: 'About'},
+            { num: '02.', label: 'Work'},
+            { num: '03.', label: 'Projects'},
+            { num: '04.', label: 'Travel'},
         ];
+
 
         this.linkProg    = this.links.map(() => 0);
 
@@ -31,6 +71,44 @@ export default class Header {
         /* ---------- nav drop-in ---------- */
         this.navProg = 0;                // 0 → navDone
         this.navDone = 1 + NAV_ANIM.stagger * (this.links.length - 1)
+
+
+        /* hit-boxes are filled every draw so onClick can hit-test */
+      this.linkBoxes    = this.links.map(() => ({}));
+      /* click listener for scrolling */
+      //canvas.addEventListener('click', this.onClick);
+    }
+
+
+    updateLinkBoxes() {
+      const ctx   = this.ctx;
+      const dpr   = window.devicePixelRatio || 1;
+      const cssW  = this.canvas.width / dpr;
+      const yMid  = LOGO.anchor.y;
+      ctx.font = HEADER.font;
+      // measure each link
+      const metrics = this.links.map(({ num, label }) => {
+        const numW   = ctx.measureText(num).width;
+        const labelW = ctx.measureText(label).width;
+        const totalW = HEADER.innerPad + numW + HEADER.numToLabel + labelW + HEADER.innerPad;
+        return { totalW };
+      });
+      // total group width + gaps
+      const contentW = metrics.reduce((sum, m) => sum + m.totalW, 0)
+        + HEADER.gap * (this.links.length - 1);
+      // starting X so group ends before resume button
+      let x = cssW - HEADER.resumeW - contentW - HEADER.rightShift;
+      // populate each hit box
+      this.links.forEach((_, idx) => {
+        const w = metrics[idx].totalW;
+        this.linkBoxes[idx] = {
+          left:   x,
+            right:  x + w,
+            top:    yMid - HEADER.resumeH/2,
+          bottom: yMid + HEADER.resumeH/2
+        };
+        x += w + HEADER.gap;
+      });
     }
     /** call whenever you want the logo to fade-in again                        */
     resetFade() {
@@ -59,7 +137,7 @@ export default class Header {
     draw() {
         if (this.canvas.style.display === 'none') return;
         const { ctx, canvas } = this;
-
+      this.updateLinkBoxes();
         const dpr   = window.devicePixelRatio || 1;
         const cssW  = canvas.width  / dpr;   // ← real visual width in CSS px
         const cssH  = canvas.height / dpr;   // ← not used here but handy
@@ -160,6 +238,15 @@ export default class Header {
             ctx.fillText(label, x + innerPad + numW + numToLabel, y)
 
 
+
+            /* save hit-box for onClick / updateHover */
+          const yMid = y + dropY;                              // LOGO.anchor.y
+          this.linkBoxes[idx] = {
+            left  : x,
+            right : x + totalW,
+            top   : yMid - HEADER.resumeH / 2,
+            bottom: yMid + HEADER.resumeH / 2
+          };
             /* advance to next slot (box + gap) */
             x += totalW + HEADER.gap;
 
@@ -213,6 +300,8 @@ export default class Header {
         const cssW  = canvas.width  / dpr;   // ← real visual width in CSS px
         const cssH  = canvas.height / dpr;   // ← not used here but handy
 
+    this.updateLinkBoxes();
+
         const ctx        = this.ctx;
         ctx.font         = HEADER.font;
 
@@ -253,6 +342,8 @@ export default class Header {
 
         return this.hover !== -1 || this.hoverResume;
     }
+
+
 }
 
 

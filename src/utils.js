@@ -15,6 +15,17 @@ export function resizeHiDPI(canvas, ctx) {
   }
 }
 
+export function bezierXY(p0, p1, p2, p3, t) {
+  const u  = 1 - t;
+  const tt = t * t;
+  const uu = u * u;
+  const uuu = uu * u;
+  const ttt = tt * t;
+  const x = uuu * p0[0] + 3 * uu * t * p1[0] + 3 * u * tt * p2[0] + ttt * p3[0];
+  const y = uuu * p0[1] + 3 * uu * t * p1[1] + 3 * u * tt * p2[1] + ttt * p3[1];
+  return [x, y];
+}
+
 // utils.js – add near the other helpers
 export function wrap(ctx, txt, x, y, maxW, lh) {
   const words = txt.split(/\s+/);
@@ -395,21 +406,7 @@ export const WORK_ANIM = {
   barEase: 0.14     // 0‒1 lerp factor for the cyan bar
 };
 
-export const GLOBE_BOX = {
-  top  : 250,          // distance from top of its page
-  left : 300,          // left margin
-  size : 500,          // outer square (px)
 
-  COORDINATE : [],
-};
-
-
-
-export const INFO_PANEL = {
-  left : 1050,   // distance from the left edge of the canvas / page
-  top  : 2830 + 860 + 860 + 860 + 860,   // distance from the top
-  w    : 320,   // max width  (img will auto-scale to this)
-};
 
 export const NAV_ANIM = {
   speed   : 0.03,   // global timer advance per frame  (0-1)
@@ -422,10 +419,30 @@ export const NAV_ANIM = {
 export const BUILDS = { /* section header */
   top      : 200,          // distance from page-top
   marginX  : 310,          // global left margin
-  ruleGap  : 0,           // grey rule alignment
+  ruleGap  : -10,           // grey rule alignment
   cornerR  : 6,            // card corner radius
   ghSize   : 28,           // GitHub icon size
 };
+
+let startX1 = 490;
+let startY1 = 330;
+
+let startX2 = -510;
+let startY2 = 330;
+
+let startX3 = 490;
+let startY3 = 330;
+
+let startX4 = -510;
+let startY4 = 330;
+
+export const BUILD_CURVES = [
+  /* each curve starts well off-screen and ends at (0,0) */
+  [[startX1-480,startY1-320],[startX1-320,startY1-420],[startX1-140,startY1-90],[startX1,startY1]],   // project 0
+  [[ startX2+480,startY2-320],[ startX2+320,startY2-420],[ startX2+140,startY2-90],[startX2,startY2]],   // project 1
+  [[startX3-480,startY3-320],[startX3-320,startY3-420],[startX3-140,startY3-90],[startX3,startY3]],   // project 2
+  [[ startX4+480,startY4-320],[ startX4+320,startY4-420],[ startX4+140,startY4-90],[startX4,startY4]],   // project 3
+];
 
 /* tiny data-model – one object per project                          */
 export const PROJECT_LIST = [
@@ -436,7 +453,7 @@ export const PROJECT_LIST = [
       'Closed loop PID controller programmed in C on a Microchip dsPIC33 that can balance a ball on the center of a platform, filtering noisy signals using a 2nd order Butterworth filter.',
     tech    : ['dsPIC33', 'C', 'PID', 'UART'],
     img     : 'AmazingBallSystem.jpg',           // lives in assets/images
-    repo    : 'https://github.com/Isa-ac-hu',    // opens in new tab
+    repo    : 'https://github.com/Isa-ac-hu/PID-Controller',    // opens in new tab
 
     align   : 'right',
 
@@ -451,7 +468,7 @@ export const PROJECT_LIST = [
     blurb   : 'A script written in Java, using Q-learning with a heuristic emphasizing the minimization gaps between blocks and total height. It learned how to stay alive in Tetris indefinitely after training for 48 hours, in 2000 trials.',
     tech    : [ 'Java' ],
     img     : 'Tetris.gif',          // <- real .gif
-    repo    : 'https://github.com/Isa-ac-hu/tetris',
+    repo    : 'https://github.com/Isa-ac-hu/Tetris-Q-Learning-Agent',
 
     align   : 'left',
 
@@ -474,7 +491,7 @@ export const PROJECT_LIST = [
       'App that gradually learns a persons\'s habits, and algorithmically deduces the amount of time they need to get ready to better plan their day. Integrated with google maps and calendar.',
     tech    : ['Flutter', 'Firebase', 'Google Calendar', 'Google Authentication'],
     img     : 'Timo.png',           // lives in assets/images
-    repo    : 'https://github.com/Isa-ac-hu',    // opens in new tab
+    repo    : 'https://github.com/Isa-ac-hu/Timo',    // opens in new tab
 
     align   : 'right',
 
@@ -489,7 +506,7 @@ export const PROJECT_LIST = [
     blurb   : 'Robot powered by a small arduino computer, with activatable motors, infrared sensors, and speakers. Made to greet people.',
     tech    : [ 'Arduino', 'C', 'Circuit Design' ],
     img     : 'Arduino.gif',          // <- real .gif
-    repo    : 'https://github.com/Isa-ac-hu/tetris',
+    repo    : 'https://github.com/Isa-ac-hu/Arduino-Robot',
 
     align   : 'left',
 
@@ -549,3 +566,20 @@ export const NOTE_LIST = [
     url   : 'https://youtu.be/uOSbVwMUbJo'
 }
 ];
+
+
+export const GLOBE_BOX = {
+  top  : 400,          // distance from top of its page
+  left : 300,          // left margin
+  size : 500,          // outer square (px)
+
+  COORDINATE : [],
+};
+
+
+
+export const INFO_PANEL = {
+  left : 1050,   // distance from the left edge of the canvas / page
+  top  : 2830 + 860 + 860 + 860 + 150,   // distance from the top
+  w    : 320,   // max width  (img will auto-scale to this)
+};

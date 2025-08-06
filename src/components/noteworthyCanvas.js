@@ -8,6 +8,12 @@ export default class NoteworthyCanvas {
     constructor(ctx, canvas) {
         this.ctx     = ctx;
         this.canvas  = canvas;
+        /* one-time intro animation ------------------------------------- */
+        this.introStarted = false;   // becomes true the first time 5th page is on screen
+        this.introDone    = false;   // stays true afterwards
+        this.introTimer   = 0;       // linear 0→1
+        this.INTRO_SPEED  = 0.01;    // advance per frame
+        this.INTRO_DROP   = 200;     // px it climbs while fading in
 
         /* hover logic (per-card) */
         this.cardHover = NOTE_LIST.map(() => false);
@@ -84,6 +90,21 @@ export default class NoteworthyCanvas {
         if (scrollY < PAGE_OFFSET - cssH || scrollY > PAGE_OFFSET + cssH) return;
         const pageY = PAGE_OFFSET - scrollY;
 
+
+        /* ─── intro bookkeeping ─────────────────────────────────────── */
+      if (!this.introStarted &&
+        scrollY > PAGE_OFFSET - cssH && scrollY < PAGE_OFFSET + cssH) {
+                  this.introStarted = true;
+      }
+      if (this.introStarted && !this.introDone) {
+        this.introTimer = Math.min(1, this.introTimer + this.INTRO_SPEED);
+        if (this.introTimer >= 1) this.introDone = true;
+      }
+      const introEase = easeLogistic(this.introTimer); // 0‒1
+      const dropY     = this.INTRO_DROP * (1 - introEase);
+      const alphaT    = introEase;
+
+
         const {
             marginX, top, gap, cardW, cardH, cornerR,
             ghSize, liftPx
@@ -91,15 +112,19 @@ export default class NoteworthyCanvas {
 
         /* ---- section header ---- */
         ctx.save();
-        ctx.translate(marginX + 390, pageY + top - 30);
+        ctx.translate(0, dropY);    // rise-up
+        ctx.globalAlpha = alphaT;   // fade-in
+
+        ctx.save();
+        ctx.translate(marginX + 390, pageY + top - 50);
+
         ctx.fillStyle = COLORS.light;
         ctx.font      = 'bold 32px "Calibre", sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('Other Noteworthy Projects', 0, 0);
-
         ctx.restore();
 
-        /* ---- 4-card grid ---- */
+      /* ---- 4-card grid ---- */
         NOTE_LIST.forEach((p, i) => {
             /* hover ease 0‒1 */
             if (this.cardHover[i])
@@ -147,5 +172,6 @@ export default class NoteworthyCanvas {
 
             ctx.restore();
         });
+      ctx.restore();
     }
 }

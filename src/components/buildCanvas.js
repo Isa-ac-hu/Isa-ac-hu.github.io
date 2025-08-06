@@ -2,7 +2,7 @@
    ========================================== */
 import {
   COLORS, BUILDS, PROJECT_LIST,
-  strokeRoundRect, easeLogistic
+  strokeRoundRect, easeLogistic, BUILD_CURVES, bezierXY
 } from '../utils.js';
 
 function wrappedLineCount(ctx, text, maxW) {
@@ -63,10 +63,15 @@ export default class BuildCanvas {
     this.ctx     = ctx;
     this.canvas  = canvas;
 
-
+    this.cardIntroStarted = PROJECT_LIST.map(() => false);
+    this.cardIntroDone = PROJECT_LIST.map(() => false);
+    this.cardIntroT = PROJECT_LIST.map(() => 0);
+    this.INTRO_SPEED = 0.01;
 
     /* per-card GitHub hover state -------------------------------- */
     this.hovers = PROJECT_LIST.map(() => false);
+    this.ghProg  = PROJECT_LIST.map(() => 0);   // 0→1 logistic input
+    this.GH_SPEED = 0.08;                       // tweak speed
 
     /* image-hover state + progress (0→1 ease) */
     this.imgHover = PROJECT_LIST.map(() => false);
@@ -95,22 +100,60 @@ export default class BuildCanvas {
     }
   }
 
-  /* helper – returns index of card whose GH icon is under cursor  */
-  hitGH (cssX, cssY) {
+  hitGH(cssX, cssY) {
     const { top, marginX, ghSize } = BUILDS;
-    const cssH = this.canvas.height / (window.devicePixelRatio||1);
-    const pageY = 3 * cssH;        // 3 rd viewport (after Work) starts
-    const baseY = pageY + top;
+    const cssH   = this.canvas.height / (window.devicePixelRatio || 1);
+    const scroll = window.scrollY || window.pageYOffset;
+    const pageY  = 3 * cssH - scroll;   // same PAGE_OFFSET math as draw()
+    const baseY  = pageY + top;
 
     for (let i = 0; i < PROJECT_LIST.length; i++) {
-      const p   = PROJECT_LIST[i];
-      const gx  = (p.ghPos?.x ?? (p.card.x + p.card.w - ghSize - 12)) + marginX;
-      const gy  = (p.ghPos?.y ?? (p.card.y - ghSize/2))              + baseY;
+      const p = PROJECT_LIST[i];
+
+      // ─── replicate your draw()’s vertical-centering ─────────────
+      const imgCenterY  = p.imgPos.y + p.imgPos.h / 2;
+      const cardCenterY = p.card.y  + p.card.h  / 2;
+      const yOffset     = imgCenterY - cardCenterY;
+
+      const projectY = baseY + p.card.y + yOffset;
+      const projectX = marginX + p.card.x;
+
+      // ─── same left/right logic you use when drawing text ────────
+      const isRight = (p.align ?? 'right') === 'right';
+      const anchorX = isRight
+        ? projectX + p.card.w - 20
+        : projectX + 20;
+      const textX   = anchorX;
+      const myX     = isRight
+        ? anchorX + 20
+        : anchorX - 20;
+
+      // ─── tech-row always sits TECH_SIZE*2 px below the bottom of the card ─
+      const TECH_SIZE = 13;  // must match the one in draw()
+      const techY     = projectY + p.card.h + TECH_SIZE * 2;
+
+      // ─── finally, the GH icon coords exactly as in draw() ─────────────
+
+      const introT = easeLogistic(this.cardIntroT[i]);
+      const [dx, dy] = bezierXY(...BUILD_CURVES[i], 1 - introT);
+
+
+      let ghX = isRight
+        ? textX - 5
+        : textX - 20;
+      let ghY = techY + 20;
+
+      ghX += dx;
+      ghY += dy;
+
       if (
-        cssX >= gx && cssX <= gx + ghSize &&
-        cssY >= gy && cssY <= gy + ghSize
-      ) return i;
+        cssX >= ghX            && cssX <= ghX + ghSize &&
+        cssY >= ghY            && cssY <= ghY + ghSize
+      ) {
+        return i;
+      }
     }
+
     return -1;
   }
 
@@ -175,12 +218,31 @@ export default class BuildCanvas {
 
     /* each project card ---------------------------------------- */
     PROJECT_LIST.forEach((p, i) => {
+
+
+
+
+
       /* ─────────── keep card & image vertically centred ─────────── */
       const imgCenterY  = pageY + top + p.imgPos.y + p.imgPos.h / 2;
       const cardCenterY = pageY + top + p.card.y + p.card.h / 2;
       const yOffset     = imgCenterY - cardCenterY;   // ← differential
       const projectY = pageY + top + p.card.y + yOffset;
       const projectX = marginX + p.card.x;
+
+      // ─── 1. visibility test ───────────────────────────────────────────
+      const cardViewportY = projectY + p.card.h;           // bottom of card
+      const inView = cardViewportY > 0 && projectY < cssH; // simple check
+
+      if (inView && !this.cardIntroStarted[i]) {
+        this.cardIntroStarted[i] = true;              // arm the intro
+      }
+
+      if (this.cardIntroStarted[i] && !this.cardIntroDone[i]) {
+        this.cardIntroT[i] = Math.min(1, this.cardIntroT[i] + this.INTRO_SPEED);
+        if (this.cardIntroT[i] >= 1) this.cardIntroDone[i] = true;
+      }
+      const introT = easeLogistic(this.cardIntroT[i]);   // 0-1 eased
 
       /* background image, tinted  ---------------------------- */
       const imgX = marginX + p.imgPos.x;
@@ -304,6 +366,18 @@ export default class BuildCanvas {
         ctx.restore();
       }
 
+
+      /* Bézier offset --------------------------------------------------- */
+      const curve = BUILD_CURVES[i] ?? [[0,0],[0,0],[0,0],[0,0]];
+      const [dx, dy] = bezierXY(...curve, 1 - introT);  // play *reverse* (t=0→off-screen)
+
+      /* fade-in */
+      ctx.save();
+      ctx.globalAlpha = introT;
+
+      /* translate the whole card + picture */
+      ctx.translate(dx, dy);
+
       /* rounded card ----------------------------------------- */
       ctx.lineWidth   = 1;
       ctx.strokeStyle = '#182c44';
@@ -336,7 +410,8 @@ export default class BuildCanvas {
       const cardBot    = projectY + p.card.h;
 
       /* centre the blurb inside the card */
-      let blurbY   = cardTop + (p.card.h - blurbH) / 2 + 25;
+      let blurbY   = cardTop + (p.card.h - blurbH) / 2 + 25 - 20;
+
 
       /* title sits a little above the card (10 % of card height) */
       let titleY   = cardTop - 0.25 * p.card.h;
@@ -386,12 +461,27 @@ export default class BuildCanvas {
       }
 
       const ghY = techY + 20;
-      const hover = this.hovers[i];
-      const icon  = hover ? this.ghHover : this.ghImg;
-      if (icon.complete)
-        ctx.drawImage(icon, ghX, ghY, BUILDS.ghSize, BUILDS.ghSize);
+
+
+
+      // update logistic fade toward hover
+      this.ghProg[i] = this.hovers[i]
+        ? Math.min(1, this.ghProg[i] + this.GH_SPEED)
+        : Math.max(0, this.ghProg[i] - this.GH_SPEED);
+      const ghT = easeLogistic(this.ghProg[i]);
+      // cross-fade base → hover icon
+      ctx.save();
+      ctx.globalAlpha = 1 - ghT;
+      if (this.ghImg.complete)
+        ctx.drawImage(this.ghImg, ghX, ghY, BUILDS.ghSize, BUILDS.ghSize);
+      ctx.globalAlpha = ghT;
+      if (this.ghHover.complete)
+        ctx.drawImage(this.ghHover, ghX, ghY, BUILDS.ghSize, BUILDS.ghSize);
+      ctx.restore();
 
       ctx.textAlign = 'left';
+
+      ctx.restore()
     });
   }
 }

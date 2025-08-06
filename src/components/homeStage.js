@@ -50,7 +50,7 @@ export default class HomeStage {
         this.header = headerShared;
         this.panel   = new InfoPanel();
 
-        document.body.style.height = `${8 * 100}vh`;   // Hero (1vh) + About (1vh)
+        document.body.style.height = `${7.4 * 100}vh`;   // Hero (1vh) + About (1vh)
 
         this.scrollY  = 0;                  // new
         window.addEventListener('scroll', this.onScroll);
@@ -66,6 +66,7 @@ export default class HomeStage {
         this.frameId = requestAnimationFrame(this.frame);
 
       this.canvas.addEventListener('click', this.onClick);
+      canvas.addEventListener('click', this.header.onClick);
 
     }
     onScroll = () => {             // store CSS‑px scroll offset
