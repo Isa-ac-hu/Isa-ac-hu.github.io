@@ -33,7 +33,7 @@ export default class NoteworthyCanvas {
     this.icons.gh.src = 'assets/icons/gh.svg';
 
     canvas.addEventListener('mousemove', this.onMove);
-    canvas.addEventListener('click',     this.onClick);
+    canvas.addEventListener('click', this.onClick);
   }
 
   /* helper – returns index of card under cursor or –1 */
@@ -66,14 +66,17 @@ export default class NoteworthyCanvas {
     };
 
   onClick = e => {
-    const r   = this.canvas.getBoundingClientRect();
-    const idx = this.hitCard(e.clientX - r.left, e.clientY - r.top);
+    const r = this.canvas.getBoundingClientRect();
+    const cssX = e.clientX - r.left;
+    const cssY = e.clientY - r.top;
+    const idx = this.hitCard(cssX, cssY);
     if (idx === -1) return;
+    // prevent HomeStage (and Header) from also seeing this click
+    e.stopPropagation();
     /* open the per-card link (PDF or YouTube) in a new tab */
     const link = NOTE_LIST[idx].url;
     if (link) window.open(link, '_blank');
   };
-
   draw(scrollY) {
     const { ctx, canvas } = this;
     const dpr  = window.devicePixelRatio || 1;
