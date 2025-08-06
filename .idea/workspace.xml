@@ -5,7 +5,418 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="819078d4-47d7-499c-a0f1-14450f77bb09" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/components/noteworthyCanvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/noteworthyCanvas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Maps/ne_10m_coastline.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Maps/ne_110m_coastline.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Maps/ne_50m_coastline.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/PDF/History of English.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/PDF/Paper on Information Cascades.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/PDF/Paper on Quantum Random Walks.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_006.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_007.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_008.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_009.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_010.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_011.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_012.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_013.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_014.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_015.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_016.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_017.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_018.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_019.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_020.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_021.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_022.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_023.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_024.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_025.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_026.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_027.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_028.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_029.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_030.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_031.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_032.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_033.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_034.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_035.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_036.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_037.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_038.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_039.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_040.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_041.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_042.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_043.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_044.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_045.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_046.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_047.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_048.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_049.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_050.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_051.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_052.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_053.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_054.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_055.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_056.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_057.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_058.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_059.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_060.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_061.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_062.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_063.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_064.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_065.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_066.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_067.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_068.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_069.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_070.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_071.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_072.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_073.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_074.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_075.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_076.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_077.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_078.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_079.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_080.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_081.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_082.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_083.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_084.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_085.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_086.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_087.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_088.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_089.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_090.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_091.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_092.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_093.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_094.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_095.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_096.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_097.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_098.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_099.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_100.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_101.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_102.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_103.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_104.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_105.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_106.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_107.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_108.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_109.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_110.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_111.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_112.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_113.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_114.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_115.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_116.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_117.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_118.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_119.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_120.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_121.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_122.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_123.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_124.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_125.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_126.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_127.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_128.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_129.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_130.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_131.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_132.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_133.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_134.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_135.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_136.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_137.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_138.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Arduino/frame_139.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Chess.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_002.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_003.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_004.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_005.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_006.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_007.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_008.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_009.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_010.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_011.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_012.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_013.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_014.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_015.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_016.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_017.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_018.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_019.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_020.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_021.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_022.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_023.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_024.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_025.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_026.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_027.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_028.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_029.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_030.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_031.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_032.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_033.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_034.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_035.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_036.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_037.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_038.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_039.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_040.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_041.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_042.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_043.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_044.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_045.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_046.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_047.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_048.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_049.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_050.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_051.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_052.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_053.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_054.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_055.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_056.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_057.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_058.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_059.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_060.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_061.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_062.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_063.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_064.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/gifs/Tetris/frame_065.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/icons/folder.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/icons/gh-teal.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/icons/gh.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/icons/ig-teal.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/icons/ig.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/icons/ln-teal.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/icons/ln.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/icons/strava-teal.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/icons/strava.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/icons/tw-teal.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/icons/tw.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/1019.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/1500 Comm Ave.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/41 Bay State Road.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/AizakkuBot.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/AmazingBallSystem.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Angor Wat.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/BU Fenway.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Bangkok.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Batu Caves.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Bensalem.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Blackwell Mills.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Blue Hills Reservation.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Borobudur.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Boston Chinatown.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Boston College.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Boston.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Bound Brook.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Broadway.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Brookline.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Brooklyn.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Bunker Hill.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Cambridge.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Cancun Down Town.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Cancun Hotel Zone.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Carcar City.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Carson Beach.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Cebu City.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Cebu Strait.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Cebu.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Changi Airport.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Cherry Springs State Park.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Chesterbrook.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Chiang Kai Shek Memorial Hall.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Chocolate Hills Bohol.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Conshohocken.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Corey Hill Park.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Danao.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Downingtown.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Drexel.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/East Somerville.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/East Whiteland Township.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Elizabeth.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Elmhurst.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Ewing.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Exton.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Eyjafjoll.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Fairmount Park.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Fanwood.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Forbidden City.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Ft Lauderdale.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Georgia Tech Library.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Georgia Tech.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Governors Island.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Great Valley High School.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Great Wall.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Hangzhou.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Hanoi.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Harvard Arboretum.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Harvard Square.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Hong Kong Avenue of Stars.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Hong Kong Island.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Hong Kong Victoria Peak.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Hualien.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/IsaacHu.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Isla Mujeres.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Jakarta.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Jiangsu Buddha.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Jiaxing.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Kaohsiung.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Kathu Pa Tong.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Katla.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Killing Fields.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/King Edward VII.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Kingston.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Kuala Lumpur Airport.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Kuala Lumpur.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Levittown.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Linden.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Longwood.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Macau.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Malacca.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Malvern.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Manhattan.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Manila.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Medford.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Mendut.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Middlesex.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Momo Beach.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Mount Bromo.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Myles.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Nahant.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Nanjing.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/National University of Singapore.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Neumann University.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Newark.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Norristown.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Old Phuket Town.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Olympic Park Georgia.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Oslob Tan Awan.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Panama City Beach.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Panglao.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Pasay City.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Pasay.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Patong Beach.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Pennsbury.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Perth Amboy.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Philadelphia China Town.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Philadelphia Museum of Art.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Philadelphia.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Phnom Penh Sangkat Boeung Kak Ti Muoy.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Phnom Penh.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Plymouth.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Prince George Park.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Princeton.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Providence.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Provincetown.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Qi Xing Tan Beach.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Qi Xing.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Quincy.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Radnor.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Rainbow Steps.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Rehoboth Beach.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Reykjavik.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Reynisfjara Beach.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Ringing Rocks State Park.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Rutgers.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/S21.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Saigon.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Seaport.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Secaucus.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Shanghai.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Singapore Chinatown.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Six Flags New England.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Soho.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Solberg Airport.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Springfield Massachusetts.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Staten Island Arrochar.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Staten Island St George.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Staten Island.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Stow.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Stratton.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Strawberry Mansion.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Sun Moon Lake.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Surabaya.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Taichung.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Tainan.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Taiwan National Palace Museum.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Tarako National Park.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Taylors Gut Delaware.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Tiananmen.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Tianjin.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Timo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Timo2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Timo3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Trenton Top Road.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Trenton.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Umass Boston.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Valley Forge.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Villanova.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Virgin Island.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Wardsboro.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Winchester.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Xelha Water Park.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Xiamen Airport.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Xichen Itza.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Xitang.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/Zarephath.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/resumes/Isaac Hu Resume.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/aboutSection.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/buildCanvas.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/globeCanvas.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/header.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/hero.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/homeStage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/infoPanel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/introStage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/mailBar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/noteworthyCanvas.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/socialBar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workCanvas.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/places.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,31 +444,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JavaScript Debug.index.html.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Node.js.main.js.executor": "Run",
-    "Node.js.stageIntro.js.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "C:/Users/isaac/WebstormProjects/MyWebsite/src/assets/icons",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "C:/Users/isaac/AppData/Roaming/JetBrains/WebStorm2025.1/node/versions/22.17.1/node",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/isaac/WebstormProjects/MyWebsite/src/main.js",
-    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\isaac\\WebstormProjects\\MyWebsite\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.web.browsers",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2025.1.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Node.js.main.js.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.stageIntro.js.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/isaac/WebstormProjects/MyWebsite/src/assets/icons&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;C:/Users/isaac/AppData/Roaming/JetBrains/WebStorm2025.1/node/versions/22.17.1/node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/isaac/WebstormProjects/MyWebsite/src/main.js&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\isaac\\WebstormProjects\\MyWebsite\\node_modules\\prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.web.browsers&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2025.1.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\isaac\WebstormProjects\MyWebsite\src\assets\icons" />
@@ -109,7 +520,10 @@
       <workItem from="1754238060288" duration="34847000" />
       <workItem from="1754319124010" duration="24658000" />
       <workItem from="1754411840249" duration="6576000" />
-      <workItem from="1754422283759" duration="29114000" />
+      <workItem from="1754422283759" duration="29721000" />
+      <workItem from="1754456586570" duration="108000" />
+      <workItem from="1754456702365" duration="368000" />
+      <workItem from="1754457086770" duration="28000" />
     </task>
     <servers />
   </component>
