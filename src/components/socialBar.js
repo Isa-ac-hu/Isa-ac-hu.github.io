@@ -1,3 +1,4 @@
+/* socialBar.js */
 import {COLORS, SOCIAL, easeLogistic, BAR_ANIM} from '../utils.js';
 
 /* fallback doodle while the SVG hasn’t loaded yet */
@@ -5,39 +6,32 @@ function drawStub(ctx, id, s) {
   const r = s * 0.35;
   ctx.beginPath();
   switch (id) {
-    case 'gh': ctx.arc(0, 0, r, 0, Math.PI * 2); break;          // ◯ github
-    case 'ln': ctx.rect(-r, -r, r * 2, r * 2);    break;         // ■ linkedin
-    case 'ig': ctx.moveTo(-r, r); ctx.lineTo(r, -r);             // ⧉ instagram
+    case 'gh': ctx.arc(0, 0, r, 0, Math.PI * 2); break; // ◯ github
+    case 'ln': ctx.rect(-r, -r, r * 2, r * 2);    break; // ■ linkedin
+    case 'ig': ctx.moveTo(-r, r); ctx.lineTo(r, -r); // ⧉ instagram
       ctx.moveTo(-r, -r); ctx.lineTo(r, r); break;
-    case 'tw': ctx.moveTo(-r, 0); ctx.lineTo( r, 0);             // ― twitter
+    case 'strava': ctx.moveTo(-r, 0); ctx.lineTo( r, 0); // ― strava
       ctx.moveTo(0, -r); ctx.lineTo(0, r); break;
   }
   ctx.stroke();
 }
 
-
-/* -------------------------------------------------- */
-/* 1. one‑time SVG pre‑load                           */
-/* -------------------------------------------------- */
-const ICON_IMG = Object.create(null);        // id  →  HTMLImageElement
-let   preloadPromise;                        // make sure we only fetch once
-
+const ICON_IMG = Object.create(null);
+let preloadPromise;
 
 function loadIcon(id) {
   return new Promise(res => {
     const img = new Image();
     img.src   = `assets/icons/${id}.svg`;
-    img.onload = () => {          // store & resolve when ready
+    img.onload = () => { // store & resolve when ready
       ICON_IMG[id] = img;
       res();
     };
   });
 }
 
-
 function preloadIcons () {
   if (preloadPromise) return preloadPromise; // already running / done
-
   // load both the normal and hover (“‑teal”) variants
   const tasks = [];
   SOCIAL.icons.forEach(ic => {
@@ -50,20 +44,19 @@ function preloadIcons () {
 
 export default class SocialBar {
   constructor(ctx, canvas) {
-    this.ctx     = ctx;
-    this.canvas  = canvas;
+    this.ctx = ctx;
+    this.canvas = canvas;
 
-    this.visible = false;     // controlled by HomeStage
-    this.timer   = 0;         // 0-1 fade prog
+    this.visible = false; // controlled by HomeStage
+    this.timer = 0;
 
     /* per‑icon hover state */
     this.hovers  = SOCIAL.icons.map(() => false);
-
-    this.prog    = SOCIAL.icons.map(() => 0);   // 0‒1 logistic input
-    this.SPEED   = 0.08;                       // bigger = quicker ease
+    this.prog = SOCIAL.icons.map(() => 0);
+    this.SPEED = 0.08;
 
     canvas.addEventListener('mousemove', this.onMove);
-    canvas.addEventListener('click',     this.onClick);
+    canvas.addEventListener('click', this.onClick);
 
     preloadIcons();
   }
@@ -73,8 +66,8 @@ export default class SocialBar {
     const { x, top, size, gap } = SOCIAL;
     for (let i = 0; i < SOCIAL.icons.length; i++) {
       const lift = -SOCIAL.lift * easeLogistic(this.prog[i]);
-      const bx   = x - size / 2;
-      const by   = top + i * (size + gap) + lift - size / 2;
+      const bx = x - size / 2;
+      const by = top + i * (size + gap) + lift - size / 2;
       if (
         cssX >= bx && cssX <= bx + size &&
         cssY >= by && cssY <= by + size
@@ -90,8 +83,6 @@ export default class SocialBar {
     const cssY = e.clientY - rect.top;
 
     const idx = this.hitIndex(cssX, cssY);
-    //this.canvas.style.cursor = idx >= 0 ? 'pointer' : '';
-
     this.hovers = this.hovers.map((_, i) => i === idx);
   };
   get hoverAny () { return this.hovers.some(h => h); }
@@ -109,48 +100,40 @@ export default class SocialBar {
   draw() {
     const { ctx } = this;
 
-    if (!this.visible) return;           // not yet
+    if (!this.visible) return;
     this.timer = Math.min(1, this.timer + BAR_ANIM.speed);
-    const globalT = easeLogistic(this.timer);   // 0‒1
-    if (globalT < 1e-3) return;                 // skip painting while invisible
+    const globalT = easeLogistic(this.timer);
+    if (globalT < 1e-3) return;
     ctx.globalAlpha = globalT;
 
-
     ctx.save();
-    ctx.lineWidth   = 2;
+    ctx.lineWidth = 2;
 
     SOCIAL.icons.forEach((ic, i) => {
       /* progress toward 0 or 1 */
       if (this.hovers[i]) this.prog[i] = Math.min(1, this.prog[i] + this.SPEED);
-      else                this.prog[i] = Math.max(0, this.prog[i] - this.SPEED);
-      const lift = -SOCIAL.lift * easeLogistic(this.prog[i]);   // smooth rise
-      const alpha  = 1;
-      const color  = this.hovers[i] ? COLORS.cyan : COLORS.gray;
+      else  this.prog[i] = Math.max(0, this.prog[i] - this.SPEED);
+      const lift = -SOCIAL.lift * easeLogistic(this.prog[i]); // smooth rise
+      const alpha = 1;
+      const color = this.hovers[i] ? COLORS.cyan : COLORS.gray;
 
       const cx = SOCIAL.x;
       const cy = SOCIAL.top + i * (SOCIAL.size + SOCIAL.gap) + lift;
 
       ctx.save();
       ctx.translate(cx, cy);
-      /* ------------ icon ------------ */
 
       const bmp = this.hovers[i] ? ICON_IMG[ic.hoverId] : ICON_IMG[ic.id];
       if (bmp) {
-
         ctx.drawImage(
           bmp,
           -SOCIAL.size / 2, -SOCIAL.size / 2,
           SOCIAL.size, SOCIAL.size
         );
         ctx.globalCompositeOperation = 'source-atop';
-
-
-
       } else {
-        //ctx.strokeStyle = color;
         drawStub(ctx, ic.id, SOCIAL.size);   // placeholder until onload fires
       }
-      //ctx.globalCompositeOperation = 'source-over';
       ctx.restore();
     });
 
@@ -162,11 +145,8 @@ export default class SocialBar {
     ctx.moveTo(SOCIAL.x, lastY + SOCIAL.size / 2 + 12);
     ctx.lineTo(SOCIAL.x, lastY + SOCIAL.size / 2 + 12 + SOCIAL.lineH);
     ctx.stroke();
-
     ctx.restore();
   }
-
-  /* (optional) cleanup if you ever destroy HomeStage */
   destroy() {
     this.canvas.removeEventListener('mousemove', this.onMove);
     this.canvas.removeEventListener('click',     this.onClick);

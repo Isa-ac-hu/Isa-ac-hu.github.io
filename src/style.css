@@ -1,3 +1,5 @@
+/*style.css*/
+
 @import url(https://db.onlinewebfonts.com/c/c8da3c58be0ab862c24357279216fe05?family=SF+Mono+Regular);
 @import url(https://db.onlinewebfonts.com/c/54ef0f7ba1355411413d1b182456de2e?family=Calibre);
 
@@ -5,22 +7,21 @@ canvas, body { font-family: "SF Mono Regular", serif; }
 canvas, body {
     font-family: "Calibre", Comic Sans MS, serif; }
 
-
 html, body {
     /* min-height: 100%; */
     margin: 0;
-    overflow-y: auto;        /* ← prevents any scroll bars */
-    background: #020C1B;     /* keeps your black until the JS draws */
+    overflow-y: auto; /* prevents any scroll bars */
+    background: #020C1B; /* keeps your black until the JS draws */
 }
-
 /* make the canvas follow the viewport edges exactly */
 canvas {
-    position: fixed;         /* take it out of normal flow */
-    inset: 0;                /* shorthand for top:0; right:0; bottom:0; left:0 */
-    width: 100vw;            /* vw / vh track the visual viewport */
+    position: fixed; /* take it out of normal flow */
+    inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0 */
+    width: 100vw; /* vw / vh track the visual viewport */
     height: 100vh;
-    display: block;          /* remove inline‑block baseline gap */
-    z-index: 1;        /*we want our canvas to stay in front of most other components*/
+    display: block; /* remove inline‑block baseline gap */
+    z-index: 1; /*we want our canvas to stay in front of most other components*/
+    background: #020C1B;
 }
 
 /* each “page” takes one viewport height */
@@ -28,6 +29,6 @@ canvas {
     min-height:100vh;
     padding:0 200px;
     box-sizing:border-box;
-    display:flex;          /* centres the demo text a bit */
+    display:flex;
     align-items:center;
 }

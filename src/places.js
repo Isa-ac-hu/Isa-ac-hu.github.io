@@ -1,3 +1,5 @@
+/*places.js*/
+
 export const PLACES = [
 
   { name:"41 Bay State Road (BU dorm)",  lat:42.3503, lng:-71.1046, desc:"", img:"41 Bay State Road.jpg" },

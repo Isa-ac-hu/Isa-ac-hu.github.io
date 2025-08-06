@@ -1,5 +1,4 @@
-/* GlobeCanvas – interactive orthographic globe
-   =========================================== */
+/* GlobeCanvas.js */
 
 import {
   COLORS,
@@ -9,7 +8,7 @@ import {
 
 import {PLACES} from '../places.js';
 
-/* ───────── coast-line cache (unchanged) ─────────────────────────── */
+/* coast-line cache  */
 let COAST_PROMISE;
 let COAST_LINES = [];
 
@@ -29,38 +28,33 @@ function loadCoast () {
   return COAST_PROMISE;
 }
 
-
-
-/* ───────── helper maths ─────────────────────────────────────────── */
 const toVec = (lat, lng) => {
   const phi = lat * Math.PI / 180;
-  const lambda = -lng * Math.PI / 180;      // west = positive X on screen
+  const lambda = -lng * Math.PI / 180; // west = positive X on screen
   const cosPhi = Math.cos(phi);
   return [cosPhi * Math.cos(lambda), Math.sin(phi), cosPhi * Math.sin(lambda)];
 };
 
-const proj = ([x, y, z], R) => [R * x, -R * y, z];     // flip Y for canvas
+const proj = ([x, y, z], R) => [R * x, -R * y, z]; // flip Y for canvas
 
 /* ================================================================== */
 export default class GlobeCanvas {
 
-  /* ——— allow outside code to add a plain {lat,lng,…} object ——— */
   addMarker = (obj) => this.markers.push(obj);
 
-  /* --------------------------------------------------------------- */
   constructor (ctx, canvas) {
-    this.ctx    = ctx;
+    this.ctx = ctx;
     this.canvas = canvas;
 
     /* run-time state */
-    this.rotX  = 0;
-    this.rotY  = 0;
+    this.rotX = 0;
+    this.rotY = 0;
     this.scale = 1;
-    this.markers = [...PLACES];          // ← all places from utils
+    this.markers = [...PLACES];
 
     loadCoast();
 
-    /* ========== tiny DOM tooltip ========== */
+    /*tiny DOM tooltip*/
     const tip = document.createElement('div');
     tip.style.cssText =
       'position:fixed;padding:4px 6px;font:12px/1 "SF Mono",monospace;' +
@@ -71,7 +65,7 @@ export default class GlobeCanvas {
 
 
 
-    /* ======== pointer interaction ======== */
+    /* pointer interaction*/
     const hitTest = (clientX, clientY) => {
       const { left, top } = canvas.getBoundingClientRect();
       const x = clientX - left;
@@ -95,7 +89,7 @@ export default class GlobeCanvas {
     this.pointerInside = false;
     this.hovered = null;
 
-    /* ----- drag to rotate ----- */
+    /*  drag to rotate */
     let dragging = false, lastX = 0, lastY = 0;
     canvas.addEventListener('pointerdown', e => {
       if (!hitTest(e.clientX, e.clientY)) return;
@@ -115,16 +109,16 @@ export default class GlobeCanvas {
       const dy = e.clientY - lastY;
       lastX = e.clientX;  lastY = e.clientY;
 
-      const BASE_SPEED = 0.005;         // tuned for scale = 1
+      const BASE_SPEED = 0.005;
       const S = BASE_SPEED / this.scale;
       this.rotY += dx * S;
       this.rotX += dy * S;
     });
 
-    canvas.addEventListener('pointerup',   () => dragging = false);
+    canvas.addEventListener('pointerup', () => dragging = false);
     canvas.addEventListener('pointercancel', () => dragging = false);
 
-    /* ----- wheel to zoom ----- */
+    /* wheel to zoom */
     const ZOOM_STEP = 1.15;
     const MIN_SCALE = 0.1;
     const MAX_SCALE = 300;
@@ -137,7 +131,7 @@ export default class GlobeCanvas {
       this.scale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, this.scale));
     }, { passive: false });
 
-    /* ----- click to emit event ----- */
+    /* click to emit event */
     canvas.addEventListener('click', () => {
       if (this.hovered) {
         canvas.dispatchEvent(
@@ -147,10 +141,9 @@ export default class GlobeCanvas {
     });
   }
 
-  /* =============================================================== */
   draw (scrollY) {
 
-    // --- helper -------------------------------------------------------------
+    // helper
     const paintDot = (p, hovered=false) => {
       ctx.beginPath();
       ctx.arc(p.sx, p.sy, hovered ? 4 : 4, 0, Math.PI * 2);
@@ -159,59 +152,57 @@ export default class GlobeCanvas {
     };
 
     const { ctx, canvas } = this;
-    const dpr   = window.devicePixelRatio || 1;
-    const cssH  = canvas.height / dpr;
-    const PAGE_OFFSET = 6 * cssH;      // <-- same as before
-    /* bail early if the whole Travel page is off-screen */
+    const dpr = window.devicePixelRatio || 1;
+    const cssH = canvas.height / dpr;
+    const PAGE_OFFSET = 6 * cssH;
     if (scrollY < PAGE_OFFSET - cssH || scrollY > PAGE_OFFSET + cssH) return;
     const pageY = PAGE_OFFSET - scrollY;
-    const hdrX  = GLOBE_BOX.left;       // line-up with left edge of globe
-    const HDR_GAP = -90;                // vertical gap *above* the frame (px)
-    const hdrY  = pageY + GLOBE_BOX.top + HDR_GAP;
-    // 04. index number — cyan
-    ctx.fillStyle   = COLORS.cyan;
-    ctx.font        = '24px "SF Mono Regular", monospace';
-    ctx.textAlign   = 'left';
-    ctx.textBaseline= 'top';
+    const hdrX = GLOBE_BOX.left; // line-up with left edge of globe
+    const HDR_GAP = -90; // vertical gap *above* the frame (px)
+    const hdrY = pageY + GLOBE_BOX.top + HDR_GAP;
+    // 04. cyan index number
+    ctx.fillStyle = COLORS.cyan;
+    ctx.font = '24px "SF Mono Regular", monospace';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
     ctx.fillText('04.', hdrX, hdrY + 8);
     const idxW = ctx.measureText('04.').width + 8;
-    // heading label — light
+    // heading label
     ctx.fillStyle = COLORS.light;
     ctx.font = 'bold 36px "Calibre", sans-serif';
     ctx.fillText('Travel', hdrX + idxW, hdrY);
     // grey horizontal rule
     ctx.strokeStyle = COLORS.gray + '66';
-    ctx.lineWidth   = 0.5;
+    ctx.lineWidth = 0.5;
     ctx.beginPath();
     ctx.moveTo(hdrX + idxW + 105, hdrY + 17);
     ctx.lineTo(hdrX + idxW + 105 + 300, hdrY + 17);
     ctx.stroke();
 
-    /* --- NEW: one-liner blurb ------------------------------------ */
     ctx.fillStyle = COLORS.gray;
-    ctx.font      = '20px "Calibre", sans-serif';
+    ctx.font = '20px "Calibre", sans-serif';
     ctx.textAlign = 'left';
     ctx.fillText("I've traveled a lot — click around below to see where I've been!", hdrX, hdrY + 48);
 
-    const box  = GLOBE_BOX;
-    const cx   = box.left + box.size / 2;
-    const cy   = (PAGE_OFFSET - scrollY + box.top) + box.size / 2;
-    const R    = (box.size / 2 - 10) * this.scale;
+    const box = GLOBE_BOX;
+    const cx = box.left + box.size / 2;
+    const cy = (PAGE_OFFSET - scrollY + box.top) + box.size / 2;
+    const R = (box.size / 2 - 10) * this.scale;
 
     ctx.save();
     ctx.translate(cx, cy);
 
-    /* ------- outline frame ------- */
+    /* outline frame */
     ctx.lineWidth = 2;
     ctx.strokeStyle = COLORS.cyan;
     strokeRoundRect(ctx, -box.size/2, -box.size/2, box.size, box.size, 4);
 
-    /* ------- clipping so nothing bleeds out ------- */
+    /* clipping so nothing bleeds out */
     ctx.beginPath();
     ctx.roundRect?.(-box.size/2, -box.size/2, box.size, box.size, 4);
     ctx.clip();
 
-    /* ------- rotation matrix ------- */
+    /* rotation matrix */
     const sinX = Math.sin(this.rotX), cosX = Math.cos(this.rotX);
     const sinY = Math.sin(this.rotY), cosY = Math.cos(this.rotY);
 
@@ -219,20 +210,18 @@ export default class GlobeCanvas {
       let nx =  cosY * x + sinY * z;
       let nz = -sinY * x + cosY * z;
       let ny =  cosX * y - sinX * nz;
-      nz     =  sinX * y + cosX * nz;
+      nz =  sinX * y + cosX * nz;
       return [nx, ny, nz];
     };
 
-    /* ---------- outer rim of the globe -------------------------------- */
-    ctx.lineWidth   = 2;                 // match the square’s thickness
+    /* outer rim of the globe */
+    ctx.lineWidth = 2; // match the square’s thickness
     ctx.strokeStyle = COLORS.cyan;
     ctx.beginPath();
-    ctx.arc(0, 0, R, 0, Math.PI * 2);    // x = 0, y = 0 because we are
-    ctx.stroke();                        // already translated to (cx, cy)
+    ctx.arc(0, 0, R, 0, Math.PI * 2);
+    ctx.stroke();
 
-
-
-    /* ------- coastlines ------- */
+    /* coastlines */
     COAST_LINES.forEach(line => {
       let first = true;
       line.forEach(([lng, lat]) => {
@@ -240,23 +229,20 @@ export default class GlobeCanvas {
         if (v[2] < 0) { first = true; return; }
         const [sx, sy] = proj(v, R);
         if (first) { ctx.moveTo(sx, sy); first = false; }
-        else       { ctx.lineTo(sx, sy); }
+        else { ctx.lineTo(sx, sy); }
       });
     });
     ctx.stroke();
 
-    /* ===============================================================
-       Project all markers for this frame → used for drawing and hit-test
-    ============================================================== */
     const projected = [];
     this.markers.forEach(p => {
       const v = rot(toVec(p.lat, p.lng));
-      if (v[2] < 0) return;          // back side
+      if (v[2] < 0) return;
       const [sx, sy] = proj(v, R);
       projected.push({ ...p, sx, sy });
     });
 
-    /* ------- determine hovered place ------- */
+    /* determine hovered place */
     if (this.pointerInside) {
       const THRESH = 6 * dpr;
       this.hovered = null;
@@ -269,14 +255,14 @@ export default class GlobeCanvas {
       this.hovered = null;
     }
 
-    /* ------- draw markers ------- */
+    /* draw markers */
     projected.forEach(p => {
       if (!this.hovered || p.name !== this.hovered.name) paintDot(p);
     });
-    // 2-pass: hovered one goes on top
+    // hovered one goes on top
     if (this.hovered) paintDot(this.hovered, true);
 
-    /* ------- tooltip visibility ------- */
+    /* tooltip visibility */
     if (this.hovered) {
       this.tooltip.textContent = this.hovered.name;
       this.tooltip.style.left   = `${this.pointerX + 12}px`;
@@ -285,7 +271,6 @@ export default class GlobeCanvas {
     } else {
       this.tooltip.style.opacity = 0;
     }
-
     ctx.restore();
   }
 }
