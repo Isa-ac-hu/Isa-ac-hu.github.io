@@ -221,7 +221,7 @@ export const HERO_BTN = {
 export const HERO_ANIM = {
   delay: 0.5, // seconds AFTER the header completes
   stagger: 0.35, // delay between successive hero lines
-  dropPx: convert(30), // start-offset below baseline
+  dropPx: convert(0), // start-offset below baseline
   speed: 0.03 // timer advance per frame
 };
 

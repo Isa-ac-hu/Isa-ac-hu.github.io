@@ -82,7 +82,11 @@ export default class HomeStage {
     resizeHiDPI(this.canvas, this.ctx);
   }
 
-  onPlaceSelect = ({ detail }) => { this.panel.show(detail); };
+  onPlaceSelect = ({ detail }) => {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    resizeHiDPI(this.canvas, this.ctx);
+    this.panel.show(detail);
+  };
 
   /* ---------- hover helper ---------- */
   onMove = (e) => {
