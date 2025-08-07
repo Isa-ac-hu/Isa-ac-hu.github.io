@@ -93,10 +93,10 @@ export default class HomeStage {
     //   this.frameId = requestAnimationFrame(this.frame);
     // });
 
-    // window.addEventListener('resize', () => {
-    //   resizeHiDPI(this.canvas, this.ctx);
-    //   this.frameId = requestAnimationFrame(this.frame);
-    // });
+    window.addEventListener('resize', () => {
+      resizeHiDPI(this.canvas, this.ctx);
+      this.frameId = requestAnimationFrame(this.frame);
+    });
 
 
   }
