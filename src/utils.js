@@ -136,20 +136,18 @@ let height = window.innerHeight; //1024
 const DESIGN_WIDTH = 1638;
 const DESIGN_HEIGHT = 863;
 
-const scale = Math.min(
-  width / DESIGN_WIDTH,
-  height / DESIGN_HEIGHT
-);
 
 export function getScale(){
-  return scale;
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  return Math.min(w / DESIGN_WIDTH, h / DESIGN_HEIGHT);
 }
 export function convert(designValue){
-  const s = Math.max(scale, 0.5);
+  const s = Math.max(getScale(), 0.1);
   return designValue * s;
 }
 export function convertInt(designValue){
-  const s = Math.max(scale, 0.5);
+  const s = Math.max(getScale(), 0.1);
   return Math.round(designValue * s);
 }
 
