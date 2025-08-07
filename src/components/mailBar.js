@@ -12,12 +12,12 @@ export default class MailBar {
 
     this.prog = 0;
     this.SPEED  = 0.08;
-    this.LIFT = convert(6);
+    this.LIFT = 6;
 
     /* once-off text metrics */
-    ctx.font = convertInt(16) + 'px "SF Mono", monospace';
+    ctx.font = 16 + 'px "SF Mono", monospace';
     this.txtW = ctx.measureText(MAIL.email).width;
-    this.txtH = convert(16);
+    this.txtH = 16;
 
     /* thickness of hit-zone around the vertical text */
     this.hitW = this.txtH;  // horizontal thickness
@@ -85,7 +85,7 @@ export default class MailBar {
     ctx.save();
     ctx.translate(x, baseY - lift);
     ctx.rotate(Math.PI / 2); // 90° clockwise
-    ctx.font = convertInt(13) + 'px "SF Mono Regular", monospace';
+    ctx.font = 13 + 'px "SF Mono Regular", monospace';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = col;
@@ -94,7 +94,7 @@ export default class MailBar {
 
     /* slim grey line  */
     const lineStartY = baseY + this.hitH + MAIL.lineGap;
-    ctx.lineWidth = convert(2);
+    ctx.lineWidth = 2;
     ctx.strokeStyle = COLORS.gray;
     ctx.beginPath();
     ctx.moveTo(x, lineStartY);

@@ -113,7 +113,7 @@ export default class SocialBar {
     ctx.globalAlpha = globalT;
 
     ctx.save();
-    ctx.lineWidth = convert(2);
+    ctx.lineWidth = 2;
 
 
     const dpr   = window.devicePixelRatio || 1;
@@ -151,7 +151,7 @@ export default class SocialBar {
     /* grey vertical line */
     const lastY = baseY + (SOCIAL.icons.length - 1) * (SOCIAL.size + SOCIAL.gap * 1.5);
     ctx.strokeStyle = COLORS.gray;
-    ctx.lineWidth = convert(2);
+    ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(SOCIAL.x, lastY + SOCIAL.size / 2 + 12);
     ctx.lineTo(SOCIAL.x, lastY + SOCIAL.size / 2 + 12 + SOCIAL.lineH);

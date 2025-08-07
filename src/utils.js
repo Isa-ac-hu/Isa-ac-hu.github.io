@@ -171,9 +171,9 @@ export const COLORS = {
 /* central place for design constants */
 
 export const LOGO = {
-  anchor: { x: convert(70), y: convert(50) },  // where the mini‑logo is drawn
-  size: { w: convert(45), h: convert(45) }, // click zone width/height in CSS‑px
-  scale: convert(0.022), // radius factor (r = min(vw,vh)*scale)
+  anchor: { x: 70, y: 50 },  // where the mini‑logo is drawn
+  size: { w: 45, h: 45 }, // click zone width/height in CSS‑px
+  scale: 0.022, // radius factor (r = min(vw,vh)*scale)
 };
 
 /* derived bounds — computed once & cached */
@@ -188,17 +188,17 @@ export const LOGO_BOUNDS = {
 /* number of sides is the same everywhere */
 export const SIDES = 6;
 export const HEADER = {
-  offsetX: convert(0), // future slide‑out, keep 0 for now
-  offsetY: convert(0),
-  gap: convert(2), // horizontal gap between nav items
-  innerPad: convert(13),
-  numToLabel: convert(4),
-  rightShift: convert(70),
-  resumeW: convert(80), // Resume button outer width
-  resumeH: convert(40), // Resume button outer height
-  font: convertInt(13) + 'px "SF Mono Regular", monospace',
-  resumeRadius: convert(6), // corner radius for the rounded outline
-  resumeDistance: convert(20),
+  offsetX: 0, // future slide‑out, keep 0 for now
+  offsetY: 0,
+  gap: 2, // horizontal gap between nav items
+  innerPad: 13,
+  numToLabel: 4,
+  rightShift: 70,
+  resumeW: 80, // Resume button outer width
+  resumeH: 40, // Resume button outer height
+  font: 13 + 'px "SF Mono Regular", monospace',
+  resumeRadius: 6, // corner radius for the rounded outline
+  resumeDistance: 20,
 };
 
 export const RESUME_URL =
@@ -225,12 +225,12 @@ export const HERO_ANIM = {
 
 /* fixed social‑bar geometry (CSS‑px) */
 export const SOCIAL = {
-  x: convert(70), // left margin ─ same as mini‑logo
-  top: convert(300),
-  size: convert(20), // width & height of icon cells
-  gap: convert(25), // vertical gap between icons
-  lift: convert(4), // how much the icon rises on hover
-  lineH: convert(200),  // length of the grey line below the last icon
+  x: 70, // left margin ─ same as mini‑logo
+  top: 300,
+  size: 20, // width & height of icon cells
+  gap: 25, // vertical gap between icons
+  lift: 4, // how much the icon rises on hover
+  lineH: 200,  // length of the grey line below the last icon
 
   icons: [
     {
@@ -258,11 +258,11 @@ export const SOCIAL = {
 
 export const MAIL = {
   email: 'isaac.hu002@gmail.com',
-  x: convert(57), // distance from the right edge (same as social bar from left)
-  top: convert(350),  // matches SOCIAL.top so the two bars are aligned
-  gap: convert(40), // vertical space between characters
-  lineH: convert(200), // vertical line below the last character
-  lineGap: convert(40), //gap between email and line
+  x: 57, // distance from the right edge (same as social bar from left)
+  top: 350,  // matches SOCIAL.top so the two bars are aligned
+  gap: 40, // vertical space between characters
+  lineH: 200, // vertical line below the last character
+  lineGap: 40, //gap between email and line
 };
 
 export const ABOUT = {
@@ -565,6 +565,6 @@ export const GLOBE_BOX = {
 
 export const INFO_PANEL = {
   left: convert(1050), // distance from the left edge of the canvas / page
-  top: GLOBE_BOX.top + convert(6) * window.innerHeight,
+  top: GLOBE_BOX.top + convert(6.15) * window.innerHeight,
   w: convert(320), // max width
 };

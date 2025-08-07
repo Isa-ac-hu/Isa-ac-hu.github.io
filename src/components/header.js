@@ -154,7 +154,7 @@ export default class Header {
         ctx.closePath(); ctx.stroke();
 
         ctx.fillStyle = COLORS.cyan;
-        ctx.font = 'bold ' + convertInt(20) + 'px "SF Mono Regular", monospace';
+        ctx.font = 'bold ' + '20px "SF Mono Regular", monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText('胡', 0, 0);
