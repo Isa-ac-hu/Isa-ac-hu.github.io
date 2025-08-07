@@ -29,6 +29,7 @@ export default class HomeStage {
 
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
+    resizeHiDPI(this.canvas, this.ctx);
     this.restart = restartCallback;
     this.heroDoneTime = null;
 
@@ -50,7 +51,7 @@ export default class HomeStage {
     this.header = headerShared;
     this.panel = new InfoPanel(this.ctx, this.canvas);
 
-    this.frameId = requestAnimationFrame(this.frame);
+    //this.frameId = requestAnimationFrame(this.frame);
 
     document.body.style.height = `${7.4 * getScale() * 100}vh`; // Hero (1vh) + About (1vh)
     this.scrollY  = 0;
@@ -177,10 +178,10 @@ export default class HomeStage {
     this.socialBar.draw(this.socialBar);
     this.mailBar.draw();
     this.about.draw(this.scrollY);
-    // this.globe.draw(this.scrollY);
-    // this.work.draw(this.scrollY);
-    // this.builds.draw(this.scrollY);
-    // this.notes.draw(this.scrollY);
+    this.globe.draw(this.scrollY);
+    this.work.draw(this.scrollY);
+    this.builds.draw(this.scrollY);
+    this.notes.draw(this.scrollY);
 
     if (!this.logoDone) {
       this.logoProg += 0.03;
