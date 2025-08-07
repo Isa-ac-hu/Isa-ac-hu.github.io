@@ -7,7 +7,7 @@ export let COAST_LINES = [];
 let COAST_PROMISE;
 export function loadCoast() {
   if (COAST_PROMISE) return COAST_PROMISE;
-  COAST_PROMISE = fetch('./src/assets/Maps/ne_110m_coastline.json')
+  COAST_PROMISE = fetch('./src/assets/Maps/ne_50m_coastline.json')
     .then(res => res.json())
     .then(({ features }) => {
       features.forEach(({ geometry }) => {

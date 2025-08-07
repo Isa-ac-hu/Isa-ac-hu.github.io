@@ -177,10 +177,10 @@ export default class HomeStage {
     this.socialBar.draw(this.socialBar);
     this.mailBar.draw();
     this.about.draw(this.scrollY);
-    this.globe.draw(this.scrollY);
-    this.work.draw(this.scrollY);
-    this.builds.draw(this.scrollY);
-    this.notes.draw(this.scrollY);
+    // this.globe.draw(this.scrollY);
+    // this.work.draw(this.scrollY);
+    // this.builds.draw(this.scrollY);
+    // this.notes.draw(this.scrollY);
 
     if (!this.logoDone) {
       this.logoProg += 0.03;
