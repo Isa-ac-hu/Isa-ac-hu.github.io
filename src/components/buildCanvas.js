@@ -242,44 +242,11 @@ export default class BuildCanvas {
         this.imgProg[i] = Math.max(0, this.imgProg[i] - this.IMG_SPEED);
       const t = easeLogistic(this.imgProg[i]);      // 0-1 nice curve
 
-      if (this.isFrameset[i]) {
-        /* folder full of frames */
-        const { dir, ext, count } = p.frames;
-        if (!p.framesArr) {
-          p.framesArr = Array(count).fill(null);
-          for (let f = 0; f < count; f++) {
-            const img = new Image();
-            img.src  = `./src/assets/gifs/${dir}${String(f).padStart(3,'0')}${ext}`;
-            /* no onload needed – we’ll just skip frames that aren’t ready yet */
-            p.framesArr[f] = img;
-          }
-          p.startTime = performance.now(); // remember when playback began
-        }
-      } else if (this.isGif[i]) {
-        /* load the GIF once */
-        if (!p.animGif) {
-          p.animGif = new Image();
-          p.animGif.src = `./src/assets/gifs/${p.img}`;
-
-
-          p.animGif.onload = () => {
-            /* grab the first frame into a frozen bitmap */
-            const off = document.createElement('canvas');
-            off.width = p.animGif.naturalWidth;
-            off.height = p.animGif.naturalHeight;
-            off.getContext('2d').drawImage(p.animGif, 0, 0);
-            p.stillBmp = new Image();
-            p.stillBmp.src = off.toDataURL();
-            this.canvas.dispatchEvent(new Event('redraw'));
-          };
-        }
-      } else {
-        /* regular image */
-        if (!p.__bmp) {
-          p.__bmp = new Image();
-          p.__bmp.src = `./src/assets/images/${p.img}`;
-          p.__bmp.onload = () => this.canvas.dispatchEvent(new Event('redraw'));
-        }
+       /* regular image */
+      if (!p.__bmp) {
+        p.__bmp = new Image();
+        p.__bmp.src = `./src/assets/images/${p.img}`;
+        p.__bmp.onload = () => this.canvas.dispatchEvent(new Event('redraw'));
       }
 
       let pic, canTint = true;

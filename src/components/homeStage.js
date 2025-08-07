@@ -59,10 +59,13 @@ export default class HomeStage {
     this.canvas.addEventListener('mousemove', this.onMove);
 
     this.canvas.addEventListener('click', this.onClick);
-    canvas.addEventListener('click', this.header.onClick);
+    this.canvas.addEventListener('click', this.header.onClick);
 
     resizeHiDPI(this.canvas, this.ctx);
-    window.addEventListener('resize', () => resizeHiDPI(this.canvas, this.ctx));
+    window.addEventListener('resize', () => {
+      resizeHiDPI(this.canvas, this.ctx);
+      requestAnimationFrame(this.frame);
+    });
 
     // Don’t start drawing immediately (canvas might still be 0×0)
     window.addEventListener('load', () => {
@@ -79,7 +82,7 @@ export default class HomeStage {
     resizeHiDPI(this.canvas, this.ctx);
   }
 
-  onPlaceSelect = ({ detail }) => {  };
+  onPlaceSelect = ({ detail }) => { this.panel.show(detail); };
 
   /* ---------- hover helper ---------- */
   onMove = (e) => {
@@ -149,6 +152,14 @@ export default class HomeStage {
 
   /* main RAF */
   frame = (ts) => {
+
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    // 2) Then handle HiDPI resizing and redraw the background
+    resizeHiDPI(this.canvas, this.ctx);
+    this.ctx.fillStyle = COLORS.bgDark;
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
     this.scrollY = window.scrollY || window.pageYOffset;
     const { ctx, canvas } = this;
     resizeHiDPI(this.canvas, this.ctx);

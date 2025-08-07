@@ -1,8 +1,59 @@
 //introStage.js
-import { polygonPoints, lerpHex, resizeHiDPI, convert, convertInt } from '../utils.js';
+import { polygonPoints, lerpHex, resizeHiDPI, convert, convertInt, PROJECT_LIST } from '../utils.js';
+
+
+export let COAST_LINES = [];
+
+let COAST_PROMISE;
+export function loadCoast() {
+  if (COAST_PROMISE) return COAST_PROMISE;
+  COAST_PROMISE = fetch('./src/assets/Maps/ne_50m_coastline.json')
+    .then(res => res.json())
+    .then(({ features }) => {
+      features.forEach(({ geometry }) => {
+        if (geometry.type === 'LineString') {
+          COAST_LINES.push(geometry.coordinates);
+        } else {
+          geometry.coordinates.forEach(line => COAST_LINES.push(line));
+        }
+      });
+    });
+  return COAST_PROMISE;
+}
 
 export default class IntroStage {
   constructor(canvas, onFinish = () => {}) {
+
+    loadCoast();                      // map coastline JSON
+
+    PROJECT_LIST.forEach(p => {
+      if (p.frames) {
+        // a little array of Image objects for your BuildCanvas
+        p.framesArr = Array.from({ length: p.frames.count }, (_, i) => {
+          const img = new Image();
+          img.src = `./src/assets/gifs/${p.frames.dir}` +
+            String(i).padStart(3, '0') +
+            p.frames.ext;
+          return img;
+        });
+        // record when we “could” start stepping through them
+        p.startTime = performance.now();
+      }
+      else if (p.img && /\.gif$/i.test(p.img)) {
+        // for raw .gif files, also fetch them now
+        p.animGif = new Image();
+        p.animGif.src = `./src/assets/gifs/${p.img}`;
+        // (optional) you can snapshot a still frame here too:
+        p.animGif.onload = () => {
+          const off = document.createElement('canvas');
+          off.width  = p.animGif.naturalWidth;
+          off.height = p.animGif.naturalHeight;
+          off.getContext('2d').drawImage(p.animGif, 0, 0);
+          p.stillBmp = new Image();
+          p.stillBmp.src = off.toDataURL();
+        };
+      }
+    });
     /* ---------- setup ---------- */
     const ctx = canvas.getContext('2d');
     resizeHiDPI(canvas, ctx);
@@ -33,7 +84,7 @@ export default class IntroStage {
 
     /* geometry & state (unchanged names) */
     let prog = 0, letterAlpha = 0, done = false;
-    const STEP = 0.02, SHRINK_STEP = 0.02, VANISH_AT = 0.05;
+    const STEP = 0.01, SHRINK_STEP = 0.01, VANISH_AT = 0.04;
     let scale = 1, shrinkProg = 0, currentBG = BG1;
 
     const SIDES = 6;

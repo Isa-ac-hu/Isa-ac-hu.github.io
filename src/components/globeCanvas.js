@@ -8,27 +8,29 @@ import {
   convertInt, getScale
 } from '../utils.js';
 
+
 import {PLACES} from '../places.js';
-
-/* coast-line cache  */
-let COAST_PROMISE;
-let COAST_LINES = [];
-
-function loadCoast () {
-  if (COAST_PROMISE) return COAST_PROMISE;
-  COAST_PROMISE = fetch('./src/assets/Maps/ne_50m_coastline.json')
-    .then(res => res.json())
-    .then(({ features }) => {
-      features.forEach(({ geometry }) => {
-        if (geometry.type === 'LineString') {
-          COAST_LINES.push(geometry.coordinates);
-        } else if (geometry.type === 'MultiLineString') {
-          geometry.coordinates.forEach(line => COAST_LINES.push(line));
-        }
-      });
-    });
-  return COAST_PROMISE;
-}
+//let COAST_LINES = [];
+import { loadCoast, COAST_LINES } from './introStage.js';
+// /* coast-line cache  */
+// let COAST_PROMISE;
+// let COAST_LINES = [];
+//
+// function loadCoast () {
+//   if (COAST_PROMISE) return COAST_PROMISE;
+//   COAST_PROMISE = fetch('./src/assets/Maps/ne_50m_coastline.json')
+//     .then(res => res.json())
+//     .then(({ features }) => {
+//       features.forEach(({ geometry }) => {
+//         if (geometry.type === 'LineString') {
+//           COAST_LINES.push(geometry.coordinates);
+//         } else if (geometry.type === 'MultiLineString') {
+//           geometry.coordinates.forEach(line => COAST_LINES.push(line));
+//         }
+//       });
+//     });
+//   return COAST_PROMISE;
+// }
 
 const toVec = (lat, lng) => {
   const phi = lat * Math.PI / 180;
