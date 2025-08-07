@@ -1,5 +1,5 @@
 /* infoPanel.js */
-import { INFO_PANEL, convert, convertInt } from '../utils.js';
+import { INFO_PANEL, convert, convertInt, getScale } from '../utils.js';
 
 export default class InfoPanel {
   constructor (ctx, canvas) {
@@ -33,7 +33,7 @@ export default class InfoPanel {
 
     const dpr = window.devicePixelRatio || 1;
     const cssH = canvas.height / dpr;
-     this.pageOffset = 6 * cssH;
+     this.pageOffset = 6 * cssH * getScale();
   }
 
 

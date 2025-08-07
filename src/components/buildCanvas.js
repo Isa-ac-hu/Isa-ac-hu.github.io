@@ -1,7 +1,7 @@
 /* BuildCanvas.js */
 import {
   COLORS, BUILDS, PROJECT_LIST,
-  strokeRoundRect, easeLogistic, BUILD_CURVES, bezierXY, convert, convertInt,
+  strokeRoundRect, easeLogistic, BUILD_CURVES, bezierXY, convert, convertInt, getScale
 } from '../utils.js';
 
 function wrappedLineCount(ctx, text, maxW) {
@@ -42,7 +42,7 @@ export default class BuildCanvas {
     const { top, marginX } = BUILDS;
     const cssH = this.canvas.height / (window.devicePixelRatio || 1);
     const scroll = window.scrollY || window.pageYOffset; // current scroll
-    const pageY = 3 * cssH - scroll;
+    const pageY = 3 * cssH * getScale() - scroll;
     const baseY = pageY + top;
     for (let i = 0; i < PROJECT_LIST.length; i++) {
       const p = PROJECT_LIST[i];
@@ -180,7 +180,7 @@ export default class BuildCanvas {
     const dpr = window.devicePixelRatio || 1;
     const cssH = canvas.height / dpr;
 
-    const PAGE_OFFSET = 3 * cssH;
+    const PAGE_OFFSET = 3 * cssH * getScale();
     if (scrollY < PAGE_OFFSET - cssH || scrollY > PAGE_OFFSET + 3 * cssH) return;
 
     const pageY = PAGE_OFFSET - scrollY;
@@ -218,7 +218,7 @@ export default class BuildCanvas {
 
       // visibility test
       const cardViewportY = projectY + p.card.h;
-      const inView = cardViewportY > 0 && projectY < cssH;
+      const inView = cardViewportY > 0 && projectY < cssH * getScale();
 
       if (inView && !this.cardIntroStarted[i]) {
         this.cardIntroStarted[i] = true;

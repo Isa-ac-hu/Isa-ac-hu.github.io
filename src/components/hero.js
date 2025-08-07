@@ -19,6 +19,8 @@ function wrapFillText(ctx, text, x, y, maxW, lineH) {
   });
 }
 
+
+
 export default class Hero {
   constructor(ctx, canvas) {
     this.ctx = ctx;
@@ -35,10 +37,11 @@ export default class Hero {
     this.done = false;
   }
 
-
   getButtonBounds() {
     return this._btnBounds;
   }
+
+
 
 
 

@@ -85,7 +85,7 @@ export default class MailBar {
     ctx.save();
     ctx.translate(x, baseY - lift);
     ctx.rotate(Math.PI / 2); // 90° clockwise
-    ctx.font  = convertInt(13) + 'px "SF Mono Regular", monospace';
+    ctx.font = convertInt(13) + 'px "SF Mono Regular", monospace';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = col;

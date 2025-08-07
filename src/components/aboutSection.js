@@ -1,5 +1,5 @@
 /* aboutCanvas.js*/
-import { BULLET, COLORS, ABOUT, strokeRoundRect, SKILL_GROUPS, PORTRAIT_ANIM, easeLogistic, convert, convertInt  } from '../utils.js';
+import { BULLET, COLORS, ABOUT, strokeRoundRect, SKILL_GROUPS, PORTRAIT_ANIM, easeLogistic, convert, convertInt, getScale } from '../utils.js';
 
 export default class AboutCanvas{
   constructor(ctx,canvas){
@@ -67,17 +67,17 @@ export default class AboutCanvas{
     const {ctx,canvas}=this;
     const dpr=window.devicePixelRatio||1;
     const cssH=canvas.height/dpr; // viewport height
-    const offset=cssH; // About page starts after one vh
+    const offset=cssH * getScale(); // About page starts after one vh
     const { pad, size, width } = BULLET;
 
     //our bounds for the display
-    if(scrollY<offset-cssH||scrollY>offset+cssH)return;
+    if(scrollY<offset-cssH * getScale()||scrollY>offset+cssH * getScale())return;
 
     const pageY = offset-scrollY; // page‑top in canvas space
 
     /* trigger the intro the first time About becomes visible */
     if (!this.introStarted &&
-      scrollY > offset - cssH && scrollY < offset + cssH) {
+      scrollY > offset - cssH * getScale() && scrollY < offset + cssH * getScale()) {
       this.introStarted = true;
     }
 

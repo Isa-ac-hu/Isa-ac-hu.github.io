@@ -75,8 +75,8 @@ export default class SocialBar {
       // box’s top‐left for hit‐test:
       const by = cy - size / 2;
       if (
-        cssX >= bx       && cssX <= bx + size &&
-        cssY >= by       && cssY <= by + size
+        cssX >= bx && cssX <= bx + size &&
+        cssY >= by && cssY <= by + size
       ) return i;
     }
     return -1;

@@ -1,7 +1,7 @@
 /* noteworthyCanvas.js */
 import {
-    COLORS, NOTEWORTHY, NOTE_LIST,
-    strokeRoundRect, easeLogistic, wrap, RESUME_URL, convert, convertInt,
+  COLORS, NOTEWORTHY, NOTE_LIST,
+  strokeRoundRect, easeLogistic, wrap, RESUME_URL, convert, convertInt, getScale
 } from '../utils.js';
 
 export default class NoteworthyCanvas {
@@ -42,7 +42,7 @@ export default class NoteworthyCanvas {
     const cssH = this.canvas.height / (window.devicePixelRatio||1);
     /* scroll-corrected top-edge of the Noteworthy section -------- */
     const scrollY = window.scrollY || window.pageYOffset;
-    const pageY = 5.5 * cssH - scrollY;        // ← SAME formula draw() uses
+    const pageY = 5.5 * cssH * getScale() - scrollY;        // ← SAME formula draw() uses
     const baseY = pageY + top;
     for (let i = 0; i < NOTE_LIST.length; i++) {
       const col = i % 2, row = (i / 2) | 0;
@@ -83,7 +83,7 @@ export default class NoteworthyCanvas {
     const cssH = canvas.height / dpr;
 
     /* viewport culling */
-    const PAGE_OFFSET = 5.5 * cssH;
+    const PAGE_OFFSET = 5.5 * cssH * getScale();
     if (scrollY < PAGE_OFFSET - cssH || scrollY > PAGE_OFFSET + cssH) return;
     const pageY = PAGE_OFFSET - scrollY;
 

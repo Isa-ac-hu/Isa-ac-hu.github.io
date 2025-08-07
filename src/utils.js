@@ -126,11 +126,11 @@ export function lerpHex(c1, c2, t) {
 }
 
 //####################################CONSTANTS GO HERE########################################
-let width = window.innerWidth; //1638
-let height = window.innerHeight; //1024
+// let width = window.innerWidth; //1638
+// let height = window.innerHeight; //1024
 
-// let width = 1638/2; //1638
-// let height = 863/2; //1024
+let width = 1638/2;
+let height = 863/2;
 
 // const DESIGN_WIDTH = 1638;
 // const DESIGN_HEIGHT = 850;
@@ -143,6 +143,9 @@ const scale = Math.min(
   height / DESIGN_HEIGHT
 );
 
+export function getScale(){
+  return scale;
+}
 export function convert(designValue){
   return designValue * scale;
 }
@@ -150,6 +153,10 @@ export function convertInt(designValue){
   return Math.round(designValue * scale);
 }
 
+export function sectionY(multiplier) {
+  // “multiplier” is 1 for page 1, 2 for page 2, 6.2 for page 6.2, etc
+  return convert(DESIGN_HEIGHT * multiplier);
+}
 
 
 export const COLORS = {
@@ -558,6 +565,6 @@ export const GLOBE_BOX = {
 
 export const INFO_PANEL = {
   left: convert(1050), // distance from the left edge of the canvas / page
-  top: GLOBE_BOX.top + 6 * window.innerHeight,
+  top: GLOBE_BOX.top + convert(6) * window.innerHeight,
   w: convert(320), // max width
 };
