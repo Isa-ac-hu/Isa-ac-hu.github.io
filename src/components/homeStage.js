@@ -67,6 +67,7 @@ export default class HomeStage {
     // Don’t start drawing immediately (canvas might still be 0×0)
     window.addEventListener('load', () => {
       // Now layout is done, CSS size settled, buffer is correctly sized…
+      resizeHiDPI(canvas, this.ctx);
       this.frameId = requestAnimationFrame(this.frame);
     });
 

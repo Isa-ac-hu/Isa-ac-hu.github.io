@@ -147,10 +147,12 @@ export function getScale(){
   return scale;
 }
 export function convert(designValue){
-  return designValue * scale;
+  const s = Math.max(scale, 0.5);
+  return designValue * s;
 }
 export function convertInt(designValue){
-  return Math.round(designValue * scale);
+  const s = Math.max(scale, 0.5);
+  return Math.round(designValue * s);
 }
 
 export function sectionY(multiplier) {
