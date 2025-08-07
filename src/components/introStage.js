@@ -66,11 +66,11 @@ export default class IntroStage {
     const BG1 = '#020C1B';
     const BG2 = '#0A192F';
     const SIZE = 0.05;
-    const LETTER_FADE = 0.04;
+    const LETTER_FADE = 0.02;
     const LOG_K = 10;
 
     let bgProg = 0;
-    const BG_FADE_STEP = 0.025;
+    const BG_FADE_STEP = 0.01;
 
     /* helper – returns interpolated #rrggbb  */
     const mixBG = () => lerpHex(BG1, BG2, easeLogistic(bgProg));
@@ -84,7 +84,7 @@ export default class IntroStage {
 
     /* geometry & state (unchanged names) */
     let prog = 0, letterAlpha = 0, done = false;
-    const STEP = 0.01, SHRINK_STEP = 0.01, VANISH_AT = 0.04;
+    const STEP = 0.01, SHRINK_STEP = 0.01, VANISH_AT = 0.01;
     let scale = 1, shrinkProg = 0, currentBG = BG1;
 
     const SIDES = 6;
