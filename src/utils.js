@@ -129,8 +129,8 @@ export function lerpHex(c1, c2, t) {
 let width = window.innerWidth; //1638
 let height = window.innerHeight; //1024
 
-// let width = 1638/2;
-// let height = 863/2;
+ // let width = 1638/2;
+ // let height = 863 * 2;
 
 // const DESIGN_WIDTH = 1638;
 // const DESIGN_HEIGHT = 850;
@@ -226,7 +226,7 @@ export const HERO_ANIM = {
 /* fixed social‑bar geometry (CSS‑px) */
 export const SOCIAL = {
   x: 70, // left margin ─ same as mini‑logo
-  top: 300,
+  top: 400,
   size: 20, // width & height of icon cells
   gap: 25, // vertical gap between icons
   lift: 4, // how much the icon rises on hover
@@ -259,7 +259,7 @@ export const SOCIAL = {
 export const MAIL = {
   email: 'isaac.hu002@gmail.com',
   x: 57, // distance from the right edge (same as social bar from left)
-  top: 350,  // matches SOCIAL.top so the two bars are aligned
+  top: 450,  // matches SOCIAL.top so the two bars are aligned
   gap: 40, // vertical space between characters
   lineH: 200, // vertical line below the last character
   lineGap: 40, //gap between email and line

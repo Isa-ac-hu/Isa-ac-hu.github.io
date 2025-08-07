@@ -7,6 +7,10 @@ export default class IntroStage {
     const ctx = canvas.getContext('2d');
     resizeHiDPI(canvas, ctx);
     const dpr = window.devicePixelRatio || 1;
+
+    const cssW = canvas.width  / dpr;
+    const cssH = canvas.height / dpr;
+
     const CYAN = 'rgba(100,255,218,1)';
     const BG1 = '#020C1B';
     const BG2 = '#0A192F';
@@ -33,10 +37,11 @@ export default class IntroStage {
     let scale = 1, shrinkProg = 0, currentBG = BG1;
 
     const SIDES = 6;
-    const center = () => [canvas.width  / (2 * dpr),
-      + canvas.height / (2 * dpr)];
+    // always center in CSS‐px
+    const center = () => [cssW / 2, cssH / 2];
     const polygonPoints = () => {
-      const [cx, cy] = center(), r = Math.min(canvas.width, canvas.height) * SIZE;
+      // radius in CSS‐px, based on the smaller dimension
+      const [cx, cy] = center(), r = Math.min(cssW, cssH) * SIZE;
       const pts = [];
       for (let i = 0; i < SIDES; i++) {
         const ang = (-90 - i * 360 / SIDES) * Math.PI/180;
