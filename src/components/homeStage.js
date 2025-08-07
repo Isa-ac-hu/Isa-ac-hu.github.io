@@ -93,10 +93,10 @@ export default class HomeStage {
     //   this.frameId = requestAnimationFrame(this.frame);
     // });
 
-    window.addEventListener('resize', () => {
-      resizeHiDPI(this.canvas, this.ctx);
-      this.frameId = requestAnimationFrame(this.frame);
-    });
+    // window.addEventListener('resize', () => {
+    //   resizeHiDPI(this.canvas, this.ctx);
+    //   this.frameId = requestAnimationFrame(this.frame);
+    // });
 
 
   }
@@ -115,6 +115,8 @@ export default class HomeStage {
 
   /* ---------- hover helper ---------- */
   onMove = (e) => {
+
+
     const rect = this.canvas.getBoundingClientRect();
     const cssX = e.clientX - rect.left;
     const cssY = e.clientY - rect.top;
