@@ -1,5 +1,5 @@
 //hero.js
-import {COLORS, HERO_BTN, strokeRoundRect, easeLogistic, HERO_ANIM} from '../utils.js';
+import {COLORS, HERO_BTN, strokeRoundRect, easeLogistic, HERO_ANIM, convert, convertInt} from '../utils.js';
 
 /* wrap a long string inside maxW and draw it line‑by‑line */
 function wrapFillText(ctx, text, x, y, maxW, lineH) {
@@ -35,6 +35,14 @@ export default class Hero {
     this.done = false;
   }
 
+
+  getButtonBounds() {
+    return this._btnBounds;
+  }
+
+
+
+
   isFinished() { return this.done; }
 
   setHover(flag) { this.hover = flag; }   // called from HomeStage
@@ -43,8 +51,9 @@ export default class Hero {
     const { ctx, canvas } = this;
 
     ctx.save();
-    ctx.textAlign   = 'left';
-    ctx.textBaseline= 'top';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+
 
     /* helper */
     const drawLine = (idx, txt, font, fill, baseX, baseY) => {
@@ -75,7 +84,7 @@ export default class Hero {
     const cssH = canvas.height / dpr;
 
     const baseY = cssH * 0.23 - scrollY;
-    const lineGap = 70;  // distance between headline lines
+    const lineGap = convert(70);  // distance between headline lines
 
     /* update fade progress */
     if (this.hover) this.hoverProg = Math.min(1, this.hoverProg + this.SPEED);
@@ -85,21 +94,21 @@ export default class Hero {
 
     /* “Hi, my name is” */
     drawLine(0, 'Hi, my name is',
-      '18px "SF Mono Regular", MS Comic Sans', COLORS.cyan,
+      convertInt(18) + 'px "SF Mono Regular", MS Comic Sans', COLORS.cyan,
       HERO_BTN.x, baseY);
 
     /* Name */
     drawLine(1, 'Isaac Hu.',
-      '800 80px "Calibre", MS Comic Sans', COLORS.light,
-      HERO_BTN.x, baseY + 40);
+      '800 ' + convertInt(80) + 'px "Calibre", MS Comic Sans', COLORS.light,
+      HERO_BTN.x, baseY + convert(40));
 
     /* Tag‑line */
     drawLine(2, 'Making joy',
-      'bold 80px "Calibre", MS Comic Sans', COLORS.gray,
-      HERO_BTN.x, baseY + 60 + lineGap);
+      'bold ' + convertInt(80) + 'px "Calibre", MS Comic Sans', COLORS.gray,
+      HERO_BTN.x, baseY + convert(60) + lineGap);
     drawLine(3, 'through creation.',
-      'bold 80px "Calibre", MS Comic Sans', COLORS.gray,
-      HERO_BTN.x, baseY + 60 + lineGap * 2);
+      'bold ' + convertInt(80) + 'px "Calibre", MS Comic Sans', COLORS.gray,
+      HERO_BTN.x, baseY + convert(60) + lineGap * 2);
 
     /* paragraph  */
     {
@@ -111,20 +120,20 @@ export default class Hero {
       ctx.globalAlpha = easeT;
       ctx.translate(0, HERO_ANIM.dropPx * (1 - easeT));
       ctx.fillStyle = COLORS.gray;
-      ctx.font = '22px "Calibre", sans-serif';
+      ctx.font = convertInt(22) + 'px "Calibre", sans-serif';
       wrapFillText(
         ctx,
         "Greetings! I'm a recent graduate of Boston University (BA/MS in Computer Science). " +
         "Here is a showcase of my work and some other fun things!",
         HERO_BTN.x,
-        baseY + 73 + lineGap * 3.4,
-        750,
-        25
+        baseY + convert(73) + lineGap * 3.4,
+        convert(750),
+        convert(25)
       );
     }
 
     /* button */
-    ctx.translate(HERO_BTN.x, HERO_BTN.y);
+    ctx.translate(HERO_BTN.x, baseY + convert(73) + lineGap * 3.4);
 
     const lineIdx = 5;
     const raw = this.timer - HERO_ANIM.delay - lineIdx * HERO_ANIM.stagger;
@@ -136,27 +145,41 @@ export default class Hero {
     /* background tint */
     if (alpha > 0.005) {
       ctx.fillStyle = `rgba(100,255,218,${alpha})`
-      ctx.fillRect(0, -scrollY + lineGap, HERO_BTN.w, HERO_BTN.h);
+      ctx.fillRect(0, lineGap, HERO_BTN.w, HERO_BTN.h);
     }
 
     /* cyan rounded outline */
-    ctx.lineWidth   = 1;
+    ctx.lineWidth = 1;
     ctx.strokeStyle = COLORS.cyan;
     strokeRoundRect(
       ctx,
       0,
-      -scrollY + lineGap,
+      lineGap,
       HERO_BTN.w,
       HERO_BTN.h,
       HERO_BTN.connectRadius,
     );
 
     /* label */
-    ctx.fillStyle   = COLORS.cyan;
-    ctx.font        = '16px "SF Mono", monospace';
-    ctx.textAlign   = 'center';
+    ctx.fillStyle = COLORS.cyan;
+    ctx.font = convertInt(16) + 'px "SF Mono", monospace';
+    ctx.textAlign = 'center';
     ctx.textBaseline= 'middle';
-    ctx.fillText(HERO_BTN.label, HERO_BTN.w / 2, -scrollY + lineGap + HERO_BTN.h/2);
+    ctx.fillText(HERO_BTN.label, HERO_BTN.w / 2, lineGap + HERO_BTN.h/2);
     ctx.restore();
+
+    const btnX = HERO_BTN.x;
+    const btnY = (cssH * 0.23 - scrollY) + convert(73) + lineGap * 3.4 + lineGap;
+    const btnW = HERO_BTN.w;
+    const btnH = HERO_BTN.h;
+
+    this._btnBounds = {
+      left: btnX,
+      top: btnY,
+      right: btnX + btnW,
+      bottom: btnY + btnH
+    };
+
+
   }
 }

@@ -1,5 +1,5 @@
 /* aboutCanvas.js*/
-import { BULLET, COLORS, ABOUT, strokeRoundRect, SKILL_GROUPS, PORTRAIT_ANIM, easeLogistic  } from '../utils.js';
+import { BULLET, COLORS, ABOUT, strokeRoundRect, SKILL_GROUPS, PORTRAIT_ANIM, easeLogistic, convert, convertInt  } from '../utils.js';
 
 export default class AboutCanvas{
   constructor(ctx,canvas){
@@ -13,7 +13,7 @@ export default class AboutCanvas{
 
     /* run-time state for the "Boston University" link */
     this.buLink = {
-      x:0,y:0,w:0,h:0,
+      x:convert(0),y:convert(0),w:convert(0),h:convert(0),
       prog:0, //we also maintain a progress on the underline when you hover
       hover:false
     };
@@ -98,48 +98,49 @@ export default class AboutCanvas{
 
     /* cyan index with text 01. */
     ctx.fillStyle=COLORS.cyan;
-    ctx.font ='24px "SF Mono Regular", monospace';
+
+    ctx.font = convertInt(24) + 'px "SF Mono Regular", monospace';
     ctx.textAlign='left';ctx.textBaseline='top';
-    ctx.fillText('01.',baseX,y + 8);
-    const idxW=ctx.measureText('01.').width+8;
+    ctx.fillText('01.',baseX,y + convert(8));
+    const idxW=ctx.measureText('01.').width+convert(8);
 
     /* heading text */
     ctx.fillStyle=COLORS.light;
-    ctx.font ='bold 36px "Calibre", sans-serif';
+    ctx.font ='bold ' + convertInt(36) + 'px "Calibre", sans-serif';
     ctx.fillText('About Me',baseX+idxW,y);
 
     /* grey horizontal rule */
     ctx.strokeStyle=COLORS.gray+'66';ctx.lineWidth=0.5;
     ctx.beginPath();
-    ctx.moveTo(baseX+idxW+160,y+ABOUT.ruleGap);
-    ctx.lineTo(baseX+idxW+160 + ABOUT.lineLength,y+ABOUT.ruleGap);
+    ctx.moveTo(baseX+idxW+convert(160),y+ABOUT.ruleGap);
+    ctx.lineTo(baseX+idxW+convert(160) + ABOUT.lineLength,y+ABOUT.ruleGap);
     ctx.stroke();
 
-    y+=80;
+    y+=convert(80);
 
     /* paragraphs */
     ctx.fillStyle=COLORS.gray;
-    ctx.font ='20px "Calibre", sans-serif';
+    ctx.font = convertInt(20) + 'px "Calibre", sans-serif';
     y=this.wrap("I have a combined Bachelor of Arts/Master of Science in computer science from Boston University, completed in May 2025, with prominent coursework in embedded systems, statistics, machine learning, and software design.",baseX,y,ABOUT.maxW,ABOUT.paraLH);
-    y=this.wrap("",baseX,y - 15,ABOUT.maxW,ABOUT.paraLH);
+    y=this.wrap("",baseX,y - convert(15),ABOUT.maxW,ABOUT.paraLH);
     y=this.wrap("Outside of school, I have done some internships and personal projects that have developed my understanding of many different facets of the computing world!",baseX,y,ABOUT.maxW,ABOUT.paraLH);
-    y=this.wrap("",baseX,y - 15,ABOUT.maxW,ABOUT.paraLH);
+    y=this.wrap("",baseX,y - convert(15),ABOUT.maxW,ABOUT.paraLH);
     y=this.wrap("Here are some technologies that I've worked with across my various endeavors: ",baseX,y,ABOUT.maxW,ABOUT.paraLH);
-    y=this.wrap("",baseX,y - 15,ABOUT.maxW,ABOUT.paraLH);
+    y=this.wrap("",baseX,y - convert(15),ABOUT.maxW,ABOUT.paraLH);
     /* skill groups */
 
     /* highlight “Boston University” word manually */
     const buText= 'Boston University';
-    ctx.font = '20px "Calibre", sans-serif';
+    ctx.font = convertInt(20) + 'px "Calibre", sans-serif';
     const pre = 'I have a combined Bachelor of Arts/Master of Science in computer science from ';
     const preWb = ctx.measureText(pre).width;
     const buW = ctx.measureText(buText).width;
-    const linkX = baseX + 182;
-    const linkY = (offset-scrollY) + ABOUT.top + 80 + 30; // same paragraph Y with some adjustment
+    const linkX = baseX + convert(182);
+    const linkY = (offset-scrollY) + ABOUT.top + convert(80) + convert(30); // same paragraph Y with some adjustment
     /* store bounding box once (for hit-testing) */
     Object.assign(this.buLink,{x:linkX,y:linkY,w:buW,h:ABOUT.paraLH});
     /* progressive underline*/
-    const SPEED=.05;
+    const SPEED=convert(0.05);
     if(this.buLink.hover) this.buLink.prog=Math.min(1,this.buLink.prog+SPEED);
     else this.buLink.prog=Math.max(0,this.buLink.prog-SPEED);
     const t = AboutCanvas.ease(this.buLink.prog);
@@ -148,14 +149,14 @@ export default class AboutCanvas{
 
     if (t > 0.01) { //only draw if you see progress
       ctx.strokeStyle = COLORS.cyan;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = convertInt(2);
       ctx.beginPath();
-      ctx.moveTo(linkX, linkY + ABOUT.paraLH - 10);
-      ctx.lineTo(linkX + buW*t , linkY + ABOUT.paraLH - 10);
+      ctx.moveTo(linkX, linkY + ABOUT.paraLH - convert(10));
+      ctx.lineTo(linkX + buW*t , linkY + ABOUT.paraLH - convert(10));
       ctx.stroke();
     }
 
-    ctx.font = '13px "SF Mono Regular", monospace';
+    ctx.font = convertInt(13) + 'px "SF Mono Regular", monospace';
     const groups = Object.values(SKILL_GROUPS);
     const maxRows = Math.max(...groups.map(g => g.length));
     const colGap = ABOUT.colGap;
@@ -169,16 +170,16 @@ export default class AboutCanvas{
         ctx.strokeStyle = COLORS.cyan;
         ctx.lineWidth = width;
         ctx.beginPath();
-        ctx.moveTo(x - pad, ly + size * 0.1);
-        ctx.lineTo(x - pad + size, ly + size * 0.5);
-        ctx.lineTo(x - pad, ly + size * 0.9);
+        ctx.moveTo(x - pad, ly + size * convert(0.1));
+        ctx.lineTo(x - pad + size, ly + size * convert(0.5));
+        ctx.lineTo(x - pad, ly + size * convert(0.9));
         ctx.closePath();
         ctx.stroke();
 
         /* label */
         ctx.fillStyle = COLORS.gray;
         ctx.textBaseline = 'top';
-        ctx.fillText(txt, x, ly - 3);
+        ctx.fillText(txt, x, ly - convert(3));
       });
     });
 
@@ -187,7 +188,7 @@ export default class AboutCanvas{
     /* lazy-load once */
     if (!portrait.bmp) {
       portrait.bmp = new Image();
-      portrait.bmp.src = 'assets/images/IsaacHu.jpg';
+      portrait.bmp.src = './src/assets/images/IsaacHu.jpg';
       portrait.bmp.onload = () => canvas.dispatchEvent(new Event('redraw'));
     }
     /* bail if not ready yet */
@@ -217,13 +218,13 @@ export default class AboutCanvas{
 
     /* cyan frame that shifts when hovered */
     const s = PORTRAIT_ANIM.shift * pT; //offset
-    ctx.lineWidth = 2;
+    ctx.lineWidth = convertInt(2);
     ctx.strokeStyle = COLORS.cyan;
     strokeRoundRect(
         ctx,
-        -portrait.borderOffset + 50 - s,
-        -portrait.borderOffset + 50 - s,
-        W, H, 3
+        -portrait.borderOffset + convert(50) - s,
+        -portrait.borderOffset + convert(50) - s,
+        W, H, convert(3)
     );
 
     /* draw the picture */
@@ -237,7 +238,7 @@ export default class AboutCanvas{
         `grayscale(${g}%) brightness(${br}%) contrast(${ct}%) ` +
         `sepia(${sp}%) hue-rotate(${hr}deg) saturate(${sat}%)`;
 
-    ctx.drawImage(portrait.bmp, 0, 0, W, H);
+    ctx.drawImage(portrait.bmp, convert(0), convert(0), W, H);
     ctx.filter = 'none'; //reset to draw the frame
 
     this.linkHover = this.buLink.hover;

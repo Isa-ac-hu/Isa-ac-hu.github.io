@@ -4,6 +4,8 @@ import {
   COLORS,
   GLOBE_BOX,
   strokeRoundRect,
+  convert,
+  convertInt,
 } from '../utils.js';
 
 import {PLACES} from '../places.js';
@@ -14,7 +16,7 @@ let COAST_LINES = [];
 
 function loadCoast () {
   if (COAST_PROMISE) return COAST_PROMISE;
-  COAST_PROMISE = fetch('assets/Maps/ne_50m_coastline.json')
+  COAST_PROMISE = fetch('./src/assets/Maps/ne_50m_coastline.json')
     .then(res => res.json())
     .then(({ features }) => {
       features.forEach(({ geometry }) => {
@@ -146,7 +148,7 @@ export default class GlobeCanvas {
     // helper
     const paintDot = (p, hovered=false) => {
       ctx.beginPath();
-      ctx.arc(p.sx, p.sy, hovered ? 4 : 4, 0, Math.PI * 2);
+      ctx.arc(p.sx, p.sy, hovered ? convert(4) : convert(4), 0, Math.PI * 2);
       ctx.fillStyle = hovered ? '#ffeb3b' : '#ff4444';
       ctx.fill();
     };
@@ -158,48 +160,48 @@ export default class GlobeCanvas {
     if (scrollY < PAGE_OFFSET - cssH || scrollY > PAGE_OFFSET + cssH) return;
     const pageY = PAGE_OFFSET - scrollY;
     const hdrX = GLOBE_BOX.left; // line-up with left edge of globe
-    const HDR_GAP = -90; // vertical gap *above* the frame (px)
+    const HDR_GAP = convert(-90); // vertical gap *above* the frame (px)
     const hdrY = pageY + GLOBE_BOX.top + HDR_GAP;
     // 04. cyan index number
     ctx.fillStyle = COLORS.cyan;
-    ctx.font = '24px "SF Mono Regular", monospace';
+    ctx.font = convertInt(24) + 'px "SF Mono Regular", monospace';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
-    ctx.fillText('04.', hdrX, hdrY + 8);
-    const idxW = ctx.measureText('04.').width + 8;
+    ctx.fillText('04.', hdrX, hdrY + convert(8));
+    const idxW = ctx.measureText('04.').width + convert(8);
     // heading label
     ctx.fillStyle = COLORS.light;
-    ctx.font = 'bold 36px "Calibre", sans-serif';
+    ctx.font = 'bold ' + convertInt(36) + 'px "Calibre", sans-serif';
     ctx.fillText('Travel', hdrX + idxW, hdrY);
     // grey horizontal rule
     ctx.strokeStyle = COLORS.gray + '66';
-    ctx.lineWidth = 0.5;
+    ctx.lineWidth = convert(0.5);
     ctx.beginPath();
-    ctx.moveTo(hdrX + idxW + 105, hdrY + 17);
-    ctx.lineTo(hdrX + idxW + 105 + 300, hdrY + 17);
+    ctx.moveTo(hdrX + idxW + convert(105), hdrY + convert(17));
+    ctx.lineTo(hdrX + idxW + convert(105 + 300), hdrY + convert(17));
     ctx.stroke();
 
     ctx.fillStyle = COLORS.gray;
-    ctx.font = '20px "Calibre", sans-serif';
+    ctx.font = convertInt(20) + 'px "Calibre", sans-serif';
     ctx.textAlign = 'left';
-    ctx.fillText("I've traveled a lot — click around below to see where I've been!", hdrX, hdrY + 48);
+    ctx.fillText("I've traveled a lot — click around below to see where I've been!", hdrX, hdrY + convert(48));
 
     const box = GLOBE_BOX;
     const cx = box.left + box.size / 2;
     const cy = (PAGE_OFFSET - scrollY + box.top) + box.size / 2;
-    const R = (box.size / 2 - 10) * this.scale;
+    const R = (box.size / 2 - convert(10)) * this.scale;
 
     ctx.save();
     ctx.translate(cx, cy);
 
     /* outline frame */
-    ctx.lineWidth = 2;
+    ctx.lineWidth = convert(2);
     ctx.strokeStyle = COLORS.cyan;
-    strokeRoundRect(ctx, -box.size/2, -box.size/2, box.size, box.size, 4);
+    strokeRoundRect(ctx, -box.size/2, -box.size/2, box.size, box.size, convert(4));
 
     /* clipping so nothing bleeds out */
     ctx.beginPath();
-    ctx.roundRect?.(-box.size/2, -box.size/2, box.size, box.size, 4);
+    ctx.roundRect?.(-box.size/2, -box.size/2, box.size, box.size, convert(4));
     ctx.clip();
 
     /* rotation matrix */
@@ -215,7 +217,7 @@ export default class GlobeCanvas {
     };
 
     /* outer rim of the globe */
-    ctx.lineWidth = 2; // match the square’s thickness
+    ctx.lineWidth = convert(2); // match the square’s thickness
     ctx.strokeStyle = COLORS.cyan;
     ctx.beginPath();
     ctx.arc(0, 0, R, 0, Math.PI * 2);
@@ -265,8 +267,8 @@ export default class GlobeCanvas {
     /* tooltip visibility */
     if (this.hovered) {
       this.tooltip.textContent = this.hovered.name;
-      this.tooltip.style.left   = `${this.pointerX + 12}px`;
-      this.tooltip.style.top    = `${this.pointerY + 12}px`;
+      this.tooltip.style.left = `${this.pointerX + convertInt(12)}px`;
+      this.tooltip.style.top = `${this.pointerY + convertInt(12)}px`;
       this.tooltip.style.opacity = 1;
     } else {
       this.tooltip.style.opacity = 0;

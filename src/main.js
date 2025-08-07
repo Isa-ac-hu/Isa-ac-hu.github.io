@@ -20,6 +20,8 @@ window.addEventListener('resize', resizeMain);
 
 let currentStage;
 function startIntro () {
+  console.log(window.innerWidth, window.innerHeight);
+  console.log(screen.width, screen.height);
   hideHeader();
   currentStage = new IntroStage(canvas, startHome); // when intro ends → home
 }

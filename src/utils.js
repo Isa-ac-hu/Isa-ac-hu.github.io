@@ -126,6 +126,32 @@ export function lerpHex(c1, c2, t) {
 }
 
 //####################################CONSTANTS GO HERE########################################
+let width = window.innerWidth; //1638
+let height = window.innerHeight; //1024
+
+// let width = 1638/2; //1638
+// let height = 863/2; //1024
+
+// const DESIGN_WIDTH = 1638;
+// const DESIGN_HEIGHT = 850;
+
+const DESIGN_WIDTH = 1638;
+const DESIGN_HEIGHT = 863;
+
+const scale = Math.min(
+  width / DESIGN_WIDTH,
+  height / DESIGN_HEIGHT
+);
+
+export function convert(designValue){
+  return designValue * scale;
+}
+export function convertInt(designValue){
+  return Math.round(designValue * scale);
+}
+
+
+
 export const COLORS = {
   cyan   : 'rgba(100,255,218,1)',
   bgDark : '#0A192F',
@@ -138,9 +164,9 @@ export const COLORS = {
 /* central place for design constants */
 
 export const LOGO = {
-  anchor: { x: 70, y: 50 },  // where the mini‑logo is drawn
-  size: { w: 45,  h: 45 }, // click zone width/height in CSS‑px
-  scale: 0.022, // radius factor (r = min(vw,vh)*scale)
+  anchor: { x: convert(70), y: convert(50) },  // where the mini‑logo is drawn
+  size: { w: convert(45), h: convert(45) }, // click zone width/height in CSS‑px
+  scale: convert(0.022), // radius factor (r = min(vw,vh)*scale)
 };
 
 /* derived bounds — computed once & cached */
@@ -155,49 +181,49 @@ export const LOGO_BOUNDS = {
 /* number of sides is the same everywhere */
 export const SIDES = 6;
 export const HEADER = {
-  offsetX: 0, // future slide‑out, keep 0 for now
-  offsetY: 0,
-  gap: 2, // horizontal gap between nav items
-  innerPad: 13,
-  numToLabel: 4,
-  rightShift: 70,
-  resumeW: 80, // Resume button outer width
-  resumeH: 40, // Resume button outer height
-  font: '13px "SF Mono Regular", monospace',
-  resumeRadius: 6, // corner radius for the rounded outline
-  resumeDistance: 20,
+  offsetX: convert(0), // future slide‑out, keep 0 for now
+  offsetY: convert(0),
+  gap: convert(2), // horizontal gap between nav items
+  innerPad: convert(13),
+  numToLabel: convert(4),
+  rightShift: convert(70),
+  resumeW: convert(80), // Resume button outer width
+  resumeH: convert(40), // Resume button outer height
+  font: convertInt(13) + 'px "SF Mono Regular", monospace',
+  resumeRadius: convert(6), // corner radius for the rounded outline
+  resumeDistance: convert(20),
 };
 
 export const RESUME_URL =
-  'assets/resumes/Isaac%20Hu%20Resume.pdf';
+  './src/assets/resumes/Isaac%20Hu%20Resume.pdf';
 
 /* hero button geometry (CSS px in the design coordinate‑system) */
 export const HERO_BTN = {
-  x: 320,  // left‑edge (same margin as the “Hi, my name is”)
-  y: 540,
-  w: 160,
-  h: 56,
+  x: convert(320),  // left‑edge (same margin as the “Hi, my name is”)
+  y: convert(540),
+  w: convert(160),
+  h: convert(56),
   label: 'Get In Touch',
   mail: 'mailto:isaac.hu002@gmail.com',
-  connectRadius: 6,
+  connectRadius: convert(6),
 };
 
 /*Hero intro animation */
 export const HERO_ANIM = {
   delay: 0.5, // seconds AFTER the header completes
   stagger: 0.35, // delay between successive hero lines
-  dropPx: 30, // start-offset below baseline
+  dropPx: convert(30), // start-offset below baseline
   speed: 0.03 // timer advance per frame
 };
 
 /* fixed social‑bar geometry (CSS‑px) */
 export const SOCIAL = {
-  x: 70, // left margin ─ same as mini‑logo
-  top: 600,
-  size: 20, // width & height of icon cells
-  gap: 25, // vertical gap between icons
-  lift: 4, // how much the icon rises on hover
-  lineH: 200,  // length of the grey line below the last icon
+  x: convert(70), // left margin ─ same as mini‑logo
+  top: convert(300),
+  size: convert(20), // width & height of icon cells
+  gap: convert(25), // vertical gap between icons
+  lift: convert(4), // how much the icon rises on hover
+  lineH: convert(200),  // length of the grey line below the last icon
 
   icons: [
     {
@@ -225,38 +251,38 @@ export const SOCIAL = {
 
 export const MAIL = {
   email: 'isaac.hu002@gmail.com',
-  x: 57, // distance from the right edge (same as social bar from left)
-  top: 540,  // matches SOCIAL.top so the two bars are aligned
-  gap: 40, // vertical space between characters
-  lineH: 200, // vertical line below the last character
-  lineGap: 20, //gap between email and line
+  x: convert(57), // distance from the right edge (same as social bar from left)
+  top: convert(350),  // matches SOCIAL.top so the two bars are aligned
+  gap: convert(40), // vertical space between characters
+  lineH: convert(200), // vertical line below the last character
+  lineGap: convert(40), //gap between email and line
 };
 
 export const ABOUT = {
-  marginX: 365,
-  top: 100, // distance from the top of its page
-  maxW: 500, // paragraph wrap‑width
-  ruleGap: 17, // vertical align of the grey rule
-  paraLH: 30, // paragraph line‑height
-  skillLH: 26, // list line‑height
-  colW: 230, // width of each skill column
+  marginX: convert(365),
+  top: convert(100), // distance from the top of its page
+  maxW: convert(500), // paragraph wrap‑width
+  ruleGap: convert(17), // vertical align of the grey rule
+  paraLH: convert(30), // paragraph line‑height
+  skillLH: convert(26), // list line‑height
+  colW: convert(230), // width of each skill column
   /* portrait geometry (optional) */
-  imgW: 340,
-  imgH: 340,
-  portrait: { borderOffset : 12, bmp : null },
+  imgW: convert(340),
+  imgH: convert(340),
+  portrait: { borderOffset : convert(12), bmp : null },
 
-  colGap: 150, // space from one skill-column to the next
-  firstColY: 0, // extra vertical offset after paragraphs
-  lineLength: 300,
-  rightShiftBullets: 20,
-  portraitScale: 0.1, // 60 % of original width / height
-  imageRightShift: 100,
+  colGap: convert(150), // space from one skill-column to the next
+  firstColY: convert(0), // extra vertical offset after paragraphs
+  lineLength: convert(300),
+  rightShiftBullets: convert(20),
+  portraitScale: convert(0.1), // 60 % of original width / height
+  imageRightShift: convert(100),
 };
 
 export const BULLET = {
-  pad: 18, // distance from the skill text to the left-most point
-  size: 3, // length of each triangle side
-  width: 2, // stroke thickness
+  pad: convert(18), // distance from the skill text to the left-most point
+  size: convert(3), // length of each triangle side
+  width: convert(2), // stroke thickness
 };
 
 export const SKILL_GROUPS = {
@@ -286,25 +312,25 @@ export const BAR_ANIM = {
 /*  small portrait-hover animation  */
 export const PORTRAIT_ANIM = {
   speed: 0.08,
-  shift: 12
+  shift: convert(12)
 };
 
 /*work*/
 export const WORK = {
-  top: 200, // distance from its page-top
-  marginX: 465,
-  ruleGap: 0,
-  maxW: 620, // right column paragraph width
-  rowH: 50, // vertical spacing between job names
-  barW: 2, // cyan bar thickness
-  barH: 50, // cyan bar height
-  padX: 16, // gap between bar and job label
-  hitShift: 10,
-  buttonSize: 200,
-  labelW: 200,
-  labelPadX: 14, // horizontal padding inside the swatch
-  labelPadY: 6,        // vertical padding
-  hlPad: 0,
+  top: convert(200), // distance from its page-top
+  marginX: convert(465),
+  ruleGap: convert(0),
+  maxW: convert(620), // right column paragraph width
+  rowH: convert(50), // vertical spacing between job names
+  barW: convert(2), // cyan bar thickness
+  barH: convert(50), // cyan bar height
+  padX: convert(16), // gap between bar and job label
+  hitShift: convert(10),
+  buttonSize: convert(200),
+  labelW: convert(200),
+  labelPadX: convert(14), // horizontal padding inside the swatch
+  labelPadY: convert(6),        // vertical padding
+  hlPad: convert(0),
 };
 
 /*Jobs*/
@@ -375,43 +401,43 @@ export const JOBS = [
 /* animation for the selector bar */
 export const WORK_ANIM = {
   speed: 0.08,
-  shift: 22, // px the bar slides when switching
-  barEase: 0.14
+  shift: convert(22), // px the bar slides when switching
+  barEase: convert(0.14)
 };
 
 export const NAV_ANIM = {
   speed: 0.03, // global timer advance per frame  (0-1)
   stagger: 0.35, // delay between successive items
-  dropPx:  30 // start-offset above baseline
+  dropPx:  convert(30) // start-offset above baseline
 };
 
 /* Projects */
 export const BUILDS = { /* section header */
-  top: 200, // distance from page-top
-  marginX: 310, // global left margin
-  ruleGap: -10, // grey rule alignment
-  cornerR: 6, // card corner radius
-  ghSize: 28, // GitHub icon size
+  top: convert(200), // distance from page-top
+  marginX: convert(310), // global left margin
+  ruleGap: convert(-10), // grey rule alignment
+  cornerR: convert(6), // card corner radius
+  ghSize: convert(28), // GitHub icon size
 };
 
-let startX1 = 490;
-let startY1 = 330;
+let startX1 = convert(490);
+let startY1 = convert(330);
 
-let startX2 = -510;
-let startY2 = 330;
+let startX2 = convert(-510);
+let startY2 = convert(330);
 
-let startX3 = 490;
-let startY3 = 330;
+let startX3 = convert(490);
+let startY3 = convert(330);
 
-let startX4 = -510;
-let startY4 = 330;
+let startX4 = convert(-510);
+let startY4 = convert(330);
 
 export const BUILD_CURVES = [
   /* each curve starts well off-screen and ends at (0,0) */
-  [[startX1-480,startY1-320],[startX1-320,startY1-420],[startX1-140,startY1-90],[startX1,startY1]],   // project 0
-  [[ startX2+480,startY2-320],[ startX2+320,startY2-420],[ startX2+140,startY2-90],[startX2,startY2]],   // project 1
-  [[startX3-480,startY3-320],[startX3-320,startY3-420],[startX3-140,startY3-90],[startX3,startY3]],   // project 2
-  [[ startX4+480,startY4-320],[ startX4+320,startY4-420],[ startX4+140,startY4-90],[startX4,startY4]],   // project 3
+  [[startX1-convert(480),startY1-convert(320)],[startX1-convert(320),startY1-convert(420)],[startX1-convert(140),startY1-convert(90)],[startX1,startY1]],   // project 0
+  [[ startX2+convert(480),startY2-convert(320)],[ startX2+convert(320),startY2-convert(420)],[ startX2+convert(140),startY2-convert(90)],[startX2,startY2]],   // project 1
+  [[startX3-convert(480),startY3-convert(320)],[startX3-convert(320),startY3-convert(420)],[startX3-convert(140),startY3-convert(90)],[startX3,startY3]],   // project 2
+  [[ startX4+convert(480),startY4-convert(320)],[ startX4+convert(320),startY4-convert(420)],[ startX4+convert(140),startY4-convert(90)],[startX4,startY4]],   // project 3
 ];
 
 export const PROJECT_LIST = [
@@ -426,9 +452,9 @@ export const PROJECT_LIST = [
 
     align: 'right',
 
-    imgPos: { x:   0,  y:   0,  w: 580, h: 320 },
-    card: { x: 520,  y:  90, w: 500, h: 120 },
-    ghPos: { x: 990,  y:  250 }
+    imgPos: { x: convert(0), y: convert(0), w: convert(580), h: convert(320) },
+    card: { x: convert(520), y: convert(90), w: convert(500), h: convert(120) },
+    ghPos: { x: convert(990), y: convert(250) }
   },
 
   {
@@ -447,8 +473,8 @@ export const PROJECT_LIST = [
       count: 65, // how many numbered frames
       fps: 10 // 100 ms per frame  (count * fps ~= 6 s loop)
     },
-    imgPos: { x: 420, y: 500,  w: 580, h: 320 }, // picture on the right
-    card: { x: 0,   y: 580, w: 500, h: 120 }, // text on the left
+    imgPos: { x: convert(420), y: convert(500),  w: convert(580), h: convert(320) }, // picture on the right
+    card: { x: convert(0), y: convert(580), w: convert(500), h: convert(120) }, // text on the left
   },
   {
     title: 'Flutter Scheduling App',
@@ -459,9 +485,9 @@ export const PROJECT_LIST = [
     img: 'Timo.png',
     repo: 'https://github.com/Isa-ac-hu/Timo',
     align: 'right',
-    imgPos: { x: 300,  y:   1000,  w: 150, h: 320 },
-    card: { x: 520,  y:  1080, w: 500, h: 120 },
-    ghPos: { x: 990,  y:  250 }
+    imgPos: { x: convert(300), y: convert(1000), w: convert(150), h: convert(320) },
+    card: { x: convert(520), y: convert(1080), w: convert(500), h: convert(120) },
+    ghPos: { x: convert(990), y: convert(250) }
   },
   {
     title: 'Arduino Robot',
@@ -477,23 +503,23 @@ export const PROJECT_LIST = [
       count: 65,
       fps: 10
     },
-    imgPos: { x: 420, y: 1500,  w: 580, h: 320 }, // picture on the right
-    card: { x: 0,   y: 1580, w: 500, h: 120 }, // text on the left
+    imgPos: { x: convert(420), y: convert(1500), w: convert(580), h: convert(320) }, // picture on the right
+    card: { x: convert(0), y: convert(1580), w: convert(500), h: convert(120) }, // text on the left
   },
 ];
 
 /*Other Projects*/
 export const NOTEWORTHY = {
-  top: 130, // distance from page-top of *this* section
-  marginX: 430, // global left margin (looks centred under header)
-  gap: 40, // px between cards (both x & y)
-  cardW: 375,
-  cardH: 235,
-  cornerR: 6,
-  liftPx: 10, // how far a card rises on hover
+  top: convert(130), // distance from page-top of *this* section
+  marginX: convert(430), // global left margin (looks centred under header)
+  gap: convert(40), // px between cards (both x & y)
+  cardW: convert(375),
+  cardH: convert(235),
+  cornerR: convert(6),
+  liftPx: convert(10), // how far a card rises on hover
   speed: 0.08, // logistic input advance per frame
-  ghSize: 24,
-  iconGap: 18 // distance folder→GH→external
+  ghSize: convert(24),
+  iconGap: convert(18) // distance folder→GH→external
 };
 
 export const NOTE_LIST = [
@@ -501,19 +527,19 @@ export const NOTE_LIST = [
     title: 'Paper on Quantum Random Walks',
     desc: 'Report analyzing the behavior and novel use cases of random walks using quantum computers',
     tech: ['Quantum Computing'],
-    url: 'assets/PDF/Paper on Quantum Random Walks.pdf'
+    url: './src/assets/PDF/Paper on Quantum Random Walks.pdf'
   },
   {
     title: 'Paper on Information Cascades',
     desc: 'In depth analysis on the way information propagates through wikipedia articles',
     tech: ['Python', 'Beautiful Soup', 'Data Mining'],
-    url: 'assets/PDF/Paper on Information Cascades.pdf'
+    url: './src/assets/PDF/Paper on Information Cascades.pdf'
   },
   {
     title: 'Presentation on the History of English',
     desc: 'Presented to the Boston University history club',
-    tech: ['Flutter', 'Firebase', 'Firestore'],
-    url: 'assets/PDF/History of English.pdf'
+    tech: ['History'],
+    url: './src/assets/PDF/History of English.pdf'
   },
   {
     title: 'Schubert\'s Piano Trio No. 1 in B-Flat',
@@ -524,14 +550,14 @@ export const NOTE_LIST = [
 ];
 
 export const GLOBE_BOX = {
-  top: 400, // distance from top of its page
-  left: 300, // left margin
-  size: 500, // outer square (px)
+  top: convert(400), // distance from top of its page
+  left: convert(300), // left margin
+  size: convert(500), // outer square (px)
   COORDINATE: [],
 };
 
 export const INFO_PANEL = {
-  left: 1050, // distance from the left edge of the canvas / page
-  top: 2830 + 860 + 860 + 860 + 150, // distance from the top
-  w: 320, // max width
+  left: convert(1050), // distance from the left edge of the canvas / page
+  top: GLOBE_BOX.top + 6 * window.innerHeight,
+  w: convert(320), // max width
 };

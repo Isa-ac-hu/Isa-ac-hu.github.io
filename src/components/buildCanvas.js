@@ -1,7 +1,7 @@
 /* BuildCanvas.js */
 import {
   COLORS, BUILDS, PROJECT_LIST,
-  strokeRoundRect, easeLogistic, BUILD_CURVES, bezierXY
+  strokeRoundRect, easeLogistic, BUILD_CURVES, bezierXY, convert, convertInt,
 } from '../utils.js';
 
 function wrappedLineCount(ctx, text, maxW) {
@@ -81,9 +81,9 @@ export default class BuildCanvas {
 
     /* preload the two GitHub SVGs */
     this.ghImg = new Image();
-    this.ghImg.src = 'assets/icons/gh.svg';
+    this.ghImg.src = './src/assets/icons/gh.svg';
     this.ghHover= new Image();
-    this.ghHover.src = 'assets/icons/gh-teal.svg';
+    this.ghHover.src = './src/assets/icons/gh-teal.svg';
 
     this.isGif = PROJECT_LIST.map(p => p.img && /\.gif$/i.test(p.img));
     this.isFrameset = PROJECT_LIST.map(p => !!p.frames);
@@ -118,30 +118,30 @@ export default class BuildCanvas {
 
       const isRight = (p.align ?? 'right') === 'right';
       const anchorX = isRight
-        ? projectX + p.card.w - 20
-        : projectX + 20;
+        ? projectX + p.card.w - convert(20)
+        : projectX + convert(20);
       const textX = anchorX;
       const myX = isRight
-        ? anchorX + 20
-        : anchorX - 20;
+        ? anchorX + convert(20)
+        : anchorX - convert(20);
 
-      const TECH_SIZE = 13;
+      const TECH_SIZE = convert(13);
       const techY = projectY + p.card.h + TECH_SIZE * 2;
 
       const introT = easeLogistic(this.cardIntroT[i]);
       const [dx, dy] = bezierXY(...BUILD_CURVES[i], 1 - introT);
 
       let ghX = isRight
-        ? textX - 5
-        : textX - 20;
-      let ghY = techY + 20;
+        ? textX - convert(5)
+        : textX - convert(20);
+      let ghY = techY + convert(20);
 
       ghX += dx;
       ghY += dy;
 
       if (
-        cssX >= ghX            && cssX <= ghX + ghSize &&
-        cssY >= ghY            && cssY <= ghY + ghSize
+        cssX >= ghX && cssX <= ghX + ghSize &&
+        cssY >= ghY && cssY <= ghY + ghSize
       ) {
         return i;
       }
@@ -188,22 +188,22 @@ export default class BuildCanvas {
 
     /* section header */
     ctx.save();
-    ctx.translate(marginX, pageY + top - 100);
+    ctx.translate(marginX, pageY + top - convert(100));
 
     ctx.fillStyle = COLORS.cyan;
-    ctx.font = '24px "SF Mono Regular", monospace';
+    ctx.font = convertInt(24) + 'px "SF Mono Regular", monospace';
     ctx.fillText('03.', 0, 2);
-    const idxW = ctx.measureText('03.').width + 8;
+    const idxW = ctx.measureText('03.').width + convert(8);
 
     ctx.fillStyle = COLORS.light;
-    ctx.font = 'bold 36px "Calibre", sans-serif';
-    ctx.fillText('Some Things I’ve Built', idxW, 0);
+    ctx.font = 'bold' + convertInt(36) + 'px "Calibre", sans-serif';
+    ctx.fillText('Some Things I’ve Built', idxW, convert(0));
 
     ctx.strokeStyle = COLORS.gray;
-    ctx.lineWidth  = 0.5;
+    ctx.lineWidth = convert(0.5);
     ctx.beginPath();
-    ctx.moveTo(idxW + 340, BUILDS.ruleGap);
-    ctx.lineTo(idxW + 340 + 300, BUILDS.ruleGap);
+    ctx.moveTo(idxW + convert(340), BUILDS.ruleGap);
+    ctx.lineTo(idxW + convert(340 + 300), BUILDS.ruleGap);
     ctx.stroke();
     ctx.restore();
 
@@ -249,7 +249,7 @@ export default class BuildCanvas {
           p.framesArr = Array(count).fill(null);
           for (let f = 0; f < count; f++) {
             const img = new Image();
-            img.src  = `assets/gifs/${dir}${String(f).padStart(3,'0')}${ext}`;
+            img.src  = `./src/assets/gifs/${dir}${String(f).padStart(3,'0')}${ext}`;
             /* no onload needed – we’ll just skip frames that aren’t ready yet */
             p.framesArr[f] = img;
           }
@@ -259,7 +259,7 @@ export default class BuildCanvas {
         /* load the GIF once */
         if (!p.animGif) {
           p.animGif = new Image();
-          p.animGif.src = `assets/gifs/${p.img}`;
+          p.animGif.src = `./src/assets/gifs/${p.img}`;
 
 
           p.animGif.onload = () => {
@@ -277,7 +277,7 @@ export default class BuildCanvas {
         /* regular image */
         if (!p.__bmp) {
           p.__bmp = new Image();
-          p.__bmp.src = `assets/images/${p.img}`;
+          p.__bmp.src = `./src/assets/images/${p.img}`;
           p.__bmp.onload = () => this.canvas.dispatchEvent(new Event('redraw'));
         }
       }
@@ -351,7 +351,7 @@ export default class BuildCanvas {
       ctx.translate(dx, dy);
 
       /* rounded card  */
-      ctx.lineWidth   = 1;
+      ctx.lineWidth   = convert(1);
       ctx.strokeStyle = '#182c44';
       ctx.fillStyle   = '#182c44';
       strokeRoundRect(ctx, projectX, projectY,
@@ -361,18 +361,18 @@ export default class BuildCanvas {
       /* text column */
       const isRight = (p.align ?? 'right') === 'right';
       const anchorX = isRight
-        ? projectX + p.card.w - 20
-        : projectX + 20;
+        ? projectX + p.card.w - convert(20)
+        : projectX + convert(20);
       const textX = isRight ? anchorX : anchorX;
       ctx.textAlign  = isRight ? 'right'     : 'left';
 
-      const TAG_SIZE   = 13;
-      const TITLE_SIZE = 26;
-      const BLURB_LH   = 26;
-      const TECH_SIZE  = 13;
+      const TAG_SIZE = convert(13);
+      const TITLE_SIZE = convert(26);
+      const BLURB_LH = convert(26);
+      const TECH_SIZE = convert(13);
 
       /* Measure how tall the wrapped blurb will be */
-      const maxW = p.card.w - 40;
+      const maxW = p.card.w - convert(40);
       const blurbLines = wrappedLineCount(ctx, p.blurb, maxW);
       const blurbH = blurbLines * BLURB_LH;
 
@@ -381,7 +381,7 @@ export default class BuildCanvas {
       const cardBot = projectY + p.card.h;
 
       /* center the blurb inside the card */
-      let blurbY = cardTop + (p.card.h - blurbH) / 2 + 25 - 20;
+      let blurbY = cardTop + (p.card.h - blurbH) / 2;
 
       /* title sits a little above the card (25 % of card height) */
       let titleY = cardTop - 0.25 * p.card.h;
@@ -394,10 +394,10 @@ export default class BuildCanvas {
 
       let myX = 0;
       if(isRight) {
-        myX = textX + 20;
+        myX = textX + convert(20);
       }
       else{
-        myX = textX - 20;
+        myX = textX - convert(20);
       }
       /* Draw everything */
       ctx.fillStyle = COLORS.cyan;
@@ -409,10 +409,10 @@ export default class BuildCanvas {
       ctx.fillText(p.title, myX, titleY);
 
       /* blurb (wrapped) */
-      ctx.font = `18px "Calibre", Comic Sans MS`;
+      ctx.font = convertInt(18) + `px "Calibre", Comic Sans MS`;
       blurbY = wrap(ctx,
         p.blurb,
-        isRight ? anchorX - 5 : anchorX,
+        isRight ? anchorX - convert(5) : anchorX,
         blurbY, maxW, BLURB_LH);
 
       ctx.font = `${TECH_SIZE}px "SF Mono Regular", monospace`;
@@ -423,12 +423,12 @@ export default class BuildCanvas {
       /* GitHub icon ------------------------------------------ */
       let ghX;
       if(isRight) {
-        ghX = textX - 5;
+        ghX = textX - convert(5);
       }
       else{
-        ghX = textX - 20;
+        ghX = textX - convert(20);
       }
-      const ghY = techY + 20;
+      const ghY = techY + convert(20);
 
       // update logistic fade toward hover
       this.ghProg[i] = this.hovers[i]

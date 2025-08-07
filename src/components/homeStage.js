@@ -8,7 +8,9 @@ import {
   HERO_BTN,
   RESUME_URL,
   BAR_ANIM,
-  resizeHiDPI
+  resizeHiDPI,
+  convert,
+  convertInt,
 } from '../utils.js';
 
 import Header from './header.js';
@@ -49,20 +51,16 @@ export default class HomeStage {
     this.notes = new NoteworthyCanvas(this.ctx,this.canvas);
     this.socialBar = new SocialBar(this.ctx, this.canvas);
     this.header = headerShared;
-    this.panel = new InfoPanel();
+    this.panel = new InfoPanel(this.ctx, this.canvas);
 
     document.body.style.height = `${7.4 * 100}vh`; // Hero (1vh) + About (1vh)
     this.scrollY  = 0;
-
     window.addEventListener('scroll', this.onScroll);
     this.canvas.addEventListener('place-select', this.onPlaceSelect);
     this.canvas.addEventListener('mousemove', this.onMove);
-
     this.frameId = requestAnimationFrame(this.frame);
-
     this.canvas.addEventListener('click', this.onClick);
     canvas.addEventListener('click', this.header.onClick);
-
   }
 
   onScroll = () => {
@@ -76,14 +74,13 @@ export default class HomeStage {
     const rect = this.canvas.getBoundingClientRect();
     const cssX = e.clientX - rect.left;
     const cssY = e.clientY - rect.top;
-    const lineGap = 64;
+    const lineGap = convert(64);
     const overLogo = this.logoDone && isLogoHit(cssX, cssY);
     const overSocial = this.socialBar.hoverAny;
     const btnTop = HERO_BTN.y - this.scrollY + lineGap;
     const btnBottom = btnTop + HERO_BTN.h;
-    const overBtn =
-      cssX >= HERO_BTN.x && cssX <= HERO_BTN.x + HERO_BTN.w &&
-      cssY >= btnTop && cssY <= btnBottom;
+    const { left, top, right, bottom } = this.hero.getButtonBounds();
+    const overBtn = cssX >= left && cssX <= right && cssY >= top && cssY <= bottom;
 
     this.hero.setHover(overBtn);
 
@@ -102,8 +99,8 @@ export default class HomeStage {
   onClick = (e) => {
     if (!this.logoDone) return; // wait until fade‑in finished
     const rect = this.canvas.getBoundingClientRect();
-    const cssX   = e.clientX - rect.left;
-    const cssY   = e.clientY - rect.top;
+    const cssX = e.clientX - rect.left;
+    const cssY = e.clientY - rect.top;
     /*  Resume button – handled entirely by Header’s geometry  */
     if (this.header.isResumeHit(e.clientX, e.clientY)) {
       window.open(RESUME_URL, '_blank');
@@ -118,17 +115,14 @@ export default class HomeStage {
       this.restart();
     }
 
-    const lineGap = 64;
-
-    /* canvas-to-CSS scaling factor */
-    const scale = this.canvas.width / rect.width;
-    const btnLeft =  HERO_BTN.x * scale;
-    const btnRight = (HERO_BTN.x + HERO_BTN.w) * scale;
-    const btnTop = (HERO_BTN.y - this.scrollY + lineGap) * scale;
-    const btnBottom =  btnTop + HERO_BTN.h * scale;
-    if (pxX >= btnLeft && pxX <= btnRight &&
-      pxY >= btnTop  && pxY <= btnBottom) {
-      window.open(HERO_BTN.mail, '_self'); // launches default mail app
+    const { left, top, right, bottom } = this.hero.getButtonBounds() || {};
+    if (
+      cssX >= left &&
+      cssX <= right &&
+      cssY >= top &&
+      cssY <= bottom
+    ) {
+      window.open(HERO_BTN.mail, '_self');
     }
   };
 
@@ -173,7 +167,7 @@ export default class HomeStage {
 
     if (this.heroDoneTime &&
       performance.now() - this.heroDoneTime > BAR_ANIM.delay * 1000) {
-      this.mailBar.visible   = true;
+      this.mailBar.visible = true;
       this.socialBar.visible = true;
     }
 

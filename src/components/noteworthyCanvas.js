@@ -1,7 +1,7 @@
 /* noteworthyCanvas.js */
 import {
     COLORS, NOTEWORTHY, NOTE_LIST,
-    strokeRoundRect, easeLogistic, wrap, RESUME_URL
+    strokeRoundRect, easeLogistic, wrap, RESUME_URL, convert, convertInt,
 } from '../utils.js';
 
 export default class NoteworthyCanvas {
@@ -13,7 +13,7 @@ export default class NoteworthyCanvas {
     this.introDone = false; // stays true afterwards
     this.introTimer = 0;
     this.INTRO_SPEED = 0.01;
-    this.INTRO_DROP = 200;
+    this.INTRO_DROP = convert(200);
 
     /* hover logic (per-card) */
     this.cardHover = NOTE_LIST.map(() => false);
@@ -29,8 +29,8 @@ export default class NoteworthyCanvas {
       gh : new Image(),
       ext : new Image()
     };
-    this.icons.folder.src = 'assets/icons/folder.svg';
-    this.icons.gh.src = 'assets/icons/gh.svg';
+    this.icons.folder.src = './src/assets/icons/folder.svg';
+    this.icons.gh.src = './src/assets/icons/gh.svg';
 
     canvas.addEventListener('mousemove', this.onMove);
     canvas.addEventListener('click', this.onClick);
@@ -108,9 +108,9 @@ export default class NoteworthyCanvas {
     ctx.translate(0, dropY);    // rise-up
     ctx.globalAlpha = alphaT;   // fade-in
     ctx.save();
-    ctx.translate(marginX + 390, pageY + top - 50);
+    ctx.translate(marginX + convert(390), pageY + top - convert(50));
     ctx.fillStyle = COLORS.light;
-    ctx.font      = 'bold 32px "Calibre", sans-serif';
+    ctx.font = 'bold ' + convertInt(32) + 'px "Calibre", sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('Other Noteworthy Projects', 0, 0);
     ctx.restore();
@@ -130,34 +130,34 @@ export default class NoteworthyCanvas {
       ctx.save();
 
       /* card backing */
-      ctx.lineWidth = 1;
+      ctx.lineWidth = convertInt(1);
       ctx.strokeStyle = '#182c44';
       ctx.fillStyle = '#182c44';
       strokeRoundRect(ctx, baseX, baseY, cardW, cardH, cornerR);
       ctx.fill();
 
       /* icons */
-      const icoY = baseY + 22;
-      const icoX = baseX + 22;
+      const icoY = baseY + convert(22);
+      const icoX = baseX + convert(22);
       const { folder, gh } = this.icons;
       if (folder.complete && folder.naturalWidth > 0)
         ctx.drawImage(folder, icoX, icoY, ghSize, ghSize);
 
       /* title */
       ctx.fillStyle = COLORS.light;
-      ctx.font = '22px "Calibre", sans-serif';
-      ctx.fillText(p.title, baseX + 22, baseY + 80);
+      ctx.font = convertInt(22) + 'px "Calibre", sans-serif';
+      ctx.fillText(p.title, baseX + convert(22), baseY + convert(80));
 
       /* description */
-      ctx.font = '17px "Calibre", sans-serif';
+      ctx.font = convertInt(17) + 'px "Calibre", sans-serif';
       ctx.fillStyle = COLORS.gray;
-      const bodyMaxW = cardW - 44;
-      wrap(ctx, p.desc, baseX + 22, baseY + 112, bodyMaxW, 24);
+      const bodyMaxW = cardW - convert(44);
+      wrap(ctx, p.desc, baseX + convert(22), baseY + convert(112), bodyMaxW, convert(24));
 
       /* tech row */
-      ctx.font = '12px "SF Mono Regular", monospace';
+      ctx.font = convertInt(12) + 'px "SF Mono Regular", monospace';
       ctx.fillStyle = COLORS.light;
-      ctx.fillText(p.tech.join('   '), baseX + 22, baseY + cardH - 32);
+      ctx.fillText(p.tech.join('   '), baseX + convert(22), baseY + cardH - convert(32));
       ctx.restore();
     });
     ctx.restore();

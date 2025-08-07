@@ -1,5 +1,5 @@
 // mailBar.js
-import {BAR_ANIM, COLORS, easeLogistic, lerpHex, MAIL} from "../utils.js";
+import {BAR_ANIM, COLORS, easeLogistic, lerpHex, MAIL, convert, convertInt } from "../utils.js";
 
 export default class MailBar {
   constructor(ctx, canvas) {
@@ -10,14 +10,14 @@ export default class MailBar {
     this.visible = false;
     this.timer = 0;
 
-    this.prog   = 0;
+    this.prog = 0;
     this.SPEED  = 0.08;
-    this.LIFT   = 6;
+    this.LIFT = convert(6);
 
     /* once-off text metrics */
-    ctx.font = '16px "SF Mono", monospace';
+    ctx.font = convertInt(16) + 'px "SF Mono", monospace';
     this.txtW = ctx.measureText(MAIL.email).width;
-    this.txtH = 16;
+    this.txtH = convert(16);
 
     /* thickness of hit-zone around the vertical text */
     this.hitW = this.txtH;  // horizontal thickness
@@ -31,13 +31,15 @@ export default class MailBar {
   inBar(cssX, cssY) {
     const dpr = window.devicePixelRatio || 1;
     const cssW = this.canvas.width / dpr;
-    const left = cssW - MAIL.x - this.hitW / 2; // bar’s left edge (CSS)
-    const lift = this.LIFT * easeLogistic(this.prog); // current offset
-    const top = MAIL.top - lift;
+    const cssH = this.canvas.height / dpr;
+    const baseY = cssH - MAIL.top;
+    const lift = this.LIFT * easeLogistic(this.prog);
+    const top = baseY - lift;
+    const left = cssW - MAIL.x - this.hitW / 2;
 
     return (
       cssX >= left && cssX <= left + this.hitW &&
-      cssY >= top && cssY <= top  + this.hitH
+      cssY >= top && cssY <= top + this.hitH
     );
   }
 
@@ -75,14 +77,15 @@ export default class MailBar {
     const lift = this.LIFT * t;
     const col = lerpHex('#8892B0', '#64FFDA', t); // gray → cyan
     const dpr = window.devicePixelRatio || 1;
-    const cssW = canvas.width  / dpr;  // real visual width in CSS px
+    const cssW = canvas.width / dpr;
     const cssH = canvas.height / dpr;
-    const x = cssW - MAIL.x;  // center of the bar
-
+    const x = cssW - MAIL.x;  // horizontal center
+    // anchor MAIL.top as distance from bottom
+    const baseY = cssH - MAIL.top;
     ctx.save();
-    ctx.translate(x, MAIL.top - lift); // slide up
+    ctx.translate(x, baseY - lift);
     ctx.rotate(Math.PI / 2); // 90° clockwise
-    ctx.font  = '13px "SF Mono Regular", monospace';
+    ctx.font  = convertInt(13) + 'px "SF Mono Regular", monospace';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = col;
@@ -90,15 +93,16 @@ export default class MailBar {
     ctx.restore();
 
     /* slim grey line  */
-    ctx.lineWidth   = 2;
+    const lineStartY = baseY + this.hitH + MAIL.lineGap;
+    ctx.lineWidth = convert(2);
     ctx.strokeStyle = COLORS.gray;
     ctx.beginPath();
-    ctx.moveTo(x, MAIL.top + this.hitH + MAIL.lineGap);
-    ctx.lineTo(x, MAIL.top + this.hitH + MAIL.lineGap + MAIL.lineH);
+    ctx.moveTo(x, lineStartY);
+    ctx.lineTo(x, lineStartY + MAIL.lineH);
     ctx.stroke();
   }
   destroy () {
     this.canvas.removeEventListener('mousemove', this.onMove);
-    this.canvas.removeEventListener('click',     this.onClick);
+    this.canvas.removeEventListener('click', this.onClick);
   }
 }

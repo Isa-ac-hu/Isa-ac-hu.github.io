@@ -1,5 +1,5 @@
 //introStage.js
-import { polygonPoints, lerpHex, resizeHiDPI } from '../utils.js';
+import { polygonPoints, lerpHex, resizeHiDPI, convert, convertInt } from '../utils.js';
 
 export default class IntroStage {
   constructor(canvas, onFinish = () => {}) {
@@ -10,7 +10,7 @@ export default class IntroStage {
     const CYAN = 'rgba(100,255,218,1)';
     const BG1 = '#020C1B';
     const BG2 = '#0A192F';
-    const SIZE = 0.05;
+    const SIZE = convert(0.05);
     const LETTER_FADE = 0.04;
     const LOG_K = 10;
 
@@ -64,7 +64,7 @@ export default class IntroStage {
       /* clear & paint interpolated background */
       ctx.fillStyle = mixBG();
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.lineWidth=5; ctx.strokeStyle=CYAN; ctx.lineCap='round'; ctx.globalAlpha=1;
+      ctx.lineWidth=convert(5); ctx.strokeStyle=CYAN; ctx.lineCap='round'; ctx.globalAlpha=1;
       const scaled = ([x,y]) => {
         const [cx,cy] = center();
         return [cx + (x-cx)*scale, cy + (y-cy)*scale];
@@ -91,10 +91,10 @@ export default class IntroStage {
 
       if (prog>=1 && scale>VANISH_AT){
         const [cx,cy]=center();
-        ctx.font=`bold ${60*scale}px "Roboto Mono", monospace`;
+        ctx.font='bold ' + convert(60) * scale + 'px "Arial", monospace';
         ctx.textAlign='center'; ctx.textBaseline='middle';
         ctx.globalAlpha=letterAlpha; ctx.fillStyle=CYAN;
-        ctx.fillText('I',cx,cy+5*scale);
+        ctx.fillText('胡',cx,cy+convert(5)*scale);
       }
       requestAnimationFrame(frame);
     };

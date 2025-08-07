@@ -1,7 +1,7 @@
 /* workCanvas.js */
 import {
   COLORS, WORK, JOBS, BULLET, strokeRoundRect,
-  easeLogistic, WORK_ANIM
+  easeLogistic, WORK_ANIM, convert, convertInt,
 } from '../utils.js';
 
 function wrapLine(ctx, text, x, y, maxW, lineH) {
@@ -21,9 +21,9 @@ function wrapLine(ctx, text, x, y, maxW, lineH) {
   return cy + lineH;
 }
 
-const drawBullet = (ctx, x, y, size = 3, color = COLORS.cyan) => {
+const drawBullet = (ctx, x, y, size = convert(3), color = COLORS.cyan) => {
   ctx.strokeStyle = color;
-  ctx.lineWidth = 2;
+  ctx.lineWidth = convert(2);
   ctx.beginPath();
   ctx.moveTo(x, y + size * .1);
   ctx.lineTo(x + size,y + size * .5);
@@ -32,8 +32,8 @@ const drawBullet = (ctx, x, y, size = 3, color = COLORS.cyan) => {
   ctx.stroke();
 };
 
-const SMALL_PAD = 30; // indent for inner bullets
-const bulletPad = 20;
+const SMALL_PAD = convert(30); // indent for inner bullets
+const bulletPad = convert(20);
 
 export default class WorkCanvas {
   constructor(ctx, canvas) {
@@ -45,7 +45,7 @@ export default class WorkCanvas {
     this.introDone = false;   // stays true afterwards
     this.introTimer = 0;
     this.INTRO_SPEED = 0.01;
-    this.INTRO_DROP = 200;
+    this.INTRO_DROP = convert(200);
 
     this.compLink = { x:0, y:0, w:0, h:0, prog:0, hover:false };
 
@@ -132,29 +132,29 @@ export default class WorkCanvas {
     /* title  */
     ctx.save();
     const tx = leftX;
-    const ty = pageY + WORK.top - 100;
+    const ty = pageY + WORK.top - convert(100);
     ctx.translate(tx, ty);
 
     ctx.fillStyle = COLORS.cyan;
-    ctx.font = '24px "SF Mono Regular", monospace';
+    ctx.font = convertInt(24) + 'px "SF Mono Regular", monospace';
     ctx.fillText('02.', 0, 8);
 
-    ctx.lineWidth = 1;
-    const idxW = ctx.measureText('02.').width + 8;
+    ctx.lineWidth = convert(1);
+    const idxW = ctx.measureText('02.').width + convert(8);
 
     ctx.fillStyle = COLORS.light;
-    ctx.font = 'bold 36px "Calibre", sans-serif';
-    ctx.fillText('Where I’ve Worked', idxW, 10);
+    ctx.font = 'bold ' + convertInt(36) + 'px "Calibre", sans-serif';
+    ctx.fillText('Where I’ve Worked', idxW, convert(10));
 
-    ctx.strokeStyle=COLORS.gray;ctx.lineWidth=0.5;
+    ctx.strokeStyle=COLORS.gray;ctx.lineWidth=convert(0.5);
     ctx.beginPath();
-    ctx.moveTo(idxW + 300, WORK.ruleGap);
-    ctx.lineTo(idxW + 300 + 300, WORK.ruleGap);
+    ctx.moveTo(idxW + convert(300), WORK.ruleGap);
+    ctx.lineTo(idxW + convert(300 + 300), WORK.ruleGap);
     ctx.stroke();
     ctx.restore();
 
     /* selector list */
-    ctx.font = '13px "SF Mono Regular", sans-serif';
+    ctx.font = convertInt(13) + 'px "SF Mono Regular", sans-serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
 
@@ -169,7 +169,7 @@ export default class WorkCanvas {
       const active = i === this.sel;
       if(active || isHover){
         ctx.globalAlpha = 0.06;
-        ctx.fillRect(leftX - 6, hlY, WORK.labelW, hlH);
+        ctx.fillRect(leftX - convert(6), hlY, WORK.labelW, hlH);
         ctx.globalAlpha=1;
       }
       ctx.fillStyle = active
@@ -195,29 +195,29 @@ export default class WorkCanvas {
     /* highlight overlay behind active company name  */
     const actY = pageY + WORK.top + this.sel * WORK.rowH;
     ctx.globalAlpha = 0.06;
-    ctx.fillRect(leftX - 6,
+    ctx.fillRect(leftX - convert(6),
       actY + WORK.hlPad,
       WORK.labelW,
       WORK.rowH - WORK.hlPad*2);
     ctx.globalAlpha = 1;
 
     /* right column  */
-    const infoX = leftX + WORK.labelW + 40;
+    const infoX = leftX + WORK.labelW + convert(40);
     const job = JOBS[this.sel];
     const SPEED = 0.05;
 
     ctx.fillStyle = COLORS.light;
-    ctx.font = '18px "SF Mono Regular", sans-serif';
-    ctx.fillText(`${job.title} @ `, infoX, pageY + WORK.top + 10);
+    ctx.font = convertInt(18) + 'px "SF Mono Regular", sans-serif';
+    ctx.fillText(`${job.title} @ `, infoX, pageY + WORK.top + convert(10));
 
     const titleW = ctx.measureText(`${job.title} @ `).width;
     const compX = infoX + titleW;
-    const compY = pageY + WORK.top + 10;
+    const compY = pageY + WORK.top + convert(10);
     const compW = ctx.measureText(job.company).width;
-    const compH = 22;
+    const compH = convert(22);
 
     /* store bbox for hover tests (CSS-px) */
-    Object.assign(this.compLink, { x: compX, y: compY - 5, w: compW, h: compH });
+    Object.assign(this.compLink, { x: compX, y: compY - convert(5), w: compW, h: compH });
 
     /* progress for logistic underline */
     if (this.compLink.hover)
@@ -231,11 +231,11 @@ export default class WorkCanvas {
     ctx.fillStyle = COLORS.cyan;
     ctx.fillText(job.company, compX, compY);
 
-    const underlineY = compY + compH - 10;
+    const underlineY = compY + compH - convert(10);
     /* underline */
     if (t > 0.01) {
       ctx.strokeStyle = COLORS.cyan;
-      ctx.lineWidth   = 2;
+      ctx.lineWidth = convert(2);
       ctx.beginPath();
       ctx.moveTo(compX, underlineY);
       ctx.lineTo(compX + compW * t, underlineY);
@@ -243,31 +243,31 @@ export default class WorkCanvas {
     }
 
     ctx.fillStyle = COLORS.gray;
-    ctx.font = '16px "SF Mono Regular", monospace';
-    ctx.fillText(job.date, infoX, pageY + WORK.top + 38);
+    ctx.font = convertInt(16) + 'px "SF Mono Regular", monospace';
+    ctx.fillText(job.date, infoX, pageY + WORK.top + convert(38));
 
     /*  bullets (simple string OR nested object)  */
-    const lineH = 26;
+    const lineH = convert(26);
     const maxW = WORK.maxW;
-    let   by = pageY + WORK.top + 80;
+    let by = pageY + WORK.top + convert(80);
 
     job.bullets.forEach(b => {
       /* simple string */
       if (typeof b === 'string') {
-        drawBullet(ctx, infoX - bulletPad, by, 3);
-        by = wrapLine(ctx, b, infoX, by + 2, maxW, lineH);
+        drawBullet(ctx, infoX - bulletPad, by, convert(3));
+        by = wrapLine(ctx, b, infoX, by + convert(2), maxW, lineH);
         return;
       }
 
       /* nested object {role, desc[]} */
-      drawBullet(ctx, infoX - bulletPad, by, 3);
-      by = wrapLine(ctx, b.role, infoX, by + 2, maxW, lineH);
+      drawBullet(ctx, infoX - bulletPad, by, convert(3));
+      by = wrapLine(ctx, b.role, infoX, by + convert(2), maxW, lineH);
 
       // inner bullets, indented
       b.desc.forEach(t => {
         const innerX = infoX + SMALL_PAD;
-        drawBullet(ctx, innerX - bulletPad, by, 3, COLORS.light);
-        by = wrapLine(ctx, t, innerX, by + 2, maxW - SMALL_PAD, lineH);
+        drawBullet(ctx, innerX - bulletPad, by, convert(3), COLORS.light);
+        by = wrapLine(ctx, t, innerX, by + convert(2), maxW - SMALL_PAD, lineH);
       });
     });
     this.linkHoverGlobal = this.compLink.hover; // share with HomeStage

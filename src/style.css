@@ -21,7 +21,7 @@ canvas {
     height: 100vh;
     display: block; /* remove inline‑block baseline gap */
     z-index: 1; /*we want our canvas to stay in front of most other components*/
-    background: #020C1B;
+    background: #0A192F;
 }
 
 /* each “page” takes one viewport height */

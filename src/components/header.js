@@ -8,7 +8,9 @@ import {
   easeLogistic,
   lerpHex,
   NAV_ANIM,
-  RESUME_URL
+  RESUME_URL,
+  convert,
+  convertInt,
 } from '../utils.js';
 
 export default class Header {
@@ -110,9 +112,9 @@ export default class Header {
         - HEADER.resumeW / 2
         + HEADER.resumeDistance;
 
-      const left   = rx - HEADER.resumeW / 2;
-      const right  = rx + HEADER.resumeW / 2;
-      const top    = yMid - HEADER.resumeH / 2;
+      const left = rx - HEADER.resumeW / 2;
+      const right = rx + HEADER.resumeW / 2;
+      const top = yMid - HEADER.resumeH / 2;
       const bottom = yMid + HEADER.resumeH / 2;
       return cssX >= left && cssX <= right && cssY >= top && cssY <= bottom;
     }
@@ -123,8 +125,8 @@ export default class Header {
       const { ctx, canvas } = this;
       this.updateLinkBoxes();
       const dpr = window.devicePixelRatio || 1;
-      const cssW  = canvas.width  / dpr;
-      const cssH  = canvas.height / dpr;
+      const cssW = canvas.width / dpr;
+      const cssH = canvas.height / dpr;
 
       /* advance fade */
       if (this.logoProg < 1) this.logoProg =
@@ -152,10 +154,10 @@ export default class Header {
         ctx.closePath(); ctx.stroke();
 
         ctx.fillStyle = COLORS.cyan;
-        ctx.font = 'bold 25px "SF Mono Regular", monospace';
+        ctx.font = 'bold ' + convertInt(20) + 'px "SF Mono Regular", monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('I', 0, 0);
+        ctx.fillText('胡', 0, 0);
         ctx.restore();
 
         /* right‑hand nav links */

@@ -1,5 +1,5 @@
 /* socialBar.js */
-import {COLORS, SOCIAL, easeLogistic, BAR_ANIM} from '../utils.js';
+import {COLORS, SOCIAL, easeLogistic, BAR_ANIM, convert} from '../utils.js';
 
 /* fallback doodle while the SVG hasn’t loaded yet */
 function drawStub(ctx, id, s) {
@@ -22,7 +22,7 @@ let preloadPromise;
 function loadIcon(id) {
   return new Promise(res => {
     const img = new Image();
-    img.src   = `assets/icons/${id}.svg`;
+    img.src   = `./src/assets/icons/${id}.svg`;
     img.onload = () => { // store & resolve when ready
       ICON_IMG[id] = img;
       res();
@@ -64,13 +64,19 @@ export default class SocialBar {
   /* hit‑testing helper */
   hitIndex(cssX, cssY) {
     const { x, top, size, gap } = SOCIAL;
+    const dpr = window.devicePixelRatio || 1;
+    const cssH = this.canvas.height / dpr;
+    const baseY = cssH - top;           // first icon’s center (CSS-px) from bottom
     for (let i = 0; i < SOCIAL.icons.length; i++) {
       const lift = -SOCIAL.lift * easeLogistic(this.prog[i]);
+      // compute each icon’s *center* Y:
+      const cy = baseY + i * (size + gap) + lift;
       const bx = x - size / 2;
-      const by = top + i * (size + gap) + lift - size / 2;
+      // box’s top‐left for hit‐test:
+      const by = cy - size / 2;
       if (
-        cssX >= bx && cssX <= bx + size &&
-        cssY >= by && cssY <= by + size
+        cssX >= bx       && cssX <= bx + size &&
+        cssY >= by       && cssY <= by + size
       ) return i;
     }
     return -1;
@@ -107,8 +113,13 @@ export default class SocialBar {
     ctx.globalAlpha = globalT;
 
     ctx.save();
-    ctx.lineWidth = 2;
+    ctx.lineWidth = convert(2);
 
+
+    const dpr   = window.devicePixelRatio || 1;
+    const cssH  = this.canvas.height / dpr;
+    // “top” is now measured from the bottom of viewport:
+    const baseY = cssH - SOCIAL.top
     SOCIAL.icons.forEach((ic, i) => {
       /* progress toward 0 or 1 */
       if (this.hovers[i]) this.prog[i] = Math.min(1, this.prog[i] + this.SPEED);
@@ -118,7 +129,7 @@ export default class SocialBar {
       const color = this.hovers[i] ? COLORS.cyan : COLORS.gray;
 
       const cx = SOCIAL.x;
-      const cy = SOCIAL.top + i * (SOCIAL.size + SOCIAL.gap) + lift;
+      const cy = baseY + i * (SOCIAL.size + SOCIAL.gap) + lift;
 
       ctx.save();
       ctx.translate(cx, cy);
@@ -138,9 +149,9 @@ export default class SocialBar {
     });
 
     /* grey vertical line */
-    const lastY = SOCIAL.top + (SOCIAL.icons.length - 1) * (SOCIAL.size + SOCIAL.gap * 1.5);
+    const lastY = baseY + (SOCIAL.icons.length - 1) * (SOCIAL.size + SOCIAL.gap * 1.5);
     ctx.strokeStyle = COLORS.gray;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = convert(2);
     ctx.beginPath();
     ctx.moveTo(SOCIAL.x, lastY + SOCIAL.size / 2 + 12);
     ctx.lineTo(SOCIAL.x, lastY + SOCIAL.size / 2 + 12 + SOCIAL.lineH);
