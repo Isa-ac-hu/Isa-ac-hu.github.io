@@ -27,20 +27,11 @@ import NoteworthyCanvas from './noteworthyCanvas.js';
 export default class HomeStage {
   constructor(canvas, restartCallback = () => {}, headerShared) {
 
-    window.addEventListener('load', () => {
-      // now the CSS has been applied
-      requestAnimationFrame(this.frame);
-    });
-
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.restart = restartCallback;
     this.heroDoneTime = null;
 
-    // Hi-DPI setup
-    resizeHiDPI(canvas, this.ctx);
-    this.onResize = () => resizeHiDPI(canvas, this.ctx);
-    window.addEventListener('resize', this.onResize);
 
     /* logo animation state */
     this.logoProg  = 0;
@@ -59,14 +50,26 @@ export default class HomeStage {
     this.header = headerShared;
     this.panel = new InfoPanel(this.ctx, this.canvas);
 
+    this.frameId = requestAnimationFrame(this.frame);
+
     document.body.style.height = `${7.4 * getScale() * 100}vh`; // Hero (1vh) + About (1vh)
     this.scrollY  = 0;
     window.addEventListener('scroll', this.onScroll);
     this.canvas.addEventListener('place-select', this.onPlaceSelect);
     this.canvas.addEventListener('mousemove', this.onMove);
-    this.frameId = requestAnimationFrame(this.frame);
+
     this.canvas.addEventListener('click', this.onClick);
     canvas.addEventListener('click', this.header.onClick);
+
+    resizeHiDPI(canvas, this.ctx);
+    window.addEventListener('resize', () => resizeHiDPI(canvas, this.ctx));
+
+    // Don’t start drawing immediately (canvas might still be 0×0)
+    window.addEventListener('load', () => {
+      // Now layout is done, CSS size settled, buffer is correctly sized…
+      this.frameId = requestAnimationFrame(this.frame);
+    });
+
   }
 
   onScroll = () => {
