@@ -129,8 +129,6 @@ export function lerpHex(c1, c2, t) {
 let width = window.innerWidth; //1638
 let height = window.innerHeight; //1024
 
- // let width = 1638/2;
- // let height = 863 * 2;
 
 // const DESIGN_WIDTH = 1638;
 // const DESIGN_HEIGHT = 850;
