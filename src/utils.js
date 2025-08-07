@@ -137,7 +137,8 @@ const DESIGN_WIDTH = 1638;
 const DESIGN_HEIGHT = 863;
 
 const scale = Math.min(
-  width / DESIGN_WIDTH,
+  //width / DESIGN_WIDTH,
+  0,
   height / DESIGN_HEIGHT
 );
 
