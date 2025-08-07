@@ -220,9 +220,9 @@ export const HERO_BTN = {
 /*Hero intro animation */
 export const HERO_ANIM = {
   delay: 0.5, // seconds AFTER the header completes
-  stagger: 0.35, // delay between successive hero lines
-  dropPx: convert(0), // start-offset below baseline
-  speed: 0.03 // timer advance per frame
+  stagger: 0.45, // delay between successive hero lines
+  dropPx: convert(30), // start-offset below baseline
+  speed: 0.025 // timer advance per frame
 };
 
 /* fixed social‑bar geometry (CSS‑px) */

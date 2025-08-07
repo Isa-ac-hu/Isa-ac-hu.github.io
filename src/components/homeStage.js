@@ -25,7 +25,9 @@ import BuildCanvas  from './buildCanvas.js';
 import NoteworthyCanvas from './noteworthyCanvas.js';
 
 export default class HomeStage {
-  constructor(canvas, restartCallback = () => {}, headerShared) {
+
+  constructor(canvas, restartCallback = () => {
+  }, headerShared) {
 
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
@@ -35,24 +37,24 @@ export default class HomeStage {
 
 
     /* logo animation state */
-    this.logoProg  = 0;
-    this.logoDone  = false;
+    this.logoProg = 0;
+    this.logoDone = false;
 
     /* simple click handler */
     this.hero = new Hero(this.ctx, this.canvas);
 
-    this.mailBar = new MailBar (this.ctx, this.canvas);
-    this.about = new AboutCanvas(this.ctx,this.canvas)
-    this.globe = new GlobeCanvas(this.ctx,this.canvas);
-    this.work = new WorkCanvas(this.ctx,this.canvas);
-    this.builds = new BuildCanvas(this.ctx,this.canvas);
-    this.notes = new NoteworthyCanvas(this.ctx,this.canvas);
+    this.mailBar = new MailBar(this.ctx, this.canvas);
+    this.about = new AboutCanvas(this.ctx, this.canvas)
+    this.globe = new GlobeCanvas(this.ctx, this.canvas);
+    this.work = new WorkCanvas(this.ctx, this.canvas);
+    this.builds = new BuildCanvas(this.ctx, this.canvas);
+    this.notes = new NoteworthyCanvas(this.ctx, this.canvas);
     this.socialBar = new SocialBar(this.ctx, this.canvas);
     this.header = headerShared;
     this.panel = new InfoPanel(this.ctx, this.canvas);
 
     document.body.style.height = `${7.4 * getScale() * 100}vh`; // Hero (1vh) + About (1vh)
-    this.scrollY  = 0;
+    this.scrollY = 0;
     window.addEventListener('scroll', this.onScroll);
     this.canvas.addEventListener('place-select', this.onPlaceSelect);
     this.canvas.addEventListener('mousemove', this.onMove);
@@ -60,22 +62,23 @@ export default class HomeStage {
     this.canvas.addEventListener('click', this.onClick);
     this.canvas.addEventListener('click', this.header.onClick);
 
-    const startWhenReady = () => {
-      const { width, height } = this.canvas.getBoundingClientRect();
+    const start = () => {
+      const {width, height} = this.canvas.getBoundingClientRect();
       if (width > 0 && height > 0) {
         resizeHiDPI(this.canvas, this.ctx);
         this.frameId = requestAnimationFrame(this.frame);
       } else {
         // try again on the next frame
-        requestAnimationFrame(startWhenReady);
+        requestAnimationFrame(start);
       }
     };
 
 
     if (document.readyState === 'loading') {
-      window.addEventListener('DOMContentLoaded', startWhenReady);
+      window.addEventListener('DOMContentLoaded', start);
     } else {
-      startWhenReady();
+      setTimeout(start.bind(this), 100);
+      start();
     }
     // // Don’t start drawing immediately (canvas might still be 0×0)
     // window.addEventListener('DOMContentLoaded', () => {
@@ -88,7 +91,6 @@ export default class HomeStage {
       resizeHiDPI(this.canvas, this.ctx);
       this.frameId = requestAnimationFrame(this.frame);
     });
-
 
 
   }
