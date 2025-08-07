@@ -563,6 +563,6 @@ export const GLOBE_BOX = {
 
 export const INFO_PANEL = {
   left: convert(1050), // distance from the left edge of the canvas / page
-  top: GLOBE_BOX.top + convert(6.15) * window.innerHeight,
+  top: GLOBE_BOX.top + convert(6.55) * window.innerHeight,
   w: convert(320), // max width
 };

@@ -33,7 +33,7 @@ export default class InfoPanel {
 
     const dpr = window.devicePixelRatio || 1;
     const cssH = canvas.height / dpr;
-     this.pageOffset = 6.15 * cssH * getScale();
+     this.pageOffset = 6.55 * cssH * getScale();
   }
 
 
