@@ -61,13 +61,13 @@ export default class HomeStage {
     this.canvas.addEventListener('click', this.onClick);
     canvas.addEventListener('click', this.header.onClick);
 
-    resizeHiDPI(canvas, this.ctx);
-    window.addEventListener('resize', () => resizeHiDPI(canvas, this.ctx));
+    resizeHiDPI(this.canvas, this.ctx);
+    window.addEventListener('resize', () => resizeHiDPI(this.canvas, this.ctx));
 
     // Don’t start drawing immediately (canvas might still be 0×0)
     window.addEventListener('load', () => {
       // Now layout is done, CSS size settled, buffer is correctly sized…
-      resizeHiDPI(canvas, this.ctx);
+      resizeHiDPI(this.canvas, this.ctx);
       this.frameId = requestAnimationFrame(this.frame);
     });
 
@@ -75,9 +75,11 @@ export default class HomeStage {
 
   onScroll = () => {
     this.scrollY = window.scrollY || window.pageYOffset;
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    resizeHiDPI(this.canvas, this.ctx);
   }
 
-  onPlaceSelect = ({ detail }) => { this.panel.show(detail); };
+  onPlaceSelect = ({ detail }) => {  };
 
   /* ---------- hover helper ---------- */
   onMove = (e) => {
