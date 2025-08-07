@@ -63,12 +63,18 @@ export default class HomeStage {
     this.canvas.addEventListener('click', this.header.onClick);
 
     const start = () => {
-      const {width, height} = this.canvas.getBoundingClientRect();
-      if (width > 0 && height > 0) {
+      const { width, height } = canvas.getBoundingClientRect();
+      if (width && height) {
+        // sync the backing store
         resizeHiDPI(this.canvas, this.ctx);
+        // force your resize handler / first paint
+        window.dispatchEvent(new Event('resize'));
+        // now enter your animation loop
         this.frameId = requestAnimationFrame(this.frame);
       } else {
-        // try again on the next frame
+        resizeHiDPI(this.canvas, this.ctx);
+        // force your resize handler / first paint
+        window.dispatchEvent(new Event('resize'));
         requestAnimationFrame(start);
       }
     };
