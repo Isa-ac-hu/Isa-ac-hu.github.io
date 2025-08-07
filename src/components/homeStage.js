@@ -80,7 +80,7 @@ export default class HomeStage {
 
     window.addEventListener('resize', () => {
       resizeHiDPI(this.canvas, this.ctx);
-      this.frameId = requestAnimationFrame(this.frame);
+      //this.frameId = requestAnimationFrame(this.frame);
     });
 
 
