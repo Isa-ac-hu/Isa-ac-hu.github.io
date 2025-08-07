@@ -192,7 +192,7 @@ export default class BuildCanvas {
 
     ctx.fillStyle = COLORS.cyan;
     ctx.font = convertInt(24) + 'px "SF Mono Regular", monospace';
-    ctx.fillText('03.', 0, 2);
+    ctx.fillText('03.', convert(0), convert(2));
     const idxW = ctx.measureText('03.').width + convert(8);
 
     ctx.fillStyle = COLORS.light;

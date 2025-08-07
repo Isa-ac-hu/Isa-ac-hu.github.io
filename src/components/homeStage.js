@@ -26,6 +26,12 @@ import NoteworthyCanvas from './noteworthyCanvas.js';
 
 export default class HomeStage {
   constructor(canvas, restartCallback = () => {}, headerShared) {
+
+    window.addEventListener('load', () => {
+      // now the CSS has been applied
+      requestAnimationFrame(this.frame);
+    });
+
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.restart = restartCallback;
