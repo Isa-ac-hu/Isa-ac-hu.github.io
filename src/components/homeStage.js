@@ -60,16 +60,22 @@ export default class HomeStage {
     this.canvas.addEventListener('click', this.onClick);
     this.canvas.addEventListener('click', this.header.onClick);
 
-    const start = () => {
-      resizeHiDPI(this.canvas, this.ctx);
-      this.frameId = requestAnimationFrame(this.frame);
+    const startWhenReady = () => {
+      const { width, height } = this.canvas.getBoundingClientRect();
+      if (width > 0 && height > 0) {
+        resizeHiDPI(this.canvas, this.ctx);
+        this.frameId = requestAnimationFrame(this.frame);
+      } else {
+        // try again on the next frame
+        requestAnimationFrame(startWhenReady);
+      }
     };
+
+
     if (document.readyState === 'loading') {
-      // page hasn’t finished initial parse yet: wait for it
-      window.addEventListener('DOMContentLoaded', start);
+      window.addEventListener('DOMContentLoaded', startWhenReady);
     } else {
-      // DOMContentLoaded already happened — go!
-      start();
+      startWhenReady();
     }
     // // Don’t start drawing immediately (canvas might still be 0×0)
     // window.addEventListener('DOMContentLoaded', () => {
@@ -80,7 +86,7 @@ export default class HomeStage {
 
     window.addEventListener('resize', () => {
       resizeHiDPI(this.canvas, this.ctx);
-      //this.frameId = requestAnimationFrame(this.frame);
+      this.frameId = requestAnimationFrame(this.frame);
     });
 
 
