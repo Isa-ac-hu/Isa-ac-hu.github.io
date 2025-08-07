@@ -10,7 +10,7 @@ import {
   NAV_ANIM,
   RESUME_URL,
   convert,
-  convertInt,
+  convertInt, getScale
 } from '../utils.js';
 
 export default class Header {
@@ -32,10 +32,10 @@ export default class Header {
     const vh = window.innerHeight;
     // custom section start positions in multiples of vh
     const sectionOffsets = [
-      /* About */ 1,
-      /* Work */ 2,
-      /* Projects */ 3,
-      /* Travel */ 6.2
+      /* About */ 1 * getScale(),
+      /* Work */ 2 * getScale(),
+      /* Projects */ 3 * getScale(),
+      /* Travel */ 6.6 * getScale(),
     ];
     const targetY = sectionOffsets[idx] * vh;
     window.scrollTo({ top: targetY, behavior: 'smooth' });
