@@ -29,8 +29,6 @@ export default class HomeStage {
 
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
-    resizeHiDPI(this.canvas, this.ctx);
-    this.frameId = requestAnimationFrame(this.frame);
 
     this.restart = restartCallback;
     this.heroDoneTime = null;
@@ -62,18 +60,30 @@ export default class HomeStage {
     this.canvas.addEventListener('click', this.onClick);
     this.canvas.addEventListener('click', this.header.onClick);
 
-    resizeHiDPI(this.canvas, this.ctx);
-    window.addEventListener('resize', () => {
+    const start = () => {
       resizeHiDPI(this.canvas, this.ctx);
-      requestAnimationFrame(this.frame);
-    });
+      this.frameId = requestAnimationFrame(this.frame);
+    };
+    if (document.readyState === 'loading') {
+      // page hasn’t finished initial parse yet: wait for it
+      window.addEventListener('DOMContentLoaded', start);
+    } else {
+      // DOMContentLoaded already happened — go!
+      start();
+    }
+    // // Don’t start drawing immediately (canvas might still be 0×0)
+    // window.addEventListener('DOMContentLoaded', () => {
+    //   // Now layout is done, CSS size settled, buffer is correctly sized…
+    //   resizeHiDPI(this.canvas, this.ctx);
+    //   this.frameId = requestAnimationFrame(this.frame);
+    // });
 
-    // Don’t start drawing immediately (canvas might still be 0×0)
-    window.addEventListener('load', () => {
-      // Now layout is done, CSS size settled, buffer is correctly sized…
+    window.addEventListener('resize', () => {
       resizeHiDPI(this.canvas, this.ctx);
       this.frameId = requestAnimationFrame(this.frame);
     });
+
+
 
   }
 
