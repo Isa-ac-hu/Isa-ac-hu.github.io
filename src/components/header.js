@@ -35,7 +35,7 @@ export default class Header {
       /* About */ 1 * getScale(),
       /* Work */ 2.2 * getScale(),
       /* Projects */ 3 * getScale(),
-      /* Travel */ 6.8 * getScale(),
+      /* Travel */ 6.85 * getScale(),
     ];
     const targetY = sectionOffsets[idx] * vh;
     window.scrollTo({ top: targetY, behavior: 'smooth' });
