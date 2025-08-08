@@ -61,7 +61,7 @@ export default class NoteworthyCanvas {
     const cssY = e.clientY - r.top;
     const idx = this.hitCard(cssX, cssY);
     this.cardHover = NOTE_LIST.map((_, i) => i === idx);
-    this.hoverAny  = idx !== -1;
+    this.hoverAny = idx !== -1;
     this.canvas.style.cursor = this.hoverAny ? 'pointer' : '';
     };
 
