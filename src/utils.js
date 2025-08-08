@@ -1,34 +1,34 @@
 /* utils.js */
 /*#############################FUNCTIONS GO HERE###################################*/
-let __frozenViewport = null;
-export function resizeHiDPI(canvas, ctx) {
-  if (!__frozenViewport) {
-    // Capture DPR and CSS size ONCE
-    const dpr  = window.devicePixelRatio || 1;
-    const rect = canvas.getBoundingClientRect();
-    __frozenViewport = {
-      dpr,
-          cssW: rect.width  || window.innerWidth,
-      cssH: rect.height || window.innerHeight
-    };
-  }
-  const { dpr, cssW, cssH } = __frozenViewport;
-  if (canvas.width !== cssW * dpr || canvas.height !== cssH * dpr) {
-    canvas.width  = cssW * dpr;
-    canvas.height = cssH * dpr;
-  }
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-}
-
+//let __frozenViewport = null;
 // export function resizeHiDPI(canvas, ctx) {
-//   const dpr = window.devicePixelRatio || 1;
-//   const { width: cssW, height: cssH } = canvas.getBoundingClientRect();
-//   if (canvas.width !== cssW * dpr || canvas.height !== cssH * dpr) {
-//     canvas.width = cssW * dpr;
-//     canvas.height = cssH * dpr;
-//     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+//   if (!__frozenViewport) {
+//     // Capture DPR and CSS size ONCE
+//     const dpr  = window.devicePixelRatio || 1;
+//     const rect = canvas.getBoundingClientRect();
+//     __frozenViewport = {
+//       dpr,
+//           cssW: rect.width  || window.innerWidth,
+//       cssH: rect.height || window.innerHeight
+//     };
 //   }
+//   const { dpr, cssW, cssH } = __frozenViewport;
+//   if (canvas.width !== cssW * dpr || canvas.height !== cssH * dpr) {
+//     canvas.width  = cssW * dpr;
+//     canvas.height = cssH * dpr;
+//   }
+//   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 // }
+
+export function resizeHiDPI(canvas, ctx) {
+  const dpr = window.devicePixelRatio || 1;
+  const { width: cssW, height: cssH } = canvas.getBoundingClientRect();
+  if (canvas.width !== cssW * dpr || canvas.height !== cssH * dpr) {
+    canvas.width = cssW * dpr;
+    canvas.height = cssH * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+}
 
 export function bezierXY(p0, p1, p2, p3, t) {
   const u = 1 - t;
@@ -157,10 +157,15 @@ const DESIGN_HEIGHT = 863;
 
 
 export function getScale(){
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  return Math.min(w / DESIGN_WIDTH, h / DESIGN_HEIGHT);
+  // Freeze the scale after first computation
+  if (typeof getScale._frozen !== 'number') {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    getScale._frozen = Math.min(w / DESIGN_WIDTH, h / DESIGN_HEIGHT);
+  }
+  return getScale._frozen;
 }
+
 export function convert(designValue){
   const s = Math.max(getScale(), 0.1);
   return designValue * s;

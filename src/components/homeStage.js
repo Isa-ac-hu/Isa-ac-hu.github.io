@@ -69,10 +69,10 @@ export default class HomeStage {
         // now enter your animation loop
         this.frameId = requestAnimationFrame(this.frame);
       } else {
-        resizeHiDPI(this.canvas, this.ctx);
+        //resizeHiDPI(this.canvas, this.ctx);
         // force your resize handler / first paint
-        window.dispatchEvent(new Event('resize'));
-        requestAnimationFrame(start);
+        //window.dispatchEvent(new Event('resize'));
+        this.frameID = requestAnimationFrame(start);
       }
     };
 

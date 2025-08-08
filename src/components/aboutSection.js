@@ -10,6 +10,10 @@ export default class AboutCanvas{
     this.introTimer = 0;       // counts to 1, used for our logistic curve
     this.INTRO_SPEED = 0.01;
     this.INTRO_DROP = 200;      // px it climbs while fading in
+    const t = this.ctx.getTransform();
+    this._dpr  = t && typeof t.a === 'number' ? t.a : (window.devicePixelRatio || 1);
+    this._cssW = this.canvas.width  / this._dpr;
+    this._cssH = this.canvas.height / this._dpr;
 
     /* run-time state for the "Boston University" link */
     this.buLink = {
@@ -65,9 +69,10 @@ export default class AboutCanvas{
 
   draw(scrollY){
     const {ctx,canvas}=this;
-    const dpr=window.devicePixelRatio||1;
-    const cssH=canvas.height/dpr; // viewport height
-    const offset=cssH * getScale(); // About page starts after one vh
+    // Use frozen DPR/CSS size captured in constructor
+    const dpr   = this._dpr;
+    const cssH  = this._cssH;          // viewport height in CSS px (frozen)
+    const offset= cssH * getScale();
     const { pad, size, width } = BULLET;
 
     //our bounds for the display

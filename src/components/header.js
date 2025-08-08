@@ -32,10 +32,10 @@ export default class Header {
     const vh = window.innerHeight;
     // custom section start positions in multiples of vh
     const sectionOffsets = [
-      /* About */ 1 * getScale(),
-      /* Work */ 2.2 * getScale(),
-      /* Projects */ 3 * getScale(),
-      /* Travel */ 6.85 * getScale(),
+      /* About */ 1,
+      /* Work */ 2.2,
+      /* Projects */ 3,
+      /* Travel */ 6.85,
     ];
     const targetY = sectionOffsets[idx] * vh;
     window.scrollTo({ top: targetY, behavior: 'smooth' });

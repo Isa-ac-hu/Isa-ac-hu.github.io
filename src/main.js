@@ -2,26 +2,27 @@
 
 import IntroStage from './components/introStage.js';
 import HomeStage  from './components/homeStage.js';
-import {easeLogistic, ensureHeaderGlass, hideHeader, showHeader } from './utils.js';
+import {easeLogistic, ensureHeaderGlass, hideHeader, resizeHiDPI, showHeader} from './utils.js';
 import Header from './components/header.js';
 
 const canvas = document.getElementById('hexCanvas');
 const ctx = canvas.getContext('2d');
 
 let headerCanvas, headerCtx, headerRAF, header;
-function resizeMain() {
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = innerWidth * dpr;
-  canvas.height = innerHeight * dpr;
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-}
-resizeMain();
-window.addEventListener('resize', resizeMain);
+// function resizeMain() {
+//   const dpr = window.devicePixelRatio || 1;
+//   canvas.width = innerWidth * dpr;
+//   canvas.height = innerHeight * dpr;
+//   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+// }
+// resizeMain();
+// window.addEventListener('resize', resizeMain);
+resizeHiDPI(canvas, ctx);
 
 let currentStage;
 function startIntro () {
-  console.log(window.innerWidth, window.innerHeight);
-  console.log(screen.width, screen.height);
+  // console.log(window.innerWidth, window.innerHeight);
+  // console.log(screen.width, screen.height);
   hideHeader();
   currentStage = new IntroStage(canvas, startHome); // when intro ends → home
 }
