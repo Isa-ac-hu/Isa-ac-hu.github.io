@@ -33,7 +33,7 @@ export default class Header {
     // custom section start positions in multiples of vh
     const sectionOffsets = [
       /* About */ 1 * getScale(),
-      /* Work */ 2 * getScale(),
+      /* Work */ 2.2 * getScale(),
       /* Projects */ 3 * getScale(),
       /* Travel */ 6.8 * getScale(),
     ];

@@ -11,7 +11,7 @@
       <change beforePath="$PROJECT_DIR$/src/components/homeStage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/homeStage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/infoPanel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/infoPanel.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/noteworthyCanvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/noteworthyCanvas.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workCanvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workCanvas.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +122,7 @@
       <workItem from="1754496970417" duration="166000" />
       <workItem from="1754497174192" duration="24975000" />
       <workItem from="1754586006106" duration="3260000" />
-      <workItem from="1754601889823" duration="4056000" />
+      <workItem from="1754601889823" duration="4638000" />
     </task>
     <servers />
   </component>
@@ -140,7 +140,8 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/components/workCanvas.js</url>
           <line>1</line>
-          <option name="timeStamp" value="2" />
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

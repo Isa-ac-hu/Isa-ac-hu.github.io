@@ -98,7 +98,7 @@ export default class WorkCanvas {
     const { ctx, canvas } = this;
     const dpr = window.devicePixelRatio || 1;
     const cssH = canvas.height / dpr;
-    const PAGE_OFFSET = 2 * cssH * getScale();
+    const PAGE_OFFSET = 2.2 * cssH * getScale();
     if (scrollY < PAGE_OFFSET - cssH || scrollY > PAGE_OFFSET + cssH) return;
     const pageY = PAGE_OFFSET - scrollY;
     this.pageY  = pageY;

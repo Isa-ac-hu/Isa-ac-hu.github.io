@@ -66,9 +66,6 @@ export default class HomeStage {
       const { width, height } = canvas.getBoundingClientRect();
       if (width && height) {
         // sync the backing store
-        resizeHiDPI(this.canvas, this.ctx);
-        // force your resize handler / first paint
-        window.dispatchEvent(new Event('resize'));
         // now enter your animation loop
         this.frameId = requestAnimationFrame(this.frame);
       } else {
@@ -104,12 +101,10 @@ export default class HomeStage {
   onScroll = () => {
     this.scrollY = window.scrollY || window.pageYOffset;
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-    resizeHiDPI(this.canvas, this.ctx);
   }
 
   onPlaceSelect = ({ detail }) => {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-    resizeHiDPI(this.canvas, this.ctx);
     this.panel.show(detail);
   };
 
@@ -193,7 +188,6 @@ export default class HomeStage {
 
     this.scrollY = window.scrollY || window.pageYOffset;
     const { ctx, canvas } = this;
-    resizeHiDPI(this.canvas, this.ctx);
 
     /* background & placeholder text */
     ctx.fillStyle = COLORS.bgDark;
