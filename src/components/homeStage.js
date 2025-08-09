@@ -53,7 +53,7 @@ export default class HomeStage {
     this.header = headerShared;
     this.panel = new InfoPanel(this.ctx, this.canvas);
 
-    document.body.style.height = `${9.5 * getScale() * 100}vh`; // Hero (1vh) + About (1vh)
+    document.body.style.height = `${8.5 * 100}vh`; // Hero (1vh) + About (1vh)
     this.scrollY = 0;
     window.addEventListener('scroll', this.onScroll);
     this.canvas.addEventListener('place-select', this.onPlaceSelect);
