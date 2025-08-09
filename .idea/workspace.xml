@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="819078d4-47d7-499c-a0f1-14450f77bb09" name="Changes" comment="" />
+    <list default="true" id="819078d4-47d7-499c-a0f1-14450f77bb09" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/homeStage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/homeStage.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,6 +65,7 @@
       <recent name="C:\Users\isaac\WebstormProjects\MyWebsite\src\assets\resumes" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\isaac\WebstormProjects\MyWebsite\src\assets\resumes" />
       <recent name="C:\Users\isaac\WebstormProjects\MyWebsite\src" />
       <recent name="C:\Users\isaac\WebstormProjects\MyWebsite\src\assets\images" />
       <recent name="C:\Users\isaac\WebstormProjects\MyWebsite\src\assets\icons" />
@@ -117,6 +121,7 @@
       <workItem from="1754601889823" duration="7197000" />
       <workItem from="1754673288452" duration="1652000" />
       <workItem from="1754677645858" duration="3018000" />
+      <workItem from="1754775169337" duration="182000" />
     </task>
     <servers />
   </component>
