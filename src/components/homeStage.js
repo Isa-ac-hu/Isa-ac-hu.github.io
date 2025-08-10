@@ -53,7 +53,11 @@ export default class HomeStage {
     this.header = headerShared;
     this.panel = new InfoPanel(this.ctx, this.canvas);
 
-    document.body.style.height = `${8.5 * 100}vh`; // Hero (1vh) + About (1vh)
+    resizeHiDPI(this.canvas, this.ctx);
+    this.onResize = () => resizeHiDPI(this.canvas, this.ctx);
+    window.addEventListener('resize', this.onResize);
+
+    document.body.style.height = `${9 * 100}vh`; // Hero (1vh) + About (1vh)
     this.scrollY = 0;
     window.addEventListener('scroll', this.onScroll);
     this.canvas.addEventListener('place-select', this.onPlaceSelect);
@@ -173,6 +177,7 @@ export default class HomeStage {
     this.canvas.removeEventListener('mousemove', this.onMove);
     window.removeEventListener('scroll', this.onScroll);
     this.canvas.removeEventListener('place-select', this.onPlaceSelect);
+    this.canvas.removeEventListener('click', this.header.onClick);
     window.removeEventListener('resize', this.onResize);
   }
 
@@ -183,8 +188,6 @@ export default class HomeStage {
 
     // 2) Then handle HiDPI resizing and redraw the background
     resizeHiDPI(this.canvas, this.ctx);
-    this.ctx.fillStyle = COLORS.bgDark;
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.scrollY = window.scrollY || window.pageYOffset;
     const { ctx, canvas } = this;
@@ -195,7 +198,6 @@ export default class HomeStage {
 
     const headerDone =
       this.header.logoProg >= 1 && this.header.navProg >= this.header.navDone;
-    this.socialBar.draw(this.socialBar);
     this.mailBar.draw();
     this.about.draw(this.scrollY);
     this.globe.draw(this.scrollY);
