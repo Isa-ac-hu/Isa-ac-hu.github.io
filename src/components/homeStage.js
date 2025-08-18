@@ -179,6 +179,7 @@ export default class HomeStage {
     this.canvas.removeEventListener('place-select', this.onPlaceSelect);
     this.canvas.removeEventListener('click', this.header.onClick);
     window.removeEventListener('resize', this.onResize);
+    this.panel.destroy();
   }
 
   /* main RAF */

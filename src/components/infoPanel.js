@@ -1,5 +1,5 @@
 /* infoPanel.js */
-import { INFO_PANEL, convert, convertInt, getScale } from '../utils.js';
+import { INFO_PANEL, GLOBE_BOX, convert, convertInt, getScale } from '../utils.js';
 
 export default class InfoPanel {
   constructor (ctx, canvas) {
@@ -19,7 +19,7 @@ export default class InfoPanel {
       gap : convertInt(12) + 'px',
       color : '#ccd6f6',
       fontFamily : '"Inter",sans-serif',
-      zIndex : 30,
+      zIndex : 2,
     });
     Object.assign(this.img.style, { width: '100%', borderRadius: convertInt(6) + 'px' });
     Object.assign(this.titleEl.style, { margin: 0, fontSize: convertInt(20) + 'px', color: '#ffeb3b' });
@@ -65,4 +65,9 @@ export default class InfoPanel {
     this.el.style.display = 'flex';
   }
   hide () { this.el.style.display = 'none'; }
+
+  destroy () {
+    this.hide();
+    if (this.el && this.el.parentNode) this.el.parentNode.removeChild(this.el);
+  }
 }

@@ -187,6 +187,13 @@ export const PLACES = [
     img  : "Georgia Tech.jpg"
   },
   {
+    name : "Glacier Bay National Park, Alaska",
+    lat  : 58.6658,
+    lng  : -136.9002,
+    desc : "I came here in 6th grade on a cruise ship. I was served a cornish hen and cried because I thought it was a baby chicken. Good thing I didn't know about chicken nuggets...",
+    img  : "GlacierBay.jpg"
+  },
+  {
     name : "Governors Island, New York",
     lat  : 40.6895,
     lng  : -74.0168,
