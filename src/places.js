@@ -2,8 +2,15 @@
 
 export const PLACES = [
 
-  { name:"41 Bay State Road (BU dorm)",  lat:42.3503, lng:-71.1046, desc:"", img:"41 Bay State Road.jpg" },
-  { name:"1019 Commonwealth Ave, Boston",lat:42.3512, lng:-71.1359, desc:"", img:"1019.jpg" },
+  { name:"41 Bay State Road (BU dorm)",  lat:42.3503, lng:-71.1046, desc:"I lived here my senior year! My mom broke down in tears seeing the size of the room.", img:"41 Bay State Road.jpg" },
+  { name:"1019 Commonwealth Ave, Boston",lat:42.3512, lng:-71.1359, desc:"I lived here my freshman year! So many fond memories in the communal living space (I was the only one that used it)", img:"1019.jpg" },
+  {
+    name : "Acadia National Park, Maine",
+    lat  : 44.338974,
+    lng  : -68.273430,
+    desc : "We climbed the beehive trail; there was one section where the rock had eroded, and in its place was some slippery metal cylinders pounded into the mountain, and a view of a long drop directly below.",
+    img  : "Acadia.jpg"
+  },
   {
     name : "Angor Wat, Cambodia",
     lat  : 13.4125,
@@ -15,7 +22,7 @@ export const PLACES = [
     name : "Avenue of Stars, Hong Kong",
     lat  : 22.2945,
     lng  : 114.1734,
-    desc : "",
+    desc : "I sat here for hours looking at the junkers in the bay. Do you think Bruce Lee really died of heat stroke after removing his sweat glands?",
     img  : "Hong Kong Avenue of Stars.jpg"
   },
   {
@@ -24,6 +31,20 @@ export const PLACES = [
     lng  : 100.5018,
     desc : "",
     img  : "Bangkok.jpg"
+  },
+  {
+    name : "Bangor, Maine",
+    lat  : 44.801626,
+    lng  : -68.771329,
+    desc : "Bang what?? This picture depicts the house where Stephen King did all his cocaine.",
+    img  : "Bangor.jpg"
+  },
+  {
+    name : "Bar Harbor, Maine",
+    lat  : 44.387699,
+    lng  : -68.212219,
+    desc : "Tourist trap city! We had some overpriced lobster rolls and skipped stones by the beach.",
+    img  : "Bar Harbor.jpg"
   },
   {
     name : "Batu Caves, Malaysia",
@@ -36,7 +57,7 @@ export const PLACES = [
     name : "Bensalem, Pennsylvania",
     lat  : 40.11278,
     lng  : -74.94333,
-    desc : "",
+    desc : "Theres this seafood buffet in this town I would come to after work at Church&Dwight. I would get one plate of assorted meats, one plate of seafood, one plate of sushi, one plate of simple carbs, and then a plate of fruit and dessert. I gained like 5kg that summer...",
     img  : "Bensalem.jpg"
   },
   {
@@ -364,6 +385,20 @@ export const PLACES = [
   { name:"Phnom Penh (Boeung Kak Ti Muoy)",       lat:11.5693, lng:104.9011, desc:"", img:"Phnom Penh Sangkat Boeung Kak Ti Muoy.jpg" },
   { name:"Phnom Penh, Cambodia",                  lat:11.5564, lng:104.9282, desc:"", img:"Phnom Penh.jpg" },
   { name:"Plymouth, Massachusetts",               lat:41.9584, lng:-70.6673, desc:"", img:"Plymouth.jpg" },
+  {
+    name : "Portsmouth, New Hampshire",
+    lat  : 43.071568,
+    lng  : -70.762245,
+    desc : "We stopped here for a bathroom break. Theres a lot of submarines for a state with so little coast...",
+    img  : "Portsmouth.jpg"
+  },
+  {
+    name : "Portland, Maine",
+    lat  : 43.680031,
+    lng  : -70.310425,
+    desc : "Theres this one lighthouse here which I swear is the picture that comes up for everyone when you search for Maine. I don't even know what these people eat I just know the lighthouse",
+    img  : "Portland.jpg"
+  },
   { name:"Prince George Park, NUS Singapore",     lat: 1.2949, lng:103.7810, desc:"", img:"Prince George Park.jpg" },
   { name:"Princeton, New Jersey",                 lat:40.3573, lng:-74.6672, desc:"", img:"Princeton.jpg" },
   { name:"Providence, Rhode Island",              lat:41.8240, lng:-71.4128, desc:"", img:"Providence.jpg" },
