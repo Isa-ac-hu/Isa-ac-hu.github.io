@@ -2,8 +2,8 @@
 
 export const PLACES = [
 
-  { name:"41 Bay State Road (BU dorm)",  lat:42.3503, lng:-71.1046, desc:"I lived here my senior year! My mom broke down in tears seeing the size of the room.", img:"41 Bay State Road.jpg" },
-  { name:"1019 Commonwealth Ave, Boston",lat:42.3512, lng:-71.1359, desc:"I lived here my freshman year! So many fond memories in the communal living space (I was the only one that used it)", img:"1019.jpg" },
+  { name:"41 Bay State Road, Boston, Massachusetts",  lat:42.3503, lng:-71.1046, desc:"I lived here my senior year! My mom broke down in tears seeing the size of the room.", img:"41 Bay State Road.jpg" },
+  { name:"1019 Commonwealth Ave, Boston, Massachusetts",lat:42.3512, lng:-71.1359, desc:"I lived here my freshman year! So many fond memories in the communal living space (I was the only one that used it)", img:"1019.jpg" },
   {
     name : "Acadia National Park, Maine",
     lat  : 44.338974,
@@ -29,7 +29,7 @@ export const PLACES = [
     name : "Bangkok, Thailand",
     lat  : 13.7563,
     lng  : 100.5018,
-    desc : "",
+    desc : "The city feels very cyberpunk-esque; I saw a guy hawking roasted scorpions. Also the grab motorcycle had a slightly cheaper option if I would forgo the helmet on the ride. Fun!",
     img  : "Bangkok.jpg"
   },
   {
@@ -50,7 +50,7 @@ export const PLACES = [
     name : "Batu Caves, Malaysia",
     lat  : 3.2379,
     lng  : 101.6840,
-    desc : "",
+    desc : "Supposedly the monkeys here have gotten rather intelligent, and will steal your phone and bargain it for food. I fed them a bit of my pineapple.",
     img  : "Batu Caves.jpg"
   },
   {
@@ -64,14 +64,14 @@ export const PLACES = [
     name : "Blackwells Mills, New Jersey",
     lat  : 40.4757,
     lng  : -74.5713,
-    desc : "",
+    desc : "Passed through here biking towards NYC. Theres an old canal that runs through here, and floodgates are located here.",
     img  : "Blackwell Mills.jpg"
   },
   {
     name : "Blue Hills Reservation, Massachusetts",
     lat  : 42.21478287610891,
     lng  : -71.08811531288134,
-    desc : "",
+    desc : "Every year, SASE does the sunrise hike at Blue Hills! It is some of my fondest memories of college, running ahead and hiding behind a tree to give someone a scare at 4 am. Good view of the stars.",
     img  : "Blue Hills Reservation.jpg"
   },
   {
@@ -81,19 +81,43 @@ export const PLACES = [
     desc : "I went to school here! The locals have a strange fixation on Dunkin Donuts. My secret spot in the city is Corey Hill Playground, it has hammocks and a truly incredible view!",
     img  : "Boston.png"
   },
-  { name:"Borobudur Temple, Indonesia",  lat:-7.6079, lng:110.2038, desc:"", img:"Borobudur.jpg" },
-  { name:"Boston College",   lat:42.3400, lng:-71.1672, desc:"", img:"Boston College.jpg" },
-  { name:"Bound Brook, NJ USA",          lat:40.5684, lng:-74.5385, desc:"", img:"Bound Brook.jpg" },
-  { name:"Broadway, NYC (42 St area)",   lat:40.7560, lng:-73.9867, desc:"", img:"Broadway.jpg" },
-  { name:"Brookline, MA USA",            lat:42.3317, lng:-71.1217, desc:"", img:"Brookline.jpg" },
-  { name:"Brooklyn, New York",    lat:40.7003, lng:-73.9967, desc:"", img:"Brooklyn.jpg" },
-  { name:"BU Fenway Campus",             lat:42.3413, lng:-71.0983, desc:"", img:"BU Fenway.jpg" },
-  { name:"Bunker Hill Monument, Massachusetts",     lat:42.3763, lng:-71.0611, desc:"", img:"Bunker Hill.jpg" },
-  { name:"Cambridge, Massachusetts",      lat:42.3736, lng:-71.1097, desc:"", img:"Cambridge.jpg" },
-  { name:"Cancún Downtown, Mexico",      lat:21.1619, lng:-86.8515, desc:"", img:"Cancun Down Town.jpg" },
-  { name:"Cancún Hotel Zone, Mexico",     lat:21.1342, lng:-86.7487, desc:"", img:"Cancun Hotel Zone.jpg" },
-  { name:"Carcar City, Philippines",         lat:10.1153, lng:123.6400, desc:"", img:"Carcar City.jpg" },
-  { name:"Carson Beach, South Boston",   lat:42.3290, lng:-71.0369, desc:"", img:"Carson Beach.jpg" },
+  { name:"Borobudur Temple, Indonesia", lat:-7.6079, lng:110.2038,
+    desc:"Tradition dictates that the 3 layers of stupas of Borobudur represents the three realms of Buddhist cosmology: the world of desires, the world of forms, and the formless world; inside each stupa is a miniature Buddha. When Stamford Raffles opened the topmost stupa, he found it to be empty.",
+    img:"Borobudur.jpg" },
+  { name:"Boston College, Massachusetts", lat:42.3400, lng:-71.1672,
+    desc:"A catholic school and a long time competitor of Boston University, with which my school often gets confused (much to my chagrin). Much prettier than BU, I will say.",
+    img:"Boston College.jpg" },
+  { name:"Bound Brook, New Jersey", lat:40.5684, lng:-74.5385,
+    desc:"Along the Raritan Canal biking trail through New Jersey, there are virtually no places to stop for food until you reach this town. It was quite a relief to see this sign!",
+    img:"Bound Brook.jpg" },
+  { name:"Broadway, NYC, New York", lat:40.7560, lng:-73.9867,
+    desc:"Broadway is the main artery of New York cultural life. I saw Hadestown here!",
+    img:"Broadway.jpg" },
+  { name:"Brookline, Massachusetts", lat:42.3317, lng:-71.1217,
+    desc:"A historic village south of my University. Famous for being the birthplace of JFK, and being the first suburb to resist annexation (for better or for worse!)",
+    img:"Brookline.jpg" },
+  { name:"Brooklyn, New York", lat:40.7003, lng:-73.9967,
+    desc:"In vinegar hill theres this escape room called \"Beat the Bomb\", they tell you that if you beat the final minigame, you wont get covered in slime. Here's a secret! They will slime you either way. Anyway the bridge has a nice view of the city! Somehow every single time we pass it my friend jokes that I can't go on due to the 3 ton weight limit.",
+    img:"Brooklyn.jpg" },
+  { name:"BU Fenway Campus, Massachusetts", at:42.3413, lng:-71.0983,
+    desc:"Formerly Wheelock college, now annexed into Boston University. Part of an ongoing territorial consolidation war happening between BU and Northeastern as they swallow up all the small colleges of the area. Much nicer dining hall than main campus.",
+    img:"BU Fenway.jpg" },
+  { name:"Bunker Hill Monument, Massachusetts", lat:42.3763, lng:-71.0611,
+    desc:"My friends and I walked the whole 4 miles to see this monument. There's an excellent skate park nearby. Even being a history nerd, I think this is the only time I walked the freedom trail in Boston.",
+    img:"Bunker Hill.jpg" },
+  { name:"Cambridge, Massachusetts", lat:42.3736, lng:-71.1097,
+    desc:"Home of Harvard and MIT. I used to walk along this path every night, rain, sleet, snow, or shine, to go to the west campus late night. They have these wings with mango habenero sauce that I have not been able to find anywhere else. Oh yeah and the view is nice I guess.",
+    img:"Cambridge.jpg" },
+  { name:"Cancún Downtown, Mexico", lat:21.1619, lng:-86.8515,
+    desc:"My friends had no intention of leaving the resort when we were in Mexico, but I thought otherwise. This was a white van I stepped into without figuring out where exactly it was taking me. I ended up quite far. At least it was only 10 pesos! You'll find this happens a lot with me.",
+    img:"Cancun Down Town.jpg" },
+  { name:"Cancún Hotel Zone, Mexico", lat:21.1342, lng:-86.7487,
+    desc:"Transport busses race down the main road at highway speeds. The only way to impede their terrifying ingress is to wave them down, for there are few actual bus stops.",
+    img:"Cancun Hotel Zone.jpg" },
+  { name:"Carcar City, Philippines", lat:10.1153, lng:123.6400, desc:"", img:"Carcar City.jpg" },
+  { name:"Carson Beach, South Boston", lat:42.3290, lng:-71.0369,
+    desc:"By my record the first of my adventurous long walks through Boston, this one through the bad parts of west Roxbury. It's always strange thinking about how close to the coast you are, I only remember when I see a seagull fly by.",
+    img:"Carson Beach.jpg" },
 
   { name:"Cebu City Philippines",                 lat:10.3157, lng:123.8854, desc:"", img:"Cebu City.jpg" },
   { name:"Cebu Strait",      lat:10.1370, lng:123.7700, desc:"", img:"Cebu Strait.jpg" },
@@ -447,6 +471,9 @@ export const PLACES = [
 
   { name:"Tuol Sleng (S-21) Museum, Phnom Penh",  lat:11.5491, lng:104.9174, desc:"", img:"S21.jpg" },
   { name:"UMass Boston, Massachusetts",           lat:42.3146, lng:-71.0387, desc:"The UMass Boston mascot is an anthropomorphic lighthouse with the most diabolical smile I have ever seen. See for yourself!", img:"Umass Boston.jpg" },
+  { name:"Valladolid, Mexico",  lat: 20.6896, lng: -88.2022,
+    desc:"The lands of the Yucatan are famous for their Cenotes, the only place in the world with such structures, created by the asteroid that wiped out the dinosaurs. I floated in this one for a while, pondering the life I've lived.",
+    img:"Valladolid.jpg" },
   { name:"Valley Forge, Pennsylvania",           lat:40.0994, lng:-75.4636, desc:"", img:"Valley Forge.jpg" },
   {
     name : "Victoria Peak, Hong Kong",
