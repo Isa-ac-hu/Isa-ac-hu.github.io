@@ -415,6 +415,7 @@ export const PLACES = [
   { name:"Philadelphia, Pennsylvania",            lat:39.9526, lng:-75.1652, desc:"", img:"Philadelphia.jpg" },
   { name:"Phnom Penh (Boeung Kak Ti Muoy)",       lat:11.5693, lng:104.9011, desc:"", img:"Phnom Penh Sangkat Boeung Kak Ti Muoy.jpg" },
   { name:"Phnom Penh, Cambodia",                  lat:11.5564, lng:104.9282, desc:"", img:"Phnom Penh.jpg" },
+  { name:"Phoenixville, Pennsylvania", lat:40.1304, lng:-75.5149, desc:"I wish my hometown were more like this town. Here's a hidden arcade bar my friend brought me to. I lost both games shooting in the black ball. Whoops!", img:"Phoenixville.jpg" },
   { name:"Plymouth, Massachusetts",               lat:41.9584, lng:-70.6673, desc:"", img:"Plymouth.jpg" },
   {
     name : "Portsmouth, New Hampshire",
