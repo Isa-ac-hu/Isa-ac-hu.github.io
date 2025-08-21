@@ -185,13 +185,18 @@ export default class HomeStage {
   /* main RAF */
   frame = (ts) => {
 
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-    // 2) Then handle HiDPI resizing and redraw the background
-    resizeHiDPI(this.canvas, this.ctx);
-
-    this.scrollY = window.scrollY || window.pageYOffset;
     const { ctx, canvas } = this;
+    // (A) Sync HiDPI/backing store size FIRST
+    // Ensures canvas.width/height match CSS size * DPR before any drawing
+    resizeHiDPI(canvas, ctx);
+    // (B) Clear with identity transform to avoid scaled-clear artifacts
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // (C) Apply DPR transform explicitly every frame (even if size didn't change)
+    // This prevents any transform "drift" if some code forgot a restore, etc.
+    const dpr = window.devicePixelRatio || 1;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    this.scrollY = window.scrollY || window.pageYOffset;
 
     /* background & placeholder text */
     ctx.fillStyle = COLORS.bgDark;
