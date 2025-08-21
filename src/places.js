@@ -115,7 +115,7 @@ export const PLACES = [
     desc:"Transport busses race down the main road at highway speeds. The only way to impede their terrifying ingress is to wave them down, for there are few actual bus stops.",
     img:"Cancun Hotel Zone.jpg" },
   { name:"Carcar City, Philippines", lat:10.1153, lng:123.6400, desc:"", img:"Carcar City.jpg" },
-  { name:"Carson Beach, South Boston", lat:42.3290, lng:-71.0369,
+  { name:"Carson Beach, Boston, Massachusetts", lat:42.3290, lng:-71.0369,
     desc:"By my record the first of my adventurous long walks through Boston, this one through the bad parts of west Roxbury. It's always strange thinking about how close to the coast you are, I only remember when I see a seagull fly by.",
     img:"Carson Beach.jpg" },
 
@@ -235,14 +235,14 @@ export const PLACES = [
     name : "Hangzhou, China",
     lat  : 30.2741,
     lng  : 120.1551,
-    desc : "",
+    desc : "There is a famous tea that is grown around this peaceful lake, but it earnestly tastes like green bean water.",
     img  : "Hangzhou.jpg"
   },
   {
     name : "Hanoi, Vietnam",
     lat  : 21.0278,
     lng  : 105.8342,
-    desc : "",
+    desc : "At my friends house, the monsoon rains came in and ants as big as my thumb began to flood across his kitchen table as we were eating dinner. I tried to flatten one and it bit me. He tells me this is a normal occurrence. We visited the site where John McCain was shot down, and then tortured by the Viet-Cong.",
     img  : "Hanoi.jpg"
   },
   {
@@ -323,7 +323,7 @@ export const PLACES = [
     desc : "",
     img  : "King Edward VII.jpg"
   },
-  { name:"Kingston, New Jersey",                lat:40.3759, lng:-74.6157, desc:"", img:"Kingston.jpg" /* filled-in */ },
+  { name:"Kingston, New Jersey", lat:40.3759, lng:-74.6157, desc:"", img:"Kingston.jpg" },
   {
     name : "Kuala Lumpur, Malaysia",
     lat  : 3.1390,
@@ -357,28 +357,28 @@ export const PLACES = [
     name : "Longwood Medical Area, Massachusetts",
     lat  : 42.3364,
     lng  : -71.1056,
-    desc : "",
+    desc : "Behold! A One-legged duck!",
     img  : "Longwood.jpg"
   },
   {
     name : "Macau SAR, China",
     lat  : 22.1987,
     lng  : 113.5439,
-    desc : "",
+    desc : "One of the guys I was travelling with tried to hype everyone up to do even a single $75 roulette spin, but his arguments about expected returns fell upon deaf ears. He had this interesting game, where we would take bets on random facts like how tall the eiffel tower is, or how many people live in Mongolia, and we would actually settle on a number that was pretty close to reality. Statisticians scare me...",
     img  : "Macau.jpg"
   },
   {
     name : "Malacca City, Malaysia",
     lat  : 2.1896,
     lng  : 102.2501,
-    desc : "",
+    desc : "On the bus ride to this town, I struck up a long conversation with a local Chinese Hokkien. He told me about his dreams of moving to Singapore, where he would no longer be discriminated against. He also gave me an amazing sashimi recommendation! Visit Wa-Zen in Malacca-Reya if you get the chance, they will give you real wasabi if you ask for it, and a whole bowl is only 7 usd!",
     img  : "Malacca.jpg"
   },
   {
     name : "Malvern, Pennsylvania",
     lat  : 40.0343,
     lng  : -75.5135,
-    desc : "",
+    desc : "My hometown! This is a photo we took at some local farmstead right before senior prom. There's not a whole lot to do here.",
     img  : "Malvern.jpg"
   },
   {
@@ -471,7 +471,7 @@ export const PLACES = [
   { name:"Top Road – North Trenton, NJ",          lat:40.2295, lng:-74.7592, desc:"", img:"Trenton Top Road.jpg" },
 
   { name:"Tuol Sleng (S-21) Museum, Phnom Penh",  lat:11.5491, lng:104.9174, desc:"", img:"S21.jpg" },
-  { name:"UMass Boston, Massachusetts",           lat:42.3146, lng:-71.0387, desc:"The UMass Boston mascot is an anthropomorphic lighthouse with the most diabolical smile I have ever seen. See for yourself!", img:"Umass Boston.jpg" },
+  { name:"UMass Boston, Massachusetts", lat:42.3146, lng:-71.0387, desc:"Me and my roommate came here once to pick up a used couch. The girl who was selling it tried to include her cat in the deal for free. Who does that??? The UMass Boston mascot is an anthropomorphic lighthouse with the most diabolical smile I have ever seen. See for yourself!", img:"Umass Boston.jpg" },
   { name:"Valladolid, Mexico",  lat: 20.6896, lng: -88.2022,
     desc:"The lands of the Yucatan are famous for their Cenotes, the only place in the world with such structures, created by the asteroid that wiped out the dinosaurs. I floated in this one for a while, pondering the life I've lived.",
     img:"Valladolid.jpg" },
