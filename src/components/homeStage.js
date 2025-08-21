@@ -59,7 +59,7 @@ export default class HomeStage {
 
     document.body.style.height = `${9 * 100}vh`; // Hero (1vh) + About (1vh)
     this.scrollY = 0;
-    window.addEventListener('scroll', this.onScroll);
+    window.addEventListener('scroll', this.onScroll, { passive: true });
     this.canvas.addEventListener('place-select', this.onPlaceSelect);
     this.canvas.addEventListener('mousemove', this.onMove);
 
@@ -84,8 +84,8 @@ export default class HomeStage {
     if (document.readyState === 'loading') {
       window.addEventListener('DOMContentLoaded', start);
     } else {
-      setTimeout(start.bind(this), 100);
-      start();
+      // setTimeout(start.bind(this), 100);
+      requestAnimationFrame(start);
     }
     // // Don’t start drawing immediately (canvas might still be 0×0)
     // window.addEventListener('DOMContentLoaded', () => {
@@ -104,7 +104,7 @@ export default class HomeStage {
 
   onScroll = () => {
     this.scrollY = window.scrollY || window.pageYOffset;
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    //this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
   }
 
   onPlaceSelect = ({ detail }) => {

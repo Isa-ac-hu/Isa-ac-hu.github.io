@@ -390,7 +390,7 @@ export const PLACES = [
   },
   { name:"Manila, Philippines",                 lat:14.5995, lng:120.9842, desc:"", img:"Manila.jpg" },
   { name:"Medford, Massachusetts",              lat:42.4184, lng:-71.1062, desc:"", img:"Medford.jpg" },
-  { name:"Mendut Temple, Indonesia",            lat:-7.6074, lng:110.2207, desc:"", img:"Mendut.jpg" },
+  { name:"Mendut Temple, Indonesia", lat:-7.6074, lng:110.2207, desc:"", img:"Mendut.png" },
   { name:"Middlesex, New Jersey",               lat:40.5723, lng:-74.5010, desc:"", img:"Middlesex.jpg" },
   { name:"Momo Beach, Bohol PH",                lat: 9.9683, lng:124.0154, desc:"", img:"Momo Beach.jpg" },
   { name:"Mount Bromo, Indonesia",              lat:-7.9425, lng:112.9530, desc:"", img:"Mount Bromo.jpg" },
