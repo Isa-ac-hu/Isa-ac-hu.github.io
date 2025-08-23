@@ -30,10 +30,16 @@ export default class InfoPanel {
 
     this.ctx = ctx;
     this.canvas = canvas;
-
-    const dpr = window.devicePixelRatio || 1;
-    const cssH = canvas.height / dpr;
-    this.pageOffset = 6.85 * cssH;
+    this.pageOffset = 0;
+    this.onResize = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const cssH = this.canvas.height / dpr;
+      this.pageOffset = 6.85 * cssH;
+      this.updatePosition();
+    };
+    window.addEventListener('resize', this.onResize, { passive: true });
+    // initial position
+    this.onResize();
   }
 
 
@@ -45,6 +51,7 @@ export default class InfoPanel {
 
   /* lazy-load image on demand */
   show ({ name, desc, img }) {
+    this.updatePosition();
     this.titleEl.textContent = name;
     this.descEl.textContent = desc;
 
@@ -64,6 +71,7 @@ export default class InfoPanel {
 
   destroy () {
     this.hide();
+    window.removeEventListener('resize', this.onResize);
     if (this.el && this.el.parentNode) this.el.parentNode.removeChild(this.el);
   }
 }
