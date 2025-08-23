@@ -33,18 +33,14 @@ export default class InfoPanel {
 
     const dpr = window.devicePixelRatio || 1;
     const cssH = canvas.height / dpr;
-     this.pageOffset = 6.85 * cssH;
+    this.pageOffset = 6.85 * cssH;
   }
 
 
 
   updatePosition = () => {
-    const pageOffset = this.pageOffset;
-    const gap = convert(150);
-    const topPx = pageOffset + GLOBE_BOX.top + GLOBE_BOX.size + gap;
-    this.el.style.position = 'absolute';
+    const topPx = this.pageOffset + GLOBE_BOX.top;
     this.el.style.top = `${topPx}px`;
-
   }
 
   /* lazy-load image on demand */
